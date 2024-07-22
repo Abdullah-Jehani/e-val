@@ -1,7 +1,7 @@
 <template>
   <main class="grid lg:grid-cols-12 min-h-screen lg:bg-mainWhite bg-mainWhite">
     <div
-      class="hidden absolute top-0 left-0 translate-x-0.5 translate-y-0.5 h-screen min-w-screen z-0 bg-mainPurple rounded-full aspect-square lg:flex items-center justify-center"
+      class="hidden absolute top-0 left-0 translate-x-0.5 translate-y-0.5 h-[160vh] min-w-screen z-0 bg-mainPurple rounded-full aspect-square lg:flex items-center justify-center"
     ></div>
     <div
       class="mx-auto min-h-2/3 py-12 px-10 w-full col-span-full lg:col-span-4 lg:col-start-5 h-fit col-start-2 rounded-lg sm:col-span-10 sm:col-start-2 md:col-span-4 md:col-start-5 lg:bg-white lg:border border-darkPurple lg:shadow-md shadow-darkPurple z-10 place-self-center"
@@ -57,18 +57,20 @@
 <script setup>
 import { ref } from 'vue';
 import axios from 'axios';
+import { useToast } from 'vue-toastification';
 
 const email = ref('');
+const toast = useToast();
 
 const sendResetEmail = async () => {
   try {
     await axios.post('http://127.0.0.1:8000/api/student/forgot-password/', {
       email: email.value,
     });
-    // Handle success (e.g., show a message that the email was sent)
+    toast.success('Reset email sent successfully!');
   } catch (error) {
     console.error(error);
-    // Handle error (e.g., show an error message)
+    toast.error('Failed to send reset email.');
   }
 };
 </script>

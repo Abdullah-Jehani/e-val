@@ -88,11 +88,13 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
+import { useToast } from 'vue-toastification';
 import { useAuthStore } from '../../stores/AuthStore';
 
-const email = ref('');
-const password = ref('');
+const email = ref('sufyan_3196@limu.edu.ly');
+const password = ref('12345678');
 const router = useRouter();
+const toast = useToast();
 const authStore = useAuthStore();
 
 const login = async () => {
@@ -107,9 +109,11 @@ const login = async () => {
 
     const token = response.data.token;
     authStore.setToken(token);
+    toast.success('Login successful!');
     router.replace('/home');
   } catch (error) {
     console.error(error);
+    toast.error('Failed to login. Please check your email and password.');
   }
 };
 </script>

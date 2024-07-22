@@ -16,7 +16,7 @@
         Welcome to the <br />
         E-Valuation System!
       </p>
-      <form @submit.prevent="login" class="w-full">
+      <form @submit.prevent="signup" class="w-full">
         <div class="flex flex-col gap-2 mb-4">
           <label for="email" class="block text-sm font-medium text-mainBlack"
             >Email</label
@@ -41,11 +41,11 @@
             type="number"
             id="studentId"
             placeholder="1234"
-            class="block w-full rounded-md border h-[3.375rem] bg-white text-sm font-normal p-4 appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-            min="4"
-            max="4"
-            pattern="[0-9]{4}"
+            class="block w-full rounded-md border h-[3.375rem] bg-white text-sm font-normal p-4 appearance:textfield [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+            min="1000"
+            max="9999"
             required
+            @input="validateStudentId"
           />
         </div>
         <div class="flex flex-col gap-2 mb-4">
@@ -86,15 +86,25 @@
 
 <script setup>
 import { ref } from 'vue';
-import { useRouter } from 'vue-router';
 import axios from 'axios';
+import { useRouter } from 'vue-router';
+import { useToast } from 'vue-toastification';
 import { useAuthStore } from '../../stores/AuthStore';
 
 const email = ref('');
 const studentId = ref('');
 const password = ref('');
 const router = useRouter();
+const toast = useToast();
 const authStore = useAuthStore();
+
+const validateStudentId = (event) => {
+  const value = event.target.value;
+  if (value.length > 4) {
+    event.target.value = value.slice(0, 4);
+    studentId.value = value.slice(0, 4);
+  }
+};
 
 const signup = async () => {
   try {
@@ -109,9 +119,11 @@ const signup = async () => {
     );
     const token = response.data.token;
     authStore.setToken(token);
+    toast.success('Signup successful!');
     router.push('/home');
   } catch (error) {
     console.error(error);
+    toast.error('Failed to sign up. Please check your details.');
   }
 };
 </script>
