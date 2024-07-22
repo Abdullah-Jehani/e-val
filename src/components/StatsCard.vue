@@ -1,17 +1,18 @@
 <template>
-  <div class="w-full h-full rounded-lg p-6">
+  <div class="w-full h-full rounded-lg p-4 sm:p-8">
     <div class="flex flex-col gap-2 text-left">
-      <p class="text-lg font-semibold text-mainBlack">
+      <p class="text-lg font-semibold text-mainBlack sm:text-xl">
         {{ title }}
       </p>
-      <div>
-        <p class="text-3xl font-semibold text-mainBlack">
+      <div class="flex items-end justify-between">
+        <p class="lg:text-3xl text-xl font-semibold text-mainBlack sm:text-4xl">
           {{ value }}
         </p>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="1em"
           height="1em"
+          class="w-6 h-6 sm:w-10 sm:h-10"
           viewBox="0 0 24 24"
         >
           <g
@@ -20,7 +21,6 @@
             stroke-linecap="round"
             stroke-linejoin="round"
             stroke-width="2"
-            class="text-mainBlack"
             color="currentColor"
           >
             <path

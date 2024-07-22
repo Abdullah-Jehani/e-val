@@ -7,6 +7,7 @@ import StudentDashboardView from '../views/Student/DashboardView.vue';
 const routes = [
   {
     path: '/',
+    name: 'Home',
     component: AuthenticatedLayout,
     children: [
       {
