@@ -1,7 +1,7 @@
 <template>
   <div class="antialiased bg-mainWhite">
     <nav
-      class="bg-white border-b border-gray-200 lg:px-8 px-2 py-5 max-h-24 fixed left-0 right-0 top-0 z-50"
+      class="bg-white border-b border-mainPurple lg:px-8 px-2 py-5 max-h-24 fixed left-0 right-0 top-0 z-50"
     >
       <div class="flex flex-wrap justify-between items-center">
         <div class="flex justify-start items-center">
@@ -94,7 +94,7 @@
 
     <!-- Sidebar -->
     <aside
-      class="fixed top-0 left-0 z-40 w-56 h-screen pt-16 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0"
+      class="fixed top-0 left-0 z-40 w-56 h-screen pt-16 transition-transform -translate-x-full bg-white border-r border-mainPurple md:translate-x-0"
       aria-label="Sidenav"
       id="drawer-navigation"
     >
@@ -145,7 +145,7 @@
       </div>
     </aside>
 
-    <main class="p-4 md:ml-64 min-h-screen h-auto pt-28">
+    <main class="px-16 md:ml-56 min-h-screen h-auto pt-28">
       <router-view></router-view>
     </main>
   </div>

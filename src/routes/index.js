@@ -14,7 +14,6 @@ const routes = [
         name: 'StudentDashboard',
         component: StudentDashboardView,
       },
-
       // Add more authenticated routes here
     ],
   },
