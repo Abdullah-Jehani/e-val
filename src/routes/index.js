@@ -2,11 +2,21 @@ import { createRouter, createWebHistory } from 'vue-router';
 import LoginView from '../views/auth/LoginView.vue';
 import RegisterView from '../views/auth/RegisterView.vue';
 import ForgotPasswordView from '../views/auth/ForgotPasswordView.vue';
+import AuthenticatedLayout from '../Layouts/AuthenticatedLayout.vue';
+import StudentDashboardView from '../views/Student/DashboardView.vue';
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: LoginView,
+    component: AuthenticatedLayout,
+    children: [
+      {
+        path: 'dashboard',
+        name: 'StudentDashboard',
+        component: StudentDashboardView,
+      },
+
+      // Add more authenticated routes here
+    ],
   },
   {
     path: '/login',
