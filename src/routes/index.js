@@ -3,12 +3,17 @@ import LoginView from '../views/auth/LoginView.vue';
 import RegisterView from '../views/auth/RegisterView.vue';
 import ForgotPasswordView from '../views/auth/ForgotPasswordView.vue';
 import AuthenticatedLayout from '../Layouts/AuthenticatedLayout.vue';
+// Student views
 import StudentDashboardView from '../views/Student/DashboardView.vue';
+import SubmitSuccessView from '../views/Student/SubmitSuccessView.vue';
+
+// Admin views
 const routes = [
   {
     path: '/',
-    name: 'Home',
+    name: 'dashboard',
     component: AuthenticatedLayout,
+    redirect: '/dashboard',
     children: [
       {
         path: 'dashboard',
@@ -19,6 +24,15 @@ const routes = [
         path: 'evaluation',
         name: 'Evaluation',
         component: StudentDashboardView,
+      },
+      {
+        path: 'success',
+        name: 'SubmitSuccess',
+        component: SubmitSuccessView,
+      },
+      {
+        path: '/:pathMatch(.*)*',
+        redirect: '/',
       },
       // Add more authenticated routes here
     ],

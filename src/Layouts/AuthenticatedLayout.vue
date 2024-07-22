@@ -167,7 +167,7 @@
           class="lg:h-8 h-6"
         >
           <img
-            src="/hashed-logo.svg"
+            src="/icons/hashed-logo.png"
             alt="Hashed.ly Logo"
             class="lg:h-8 h-6 object-scale-down"
           />
