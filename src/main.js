@@ -3,6 +3,8 @@ import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 import Toast from 'vue-toastification';
 import 'vue-toastification/dist/index.css';
+import 'flowbite';
+import 'flowbite/dist/flowbite.css';
 
 import App from './App.vue';
 import './index.css';

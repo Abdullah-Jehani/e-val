@@ -15,6 +15,11 @@ const routes = [
         name: 'StudentDashboard',
         component: StudentDashboardView,
       },
+      {
+        path: 'evaluation',
+        name: 'Evaluation',
+        component: StudentDashboardView,
+      },
       // Add more authenticated routes here
     ],
   },
@@ -36,6 +41,7 @@ const routes = [
 ];
 
 const router = createRouter({
+  scrollBehavior: () => ({ top: 0, behavior: 'smooth' }),
   history: createWebHistory(),
   routes,
 });

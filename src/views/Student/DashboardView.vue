@@ -1,6 +1,6 @@
 <template>
   <div
-    class="px-5 md:p-0 grid gap-y-6 md:gap-y-12 gap-x-4 md:gap-x-5 grid-cols-4 lg:grid-cols-12"
+    class="px-3 md:p-0 grid gap-y-6 md:gap-y-12 gap-x-4 md:gap-x-5 grid-cols-4 lg:grid-cols-12"
   >
     <div
       class="col-span-2 lg:col-span-3"

@@ -98,8 +98,8 @@
       aria-label="Sidenav"
       id="drawer-navigation"
     >
-      <div class="overflow-y-auto py-5 px-3 h-full bg-white">
-        <ul class="pt-5 flex flex-col gap-1">
+      <div class="flex flex-col h-full overflow-y-auto py-5 px-3 bg-white">
+        <ul class="pt-5 flex flex-col gap-1 flex-grow">
           <li>
             <router-link
               to="/dashboard"
@@ -107,7 +107,7 @@
             >
               <svg
                 aria-hidden="true"
-                class="flex-shrink-0 w-6 h-6 transition duration-75 group-hover:text-mainBlack"
+                class="flex-shrink-0 w-6 h-6 transition duration-75"
                 fill="currentColor"
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
@@ -142,18 +142,44 @@
             </router-link>
           </li>
         </ul>
+        <!-- Sidebar footer -->
       </div>
     </aside>
 
     <main class="lg:px-16 px-1 md:ml-56 min-h-screen h-auto pt-28 pb-8">
       <router-view></router-view>
     </main>
+
+    <footer
+      class="lg:px-16 px-4 md:ml-56 py-4 grid grid-cols-2 lg:grid-cols-3 gap-8 mt-4 justify-center items-end lg:items-center text-slate-400"
+    >
+      <div class="text-left lg:text-center lg:col-start-2">
+        <p>e-val &copy; {{ new Date().getFullYear() }}</p>
+      </div>
+
+      <div
+        class="flex lg:flex-row flex-col items-end justify-end lg:items-center lg:gap-4 gap-2"
+      >
+        <p>Developed by</p>
+        <a
+          href="https://www.instagram.com/hashed.ly/"
+          target="_blank"
+          class="lg:h-8 h-6"
+        >
+          <img
+            src="/hashed-logo.svg"
+            alt="Hashed.ly Logo"
+            class="lg:h-8 h-6 object-scale-down"
+          />
+        </a>
+      </div>
+    </footer>
   </div>
 </template>
 
 <script setup></script>
 
-<style>
+<style scoped>
 .exact-active,
 .router-link-active {
   @apply bg-mainWhite text-mainPurple;
