@@ -40,4 +40,18 @@ const router = createRouter({
   routes,
 });
 
+// Ensure you protect your routes and redirect users to the login page if they are not authenticated.
+
+// router.beforeEach((to, from, next) => {
+//   const isAuthenticated = !!localStorage.getItem('token'); // Adjust according to your auth logic
+//   if (
+//     to.matched.some((record) => record.meta.requiresAuth) &&
+//     !isAuthenticated
+//   ) {
+//     next('/');
+//   } else {
+//     next();
+//   }
+// });
+
 export default router;
