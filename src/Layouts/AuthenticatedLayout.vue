@@ -145,7 +145,7 @@
       </div>
     </aside>
 
-    <main class="lg:px-16 px-1 md:ml-56 min-h-screen h-auto pt-28">
+    <main class="lg:px-16 px-1 md:ml-56 min-h-screen h-auto pt-28 pb-8">
       <router-view></router-view>
     </main>
   </div>
