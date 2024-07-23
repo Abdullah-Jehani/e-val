@@ -25,17 +25,18 @@ const routes = [
         name: 'Evaluation',
         component: StudentDashboardView,
       },
-      {
-        path: 'success',
-        name: 'SubmitSuccess',
-        component: SubmitSuccessView,
-      },
+
       {
         path: '/:pathMatch(.*)*',
         redirect: '/',
       },
       // Add more authenticated routes here
     ],
+  },
+  {
+    path: '/success',
+    name: 'SubmitSuccess',
+    component: SubmitSuccessView,
   },
   {
     path: '/login',

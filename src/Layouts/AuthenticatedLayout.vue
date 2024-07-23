@@ -50,7 +50,7 @@
             aria-expanded="false"
             data-dropdown-toggle="dropdown"
           >
-            <p>John Doe</p>
+            <p>{{ user.name }}</p>
 
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -73,12 +73,12 @@
             id="dropdown"
           >
             <div class="py-3 px-4">
-              <span class="block text-sm font-semibold text-mainBlack"
-                >Neil Sims</span
-              >
-              <span class="block text-sm text-mainBlack truncate"
-                >name@flowbite.com</span
-              >
+              <span class="block text-sm font-semibold text-mainBlack">{{
+                user.name
+              }}</span>
+              <span class="block text-sm text-mainBlack truncate">{{
+                user.email
+              }}</span>
             </div>
             <ul class="py-1 text-gray-700" aria-labelledby="dropdown">
               <li>
@@ -109,15 +109,13 @@
                 aria-hidden="true"
                 class="flex-shrink-0 w-6 h-6 transition duration-75"
                 fill="currentColor"
-                viewBox="0 0 20 20"
+                viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path>
                 <path
-                  fill-rule="evenodd"
-                  d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z"
-                  clip-rule="evenodd"
-                ></path>
+                  fill="currentColor"
+                  d="M4 13h6a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1m-1 7a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1zm10 0a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-7a1 1 0 0 0-1-1h-6a1 1 0 0 0-1 1zm1-10h6a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1h-6a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1"
+                />
               </svg>
               <span class="ml-3">Dashboard</span>
             </router-link>
@@ -129,13 +127,16 @@
             >
               <svg
                 aria-hidden="true"
-                class="flex-shrink-0 w-6 h-6 transition duration-75 group-hover:text-mainBlack"
+                class="flex-shrink-0 w-6 h-6 transition duration-75"
                 fill="currentColor"
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
               >
+                <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path>
                 <path
-                  d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"
+                  fill-rule="evenodd"
+                  d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z"
+                  clip-rule="evenodd"
                 ></path>
               </svg>
               <span class="ml-3">Evaluation</span>
@@ -177,7 +178,19 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { initFlowbite } from 'flowbite';
+import { onMounted } from 'vue';
+
+const user = {
+  name: 'Mohamed Ahmed',
+  email: 'mohamed@hashedly.com',
+};
+
+onMounted(() => {
+  initFlowbite();
+});
+</script>
 
 <style scoped>
 .exact-active,

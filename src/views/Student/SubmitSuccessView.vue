@@ -1,34 +1,40 @@
 <template>
-  <aside
-    class="fixed top-0 left-0 z-40 w-56 h-screen pt-16 transition-transform -translate-x-full bg-white border-r border-mainPurple md:translate-x-0"
-    aria-label="Sidenav"
-    id="drawer-navigation"
+  <main
+    class="grid lg:grid-cols-12 min-h-screen lg:bg-mainWhite bg-mainWhite py-20"
   >
-    <div class="overflow-y-auto py-5 px-3 h-full bg-white flex flex-col">
-      <ul class="pt-5 flex flex-col gap-1 flex-grow">
-        <li>
-          <router-link
-            to="/dashboard"
-            class="flex items-center w-full p-3 px-6 text-base font-medium text-darkGray transition duration-75 hover:bg-mainWhite rounded-md group"
-          >
-            <svg
-              aria-hidden="true"
-              class="flex-shrink-0 w-6 h-6 transition duration-75 group-hover:text-mainBlack"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path>
-              <path
-                fill-rule="evenodd"
-                d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0"
-              ></path>
-            </svg>
-          </router-link>
-        </li>
-      </ul>
+    <div
+      class="mx-auto min-h-2/3 py-12 px-10 w-full col-span-full lg:col-span-10 lg:col-start-2 h-full col-start-2 rounded-lg sm:col-span-10 sm:col-start-2 md:col-span-4 md:col-start-5 lg:bg-white lg:border-2 border-darkPurple lg:shadow-md shadow-darkPurple z-10 place-self-center"
+    >
+      <div class="flex items-center justify-center mx-auto mb-4">
+        <img
+          class="mx-auto mt-6 w-40 lg:h-40 h-24 my-auto"
+          src="/e-val-logo/logo-icon3.svg"
+          alt=""
+        />
+      </div>
+      <div class="mx-auto w-fit my-8 text-center">
+        <p
+          class="text-4xl lg:text-6xl text-center font-bold mb-4 text-mainPurple"
+        >
+          Thanks for submitting!
+        </p>
+        <p
+          class="text-center text-2xl lg:text-4xl font-normal text-darkGray lg:leading-snug lg:tracking-wide"
+        >
+          you have successfully <br />
+          completed the evaluation!
+        </p>
+      </div>
+      <div class="lg:mt-12 flex items-center justify-center mt-8">
+        <router-link
+          to="/"
+          class="bg-mainPurple hover:bg-darkPurple text-white font-medium lg:py-5 py-4 rounded focus:outline-none focus:shadow-outline transition-all duration-150 ease-in-out text-2xl w-full h-full lg:px-12 lg:text-2xl lg:w-fit block text-center"
+        >
+          Back to dashboard
+        </router-link>
+      </div>
     </div>
-  </aside>
+  </main>
 </template>
 
 <script setup></script>
