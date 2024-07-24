@@ -1,13 +1,21 @@
 <template>
   <div
-    class="w-full flex lg:flex-row flex-col justify-between lg:items-center items-start my-4 lg:my-8 gap-4 border-b pb-4 border-lightPurple"
+    class="w-full flex lg:flex-row flex-col justify-between lg:items-center items-start my-4 lg:mt-8 gap-4 border-b pb-4 border-lightPurple"
   >
-    <div class="w-2/3 flex justify-start items-center gap-2">
+    <div
+      class="lg:w-2/3 w-full flex justify-start items-start lg:items-center gap-2"
+    >
+      <!-- Course Name -->
       <label for="" class="text-xl font-normal text-darkGray">Course:</label>
-      <p class="text-xl font-semibold text-mainBlack">{{ courseName }}</p>
+      <p class="text-xl font-semibold text-mainBlack truncate">
+        {{ courseName }}
+      </p>
     </div>
 
-    <div class="w-1/3 flex justify-start items-center gap-2">
+    <!-- Instructor Name -->
+    <div
+      class="lg:w-1/3 w-full flex justify-start items-start lg:items-center gap-2"
+    >
       <label for="" class="text-xl font-normal text-darkGray"
         >Instructor:</label
       >
