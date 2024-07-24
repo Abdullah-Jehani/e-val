@@ -5,6 +5,7 @@ import ForgotPasswordView from '../views/auth/ForgotPasswordView.vue';
 import AuthenticatedLayout from '../Layouts/AuthenticatedLayout.vue';
 // Student views
 import StudentDashboardView from '../views/Student/DashboardView.vue';
+import EvaluationView from '../views/Student/EvaluationView.vue';
 import SubmitSuccessView from '../views/Student/SubmitSuccessView.vue';
 
 // Admin views
@@ -23,7 +24,7 @@ const routes = [
       {
         path: 'evaluation',
         name: 'Evaluation',
-        component: StudentDashboardView,
+        component: EvaluationView,
       },
 
       {

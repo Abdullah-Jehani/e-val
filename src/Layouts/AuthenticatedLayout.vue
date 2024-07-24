@@ -45,7 +45,7 @@
         <div class="flex items-center lg:order-2">
           <button
             type="button"
-            class="flex mx-3 rounded-full md:mr-0 items-center justify-center text-mainBlack gap-3 font-semibold p-2.5 text-lg"
+            class="flex mx-3 rounded-full md:mr-0 items-center justify-center text-mainBlack gap-2 font-semibold p-2.5 text-lg"
             id="user-menu-button"
             aria-expanded="false"
             data-dropdown-toggle="dropdown"
@@ -183,7 +183,7 @@ import { initFlowbite } from 'flowbite';
 import { onMounted } from 'vue';
 
 const user = {
-  name: 'Mohamed Ahmed',
+  name: 'Mohamed',
   email: 'mohamed@hashedly.com',
 };
 

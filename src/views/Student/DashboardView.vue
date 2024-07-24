@@ -1,6 +1,6 @@
 <template>
   <div
-    class="px-3 md:p-0 grid gap-y-6 md:gap-y-12 gap-x-4 md:gap-x-5 grid-cols-4 lg:grid-cols-12"
+    class="px-3 md:p-0 grid gap-y-3 md:gap-y-8 lg:gap-y-6 gap-x-4 md:gap-x-5 grid-cols-4 lg:grid-cols-12"
   >
     <div class="col-span-2 lg:col-span-3" v-for="card in cards" :key="card.id">
       <stats-card
@@ -93,7 +93,7 @@
       </stats-card>
     </div>
 
-    <div class="col-span-full">
+    <div class="col-span-full my-8 lg:my-5">
       <course-table />
     </div>
 
@@ -109,8 +109,8 @@
 </template>
 
 <script setup>
-import StatsCard from '../../components/StatsCard.vue';
-import CourseTable from '../../components/CourseTable.vue';
+import StatsCard from '../../components/Student/StatsCard.vue';
+import CourseTable from '../../components/Student/CourseTable.vue';
 
 const cards = [
   {

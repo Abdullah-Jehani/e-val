@@ -43,16 +43,4 @@ const courses = ref([
   { code: '98765', name: 'Mobile App Development', evaluated: true },
   { code: '43210', name: 'Database Management Systems', evaluated: false },
 ]);
-
-const addCourse = () => {
-  if (courseCode.value && courseName.value) {
-    courses.value.push({
-      code: courseCode.value,
-      name: courseName.value,
-      evaluated: false,
-    });
-    courseCode.value = '';
-    courseName.value = '';
-  }
-};
 </script>

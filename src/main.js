@@ -5,6 +5,7 @@ import Toast from 'vue-toastification';
 import 'vue-toastification/dist/index.css';
 import 'flowbite';
 import 'flowbite/dist/flowbite.css';
+import { initFlowbite } from 'flowbite';
 
 import App from './App.vue';
 import './index.css';
