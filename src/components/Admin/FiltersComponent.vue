@@ -60,7 +60,7 @@
         </div>
         <button
           class="md:hidden flex place-self-end h-12 bg-mainPurple text-white px-4 py-2 rounded-[4px] hover:bg-darkPurple transition"
-          @click="openExportModal"
+          @click="openExportModal(courses)"
         >
           Export
         </button>
@@ -71,7 +71,7 @@
     >
       <button
         class="hidden md:block bg-mainPurple text-white px-4 py-2 rounded-[4px] hover:bg-darkPurple transition"
-        @click="openExportModal"
+        @click="openExportModal(courses)"
       >
         Export
       </button>
@@ -154,7 +154,8 @@ const selectAllDepartments = () => {
   selectedDepartment.value = '';
 };
 
-const openExportModal = () => {
+const openExportModal = (objects) => {
+  selectedCourses.value = objects.map((course) => course.id);
   showModal.value = true;
 };
 

@@ -2,7 +2,7 @@
   <div
     class="fixed inset-0 bg-black backdrop-blur-sm bg-opacity-80 flex justify-center items-center z-50 transition duration-200 ease-in-out"
   >
-    <div class="bg-offWhite rounded-lg shadow-lg p-6 w-1/3">
+    <div class="bg-offWhite rounded-lg shadow-lg p-6 md:w-1/2 lg:w-1/3 w-5/6">
       <div class="flex justify-between items-center mb-4">
         <h2 class="text-xl font-bold">Enrolled Students</h2>
         <button
@@ -63,7 +63,7 @@
 import { ref, watch } from 'vue';
 
 const props = defineProps({
-  courses: {
+  object: {
     type: Array,
     required: true,
   },
