@@ -6,7 +6,6 @@
       <stats-card
         :title="card.title"
         :value="card.value"
-        :icon="card.icon"
         :class="
           card.id % 2 == 0
             ? 'bg-brightGreen border border-darkGreen'

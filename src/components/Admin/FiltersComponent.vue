@@ -8,7 +8,9 @@
       <div
         class="flex gap-2 items-start w-full h-full md:w-auto justify-between"
       >
-        <h1 class="text-2xl font-bold text-mainBlack">{{ title }}</h1>
+        <h1 class="md:text-2xl text-lg font-bold text-mainBlack">
+          {{ title }}
+        </h1>
         <div
           id="search"
           class="w-2/3 h-full flex md:hidden items-center bg-transparent min-w-1/2 border border-lightPurple rounded-[4px] px-4"
@@ -39,9 +41,9 @@
         </div>
       </div>
       <div class="w-full md:w-auto flex justify-between items-center">
-        <div class="flex gap-2 h-12">
+        <div class="flex gap-2 md:gap-4 items-center h-12">
           <button
-            class="h-full bg-mainPurple text-white px-4 py-2 rounded-[4px] hover:bg-darkPurple transition"
+            class="text-sm md:text-xl flex place-self-end h-12 bg-mainPurple text-white md:px-4 px-4 text-center items-center rounded-[4px] hover:bg-darkPurple transition"
             @click="selectAllDepartments"
           >
             All
@@ -49,7 +51,7 @@
           <select
             v-model="selectedDepartment"
             @change="updateSelectedDepartment"
-            class="h-full bg-brightGreen cursor-pointer text-mainOil px-4 py-2 rounded-[4px] border-none"
+            class="min-h-full bg-brightGreen hover:filter hover:brightness-95 cursor-pointer text-mainOil px-4 py-2 rounded-[4px] border-none transition"
           >
             <option value="" disabled>All Department</option>
             <option
@@ -62,7 +64,7 @@
           </select>
         </div>
         <button
-          class="md:hidden flex place-self-end h-12 bg-mainPurple text-white px-4 py-2 rounded-[4px] hover:bg-darkPurple transition"
+          class="md:hidden text-sm flex place-self-end h-12 bg-mainPurple text-white px-3 py-1 text-center items-center rounded-[4px] hover:bg-darkPurple transition"
           @click="openExportModal"
         >
           Export
@@ -112,6 +114,8 @@
       @close="showModal = false"
       :title="modalTitle"
       :objects="objects"
+      :showExportButton="true"
+      @export="openExportModal"
     >
     </Modal>
   </div>

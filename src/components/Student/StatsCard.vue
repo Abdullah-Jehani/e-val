@@ -4,7 +4,7 @@
       <p class="text-lg font-semibold text-mainBlack sm:text-xl">
         {{ title }}
       </p>
-      <div class="flex items-end justify-between">
+      <div class="flex items-start justify-between">
         <p class="lg:text-3xl text-xl font-semibold text-mainBlack sm:text-4xl">
           {{ value }}
         </p>
@@ -15,6 +15,7 @@
 </template>
 
 <script setup>
+import { defineProps } from 'vue';
 const props = defineProps({
   title: String,
   value: Number,

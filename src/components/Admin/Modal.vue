@@ -2,9 +2,9 @@
   <div
     class="fixed inset-0 bg-black backdrop-blur-sm bg-opacity-80 flex justify-center items-center z-50 transition duration-200 ease-in-out"
   >
-    <div class="bg-offWhite rounded-lg shadow-lg p-6 md:w-1/2 lg:w-2/5 w-7/8">
+    <div class="bg-offWhite rounded-lg shadow-lg p-6 md:w-1/2 lg:w-3/5 w-7/8">
       <div class="flex justify-between items-center mb-4">
-        <h2 class="text-xl font-bold">{{ title }}</h2>
+        <h2 v-if="title" class="text-xl font-bold">{{ title }}</h2>
         <button
           @click="$emit('close')"
           class="text-gray-500 hover:text-gray-800"
@@ -29,16 +29,16 @@
         <general-table
           :objects="objects"
           cardTitle=""
-          v-model:selection="selectedCourses"
+          v-model:selection="selectedItems"
           :border="border"
         />
       </div>
-      <div class="w-full flex justify-center mt-4">
+      <div v-if="showExportButton" class="w-full flex justify-center mt-4">
         <button
-          @click="exportCourses"
-          class="w-full bg-mainPurple text-white px-4 py-2 rounded-[4px] transition duration-200 ease-in-out"
+          @click="$emit('export', selectedItems)"
+          class="w-full bg-mainPurple hover:bg-darkPurple text-white px-4 py-2 rounded-[4px] transition duration-100 ease-in-out"
         >
-          Export
+          {{ buttonText }}
         </button>
       </div>
     </div>
@@ -46,17 +46,17 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
-import { defineEmits } from 'vue';
+import { ref } from 'vue';
+import { defineEmits, defineProps } from 'vue';
 
 import GeneralTable from '../../components/Admin/GeneralTable.vue';
 
-const emit = defineEmits(['close']);
+const emit = defineEmits(['close', 'export']);
 
 const props = defineProps({
   title: {
     type: String,
-    required: true,
+    default: '',
   },
   objects: {
     type: Array,
@@ -66,18 +66,22 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
+  showExportButton: {
+    type: Boolean,
+    default: false,
+  },
+  checkboxText: {
+    type: String,
+    default: '',
+  },
+  buttonText: {
+    type: String,
+    default: 'Export',
+  },
 });
 
-const selectedCourses = ref([]);
-
-const exportCourses = () => {
-  console.log('Selected Courses:', selectedCourses.value);
-  // export logic here
-};
-
-watch(selectedCourses, (newVal) => {
-  console.log('Selected Courses Updated:', newVal);
-});
+const selectedItems = ref([]);
+const isChecked = ref(false);
 </script>
 
 <style scoped></style>
