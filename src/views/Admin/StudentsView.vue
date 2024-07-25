@@ -30,7 +30,7 @@
         :thirdValue="studentId"
         :fourthLabel="'Semester'"
         :fourthValue="studentSemester"
-        :cards="cards"
+        :cards="studentStatsCards"
         @card-selected="openModal"
       />
     </div>
@@ -66,6 +66,9 @@ const studentEmail = ref('N/A');
 const studentId = ref('N/A');
 const studentSemester = ref('N/A');
 const studentDepartment = ref('N/A');
+const enrolledCourses = ref(0);
+const evaluated = ref(0);
+const remaining = ref(0);
 
 const courses = ref([
   {
@@ -133,6 +136,9 @@ const students = ref([
     email: 'omar.alfarouq@university.edu',
     semester: 3,
     department: 'Department 1',
+    enrolledCourses: 5,
+    evaluated: 3,
+    remaining: 2,
     role: 'student',
   },
   {
@@ -141,6 +147,9 @@ const students = ref([
     email: 'layla.alhassan@university.edu',
     semester: 2,
     department: 'Department 2',
+    enrolledCourses: 7,
+    evaluated: 5,
+    remaining: 2,
     role: 'student',
   },
   {
@@ -149,6 +158,9 @@ const students = ref([
     email: 'khalid.alsabah@university.edu',
     semester: 4,
     department: 'Department 3',
+    enrolledCourses: 6,
+    evaluated: 3,
+    remaining: 3,
     role: 'student',
   },
   {
@@ -157,6 +169,9 @@ const students = ref([
     email: 'aisha.almansoori@university.edu',
     semester: 1,
     department: 'Department 1',
+    enrolledCourses: 7,
+    evaluated: 7,
+    remaining: 0,
     role: 'student',
   },
   {
@@ -165,25 +180,83 @@ const students = ref([
     email: 'faisal.elnasser@university.edu',
     semester: 3,
     department: 'Department 2',
+    enrolledCourses: 5,
+    evaluated: 3,
+    remaining: 2,
+    role: 'student',
+  },
+  {
+    id: 20139,
+    name: 'Hassan Al-Shehri',
+    email: 'hassan.alshehri@university.edu',
+    semester: 2,
+    department: 'Department 3',
+    enrolledCourses: 7,
+    evaluated: 1,
+    remaining: 6,
+    role: 'student',
+  },
+  {
+    id: 20140,
+    name: 'Sara Al-Mansoori',
+    email: 'sara.almansoori@university.edu',
+    semester: 4,
+    department: 'Department 1',
+    enrolledCourses: 4,
+    evaluated: 3,
+    remaining: 1,
+    role: 'student',
+  },
+  {
+    id: 20141,
+    name: 'Farah Ben Abdallah',
+    email: 'farah.benabdallah@university.edu',
+    semester: 4,
+    department: 'Department 1',
+    enrolledCourses: 6,
+    evaluated: 3,
+    remaining: 3,
+    role: 'student',
+  },
+  {
+    id: 20142,
+    name: 'Khalid Bilal',
+    email: 'khalid.bilal@university.edu',
+    semester: 4,
+    department: 'Department 1',
+    enrolledCourses: 6,
+    evaluated: 2,
+    remaining: 4,
+    role: 'student',
+  },
+  {
+    id: 20143,
+    name: 'Sami Khalil',
+    email: 'sami.khalil@university.edu',
+    semester: 4,
+    department: 'Department 1',
+    enrolledCourses: 7,
+    evaluated: 3,
+    remaining: 4,
     role: 'student',
   },
 ]);
 
-const cards = ref([
+const studentStatsCards = computed(() => [
   {
     id: 1,
-    title: 'Enrolled Students',
-    value: students.value.length,
+    title: 'Enrolled Courses',
+    value: enrolledCourses.value,
   },
   {
     id: 2,
-    title: 'Completed',
-    value: students.value.length - 1,
+    title: 'Evaluated',
+    value: evaluated.value,
   },
   {
     id: 3,
     title: 'Remaining',
-    value: students.value.length,
+    value: remaining.value,
   },
 ]);
 
@@ -223,12 +296,18 @@ function updateStudentInfo(student) {
     studentId.value = student.id || 'N/A';
     studentSemester.value = student.semester || 'N/A';
     studentDepartment.value = student.department || 'N/A';
+    enrolledCourses.value = student.enrolledCourses || 0;
+    evaluated.value = student.evaluated || 0;
+    remaining.value = student.remaining || 0;
   } else {
     studentName.value = 'No Student Selected';
     studentEmail.value = 'N/A';
     studentId.value = 'N/A';
     studentSemester.value = 'N/A';
     studentDepartment.value = 'N/A';
+    enrolledCourses.value = 0;
+    evaluated.value = 0;
+    remaining.value = 0;
   }
 }
 
