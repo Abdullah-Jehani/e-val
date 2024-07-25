@@ -10,6 +10,8 @@ import SubmitSuccessView from '../views/Student/SubmitSuccessView.vue';
 
 // Admin views
 import AdminDashboardView from '../views/Admin/DashboardView.vue';
+import CoursesView from '../views/Admin/CoursesView.vue';
+
 const routes = [
   {
     // Authenticated Student routes
@@ -39,12 +41,17 @@ const routes = [
   {
     path: '/admin',
     component: AuthenticatedLayout,
-    redirect: '/dashboard',
+    redirect: '/admin/dashboard',
     children: [
       {
         path: 'dashboard',
         name: 'AdminDashboard',
         component: AdminDashboardView,
+      },
+      {
+        path: 'courses',
+        name: 'Courses',
+        component: CoursesView,
       },
     ],
   },

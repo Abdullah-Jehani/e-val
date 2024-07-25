@@ -2,17 +2,23 @@
   <div
     class="px-3 md:p-0 grid gap-y-3 md:gap-y-8 lg:gap-y-6 gap-x-4 md:gap-x-5 grid-cols-4 lg:grid-cols-12"
   >
-    <general-table
-      :objects="courses"
-      :cardTitle="'Courses'"
-      :routeName="'View All Courses'"
-      :route="'/admin/courses'"
-    />
+    <div class="col-span-full my-6 lg:my-2 h-auto">
+      <filters-component />
+    </div>
+    <div class="col-span-full my-6 lg:my-2 h-auto">
+      <general-table
+        :objects="courses"
+        :cardTitle="''"
+        :border="true"
+        class="p-3 bg-offWhite"
+      />
+    </div>
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
+import FiltersComponent from '../../components/Admin/FiltersComponent.vue';
 import GeneralTable from '../../components/Admin/GeneralTable.vue';
 import { useToast } from 'vue-toastification';
 import { useRouter } from 'vue-router';
@@ -20,66 +26,15 @@ import { useRouter } from 'vue-router';
 const toast = useToast();
 const router = useRouter();
 
-const courses = ref([
-  {
-    id: 1,
-    code: '12345',
-    name: 'Introduction to Programming',
-    Instructor: 'Sami Khaled',
-  },
-  {
-    id: 2,
-    code: '67890',
-    name: 'Data Structures and Algorithms',
-    Instructor: 'Faraj Ahmed',
-  },
-  {
-    id: 3,
-    code: '12345',
-    name: 'Introduction to Programming',
-    Instructor: 'Sami Khaled',
-  },
-  {
-    id: 4,
-    code: '67890',
-    name: 'Data Structures and Algorithms',
-    Instructor: 'Faraj Ahmed',
-  },
-  {
-    id: 5,
-    code: '12345',
-    name: 'Introduction to Programming',
-    Instructor: 'Sami Khaled',
-  },
-  {
-    id: 6,
-    code: '67890',
-    name: 'Data Structures and Algorithms',
-    Instructor: 'Faraj Ahmed',
-  },
-  {
-    id: 7,
-    code: '12345',
-    name: 'Introduction to Programming',
-    Instructor: 'Sami Khaled',
-  },
-  {
-    id: 8,
-    code: '67890',
-    name: 'Data Structures and Algorithms',
-    Instructor: 'Faraj Ahmed',
-  },
-  {
-    id: 9,
-    code: '12345',
-    name: 'Introduction to Programming',
-    Instructor: 'Sami Khaled',
-  },
-  {
-    id: 10,
-    code: '67890',
-    name: 'Data Structures and Algorithms',
-    Instructor: 'Faraj Ahmed',
-  },
-]);
+const courses = [
+  { id: '12345', name: 'Introduction to Programming' },
+  { id: '67890', name: 'Data Structures and Algorithms' },
+  { id: '54321', name: 'Web Development Fundamentals' },
+  { id: '98765', name: 'Mobile App Development' },
+  { id: '43210', name: 'Database Management Systems' },
+  { id: '98765', name: 'Mobile App Development' },
+  { id: '77542', name: 'Operating Systems' },
+  { id: '98765', name: 'Visual Programming' },
+  { id: '76544', name: 'Software Design' },
+];
 </script>

@@ -73,11 +73,11 @@ const props = defineProps({
   },
   route: {
     type: String,
-    required: true,
+    required: false,
   },
   routeName: {
     type: String,
-    required: true,
+    required: false,
   },
   border: {
     type: Boolean,
