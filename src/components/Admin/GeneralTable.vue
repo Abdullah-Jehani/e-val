@@ -1,13 +1,15 @@
 <template>
-  <div class="overflow-x-auto rounded-md border-lightPurple">
+  <div class="overflow-x-auto rounded-md border border-lightPurple">
+    <!-- Card header -->
     <div
+      v-if="cardTitle !== ''"
       class="flex flex-col justify-between items-center p-4 pb-0 bg-offWhite"
     >
       <div class="w-full flex justify-between items-center p-2 pb-4">
         <h1 class="text-2xl font-bold text-mainBlack">{{ cardTitle }}</h1>
         <router-link
           :to="route"
-          class="text-darkPurple font-semibold text-primary-600 hover:text-mainPurple transition-all duration-200 ease-in-out"
+          class="text-darkPurple font-semibold hover:text-mainPurple transition-all duration-200 ease-in-out"
         >
           <p class="hidden md:block">{{ routeName }}</p>
           <svg
@@ -31,11 +33,24 @@
     <div
       class="w-full overflow-y-auto overflow-x-clip h-64 lg:p-2 py-2 bg-offWhite font-medium"
     >
+      <div
+        v-if="objects.length === 0"
+        class="w-full h-full flex justify-center py-4 italic text-mainPurple transform pt-24"
+      >
+        No data available
+      </div>
       <table class="table-auto text-left text-mainBlack">
         <tbody class="bg-offWhite truncate">
-          <tr v-for="(object, index) in objects" :key="index" class="truncate">
+          <tr
+            v-for="(object, index) in objects"
+            :key="index"
+            class="truncate"
+            :class="{
+              'border-b border-lightPurple': border,
+            }"
+          >
             <td class="px-5 py-3 text-left md:table-cell">{{ object.id }}</td>
-            <td class="lg:px-5 px-2 py-3 truncate">{{ object.name }}</td>
+            <td class="w-full lg:px-5 px-2 py-3 truncate">{{ object.name }}</td>
           </tr>
         </tbody>
       </table>
@@ -46,9 +61,6 @@
 <script setup>
 import { ref } from 'vue';
 import { defineProps } from 'vue';
-
-const objectId = ref('');
-const objectName = ref('');
 
 const props = defineProps({
   objects: {
@@ -66,6 +78,10 @@ const props = defineProps({
   routeName: {
     type: String,
     required: true,
+  },
+  border: {
+    type: Boolean,
+    default: false,
   },
 });
 </script>

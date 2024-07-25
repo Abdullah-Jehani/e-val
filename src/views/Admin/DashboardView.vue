@@ -96,7 +96,7 @@
     </div>
 
     <div class="col-span-full lg:grid grid-cols-12 gap-4">
-      <div class="col-span-6 my-8 lg:my-5">
+      <div class="col-span-6 my-6 lg:my-4">
         <general-table
           :objects="courses"
           :cardTitle="'Courses'"
@@ -104,7 +104,7 @@
           :route="'/admin/courses'"
         />
       </div>
-      <div class="col-span-6 my-8 lg:my-5">
+      <div class="col-span-6 my-6 lg:my-4">
         <general-table
           :objects="students"
           :cardTitle="'Students'"
@@ -113,12 +113,21 @@
         />
       </div>
     </div>
+    <div class="col-span-full my-6 lg:my-2 h-auto">
+      <request-table
+        :objects="requests"
+        :cardTitle="'Student Requests'"
+        :tagName="`${requests.length} Requests`"
+      />
+    </div>
   </div>
 </template>
 
 <script setup>
+import { ref } from 'vue';
 import StatsCard from '../../components/Student/StatsCard.vue';
 import GeneralTable from '../../components/Admin/GeneralTable.vue';
+import RequestTable from '../../components/Admin/RequestsTable.vue';
 
 const students = [
   {
@@ -162,6 +171,44 @@ const courses = [
   { id: '98765', name: 'Mobile App Development' },
   { id: '77542', name: 'Mobile App Development' },
 ];
+
+const requests = ref([
+  {
+    id: 12245,
+    name: 'Sami Khaled',
+    email: 'XwE8j@example.com',
+    role: 'student',
+    request: '',
+  },
+  {
+    id: 12246,
+    name: 'Ahmed Khaled',
+    email: 'XwE8j@example.com',
+    role: 'student',
+    request: '',
+  },
+  {
+    id: 12247,
+    name: 'Ahmed Khaled',
+    email: 'XwE8j@example.com',
+    role: 'student',
+    request: '',
+  },
+  {
+    id: 12248,
+    name: 'Ahmed Khaled',
+    email: 'XwE8j@example.com',
+    role: 'student',
+    request: '',
+  },
+  {
+    id: 12249,
+    name: 'Ahmed Khaled',
+    email: 'XwE8j@example.com',
+    role: 'student',
+    request: '',
+  },
+]);
 
 const cards = [
   {
