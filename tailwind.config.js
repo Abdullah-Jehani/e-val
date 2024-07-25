@@ -11,7 +11,7 @@ module.exports = {
         mainPurple: '#7F7EFF',
         darkPurple: '#6464FF',
         lightPurple: '#8C9BFF',
-        mainBlack: '#231F20',
+        mainBlack: '#1B0826',
         mainWhite: '#EBF3FF',
         offWhite: '#D7E1FF',
         darkGray: '#2D2D2D',

@@ -38,8 +38,21 @@
               ></path>
             </svg>
           </button>
-          <a href="/dashboard" class="flex items-center justify-between ml-1">
+          <a
+            href="/dashboard"
+            class="hidden lg:flex items-center justify-between ml-1"
+          >
             <img src="/e-val-logo/main-logo2.svg" class="mr-3 h-8" alt="Logo" />
+          </a>
+          <a
+            href="/dashboard"
+            class="lg:hidden flex items-center justify-between ml-1"
+          >
+            <img
+              src="/e-val-logo/logo-icon3.svg"
+              class="mr-3 h-10"
+              alt="Logo"
+            />
           </a>
         </div>
         <div class="flex items-center lg:order-2">
