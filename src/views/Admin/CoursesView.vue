@@ -30,7 +30,7 @@
         :thirdValue="courseCode"
         :fourthLabel="'Credits'"
         :fourthValue="courseCredits"
-        :cards="cards"
+        :cards="courseStatsCards"
         @card-selected="openModal"
       />
     </div>
@@ -52,72 +52,93 @@ import ClickableTable from '../../components/Admin/ClickableTable.vue';
 import ObjectDetails from '../../components/Admin/ObjectDetails.vue';
 import Modal from '../../components/Admin/Modal.vue';
 
+// Reactive variable for selected department and search query
 const selectedDepartment = ref('');
 const searchQuery = ref('');
+
+// Reactive variable for the selected student and modal visibility
 const selectedCourse = ref(null);
 const showModal = ref(false);
 
+// Reactive variables for course details
 const courseName = ref('No Course Selected');
 const instructorName = ref('N/A');
 const courseCode = ref('N/A');
 const courseCredits = ref('N/A');
+const courseEnrolledStudents = ref('N/A');
+const courseEvaluated = ref('N/A');
+const courseRemaining = ref('N/A');
 
 const courses = ref([
   {
     id: '12325',
     department: 'Department 1',
     name: 'Introduction to Programming',
-    instructor: 'Instructor A',
+    instructor: 'Al-Khwarizmi',
     courseCode: 'CS101',
     courseCredits: '3',
+    enrolledStudents: 40,
+    evaluated: 30,
   },
   {
     id: '61890',
     department: 'Department 2',
     name: 'Data Structures and Algorithms',
-    instructor: 'Instructor B',
+    instructor: 'Ibn al-Haytham',
     courseCode: 'CS202',
     courseCredits: '4',
+    enrolledStudents: 35,
+    evaluated: 28,
   },
   {
     id: '12341',
     department: 'Department 3',
     name: 'Web Development',
-    instructor: 'Instructor C',
+    instructor: 'Al-Farabi',
     courseCode: 'CS303',
     courseCredits: '3',
+    enrolledStudents: 45,
+    evaluated: 40,
   },
   {
     id: '67090',
     department: 'Department 2',
     name: 'Database Management',
-    instructor: 'Instructor D',
+    instructor: 'Ibn Sina',
     courseCode: 'CS404',
     courseCredits: '4',
+    enrolledStudents: 50,
+    evaluated: 45,
   },
   {
     id: '19345',
     department: 'Department 1',
     name: 'Software Engineering',
-    instructor: 'Instructor E',
+    instructor: 'Al-Biruni',
     courseCode: 'CS505',
     courseCredits: '3',
+    enrolledStudents: 30,
+    evaluated: 25,
   },
   {
     id: '60090',
     department: 'Department 3',
     name: 'Artificial Intelligence',
-    instructor: 'Instructor F',
+    instructor: 'Jabir ibn Hayyan',
     courseCode: 'CS606',
     courseCredits: '4',
+    enrolledStudents: 55,
+    evaluated: 50,
   },
   {
     id: '00345',
     department: 'Department 2',
     name: 'Operating Systems',
-    instructor: 'Instructor G',
+    instructor: 'Ibn Rushd',
     courseCode: 'CS707',
     courseCredits: '3',
+    enrolledStudents: 38,
+    evaluated: 32,
   },
 ]);
 
@@ -136,39 +157,39 @@ const students = ref([
   },
   {
     id: 12247,
-    name: 'Ahmed Khaled',
-    email: 'XwE8j@example.com',
+    name: 'Fatima Khaled',
+    email: 'YzW9k@example.com',
     role: 'student',
   },
   {
     id: 12248,
-    name: 'Ahmed Khaled',
-    email: 'XwE8j@example.com',
+    name: 'Mona Khaled',
+    email: 'A1b2c@example.com',
     role: 'student',
   },
   {
     id: 12249,
-    name: 'Ahmed Khaled',
-    email: 'XwE8j@example.com',
+    name: 'Hassan Khaled',
+    email: 'B3c4d@example.com',
     role: 'student',
   },
 ]);
 
-const cards = ref([
+const courseStatsCards = computed(() => [
   {
     id: 1,
     title: 'Enrolled Students',
-    value: students.value.length,
+    value: courseEnrolledStudents.value,
   },
   {
     id: 2,
-    title: 'Completed',
-    value: students.value.length - 1,
+    title: 'Evaluated',
+    value: courseEvaluated.value,
   },
   {
     id: 3,
     title: 'Remaining',
-    value: students.value.length,
+    value: courseRemaining.value,
   },
 ]);
 
@@ -202,15 +223,45 @@ function updateCourseInfo(course) {
     instructorName.value = course.instructor || 'N/A';
     courseCode.value = course.courseCode || 'N/A';
     courseCredits.value = course.courseCredits || 'N/A';
+    courseEnrolledStudents.value = course.enrolledStudents || 'N/A';
+    courseEvaluated.value = course.evaluated || 'N/A';
+    courseRemaining.value = course.remaining || 'N/A';
   } else {
     courseName.value = 'No Course Selected';
     instructorName.value = 'N/A';
     courseCode.value = 'N/A';
     courseCredits.value = 'N/A';
+    courseEnrolledStudents.value = 'N/A';
+    courseEvaluated.value = 'N/A';
+    courseRemaining.value = 'N/A';
   }
 }
 
 const openModal = () => {
   showModal.value = true;
 };
+
+const cards = computed(() => {
+  const enrolled = selectedCourse.value.enrolledStudents || 0;
+  const evaluated = selectedCourse.value.evaluated || 0;
+  const remaining = selectedCourse.value.remaining || 0;
+
+  return [
+    {
+      id: 1,
+      title: 'Enrolled Students',
+      value: enrolled,
+    },
+    {
+      id: 2,
+      title: 'Evaluated',
+      value: evaluated,
+    },
+    {
+      id: 3,
+      title: 'Remaining',
+      value: remaining,
+    },
+  ];
+});
 </script>

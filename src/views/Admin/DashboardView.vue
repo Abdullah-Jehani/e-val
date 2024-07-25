@@ -223,12 +223,12 @@ const cards = [
   },
   {
     id: 2,
-    title: 'Completed',
+    title: 'Evaluated',
     value: courses.length - 5,
   },
   {
     id: 3,
-    title: 'Total Student',
+    title: 'Total Students',
     value: students.length,
   },
   {
