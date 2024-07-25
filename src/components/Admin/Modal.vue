@@ -2,9 +2,9 @@
   <div
     class="fixed inset-0 bg-black backdrop-blur-sm bg-opacity-80 flex justify-center items-center z-50 transition duration-200 ease-in-out"
   >
-    <div class="bg-offWhite rounded-lg shadow-lg p-6 md:w-1/2 lg:w-1/3 w-5/6">
+    <div class="bg-offWhite rounded-lg shadow-lg p-6 md:w-1/2 lg:w-2/5 w-7/8">
       <div class="flex justify-between items-center mb-4">
-        <h2 class="text-xl font-bold">Enrolled Students</h2>
+        <h2 class="text-xl font-bold">{{ title }}</h2>
         <button
           @click="$emit('close')"
           class="text-gray-500 hover:text-gray-800"
@@ -26,26 +26,12 @@
         </button>
       </div>
       <div class="overflow-y-auto h-64">
-        <table class="w-full table-auto text-left">
-          <thead>
-            <tr>
-              <th class="px-4 py-2">Select</th>
-              <th class="px-4 py-2">Course Name</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="course in courses" :key="course.id">
-              <td class="px-4 py-2">
-                <input
-                  type="checkbox"
-                  v-model="selectedCourses"
-                  :value="course.id"
-                />
-              </td>
-              <td class="px-4 py-2">{{ course.name }}</td>
-            </tr>
-          </tbody>
-        </table>
+        <general-table
+          :objects="objects"
+          cardTitle=""
+          v-model:selection="selectedCourses"
+          :border="border"
+        />
       </div>
       <div class="w-full flex justify-center mt-4">
         <button
@@ -61,11 +47,24 @@
 
 <script setup>
 import { ref, watch } from 'vue';
+import { defineEmits } from 'vue';
+
+import GeneralTable from '../../components/Admin/GeneralTable.vue';
+
+const emit = defineEmits(['close']);
 
 const props = defineProps({
-  object: {
+  title: {
+    type: String,
+    required: true,
+  },
+  objects: {
     type: Array,
     required: true,
+  },
+  border: {
+    type: Boolean,
+    default: true,
   },
 });
 
@@ -73,7 +72,7 @@ const selectedCourses = ref([]);
 
 const exportCourses = () => {
   console.log('Selected Courses:', selectedCourses.value);
-  // Add your export logic here
+  // export logic here
 };
 
 watch(selectedCourses, (newVal) => {
@@ -81,11 +80,4 @@ watch(selectedCourses, (newVal) => {
 });
 </script>
 
-<style scoped>
-.bg-mainWhite {
-  background-color: #ffffff;
-}
-.bg-mainPurple {
-  background-color: #7d4eff;
-}
-</style>
+<style scoped></style>

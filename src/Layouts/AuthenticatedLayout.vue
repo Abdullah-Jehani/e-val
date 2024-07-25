@@ -58,7 +58,7 @@
         <div class="flex items-center md:order-2">
           <button
             type="button"
-            class="flex mx-3 rounded-full md:mr-0 items-center justify-center text-mainBlack gap-2 font-semibold p-2.5 text-lg"
+            class="flex mx-3 rounded-full md:mr-0 items-center justify-center text-mainBlack gap-2 font-medium p-2.5 text-lg"
             id="user-menu-button"
             aria-expanded="false"
             data-dropdown-toggle="dropdown"
@@ -69,7 +69,7 @@
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
-              stroke-width="2"
+              stroke-width="1"
               stroke="currentColor"
               class="size-6 w-8 h-8"
             >

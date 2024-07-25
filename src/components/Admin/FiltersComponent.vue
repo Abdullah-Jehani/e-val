@@ -2,7 +2,9 @@
   <div
     class="flex h-24 flex-col md:flex-row justify-between items-end font-semibold text-lg"
   >
-    <div class="w-full h-full flex-col flex justify-between items-start gap-2">
+    <div
+      class="w-full h-full flex-col gap-y-4 flex justify-between items-start gap-2"
+    >
       <div
         class="flex gap-2 items-start w-full h-full md:w-auto justify-between"
       >
@@ -13,6 +15,7 @@
         >
           <input
             v-model="searchQuery"
+            @input="updateSearchQuery"
             type="text"
             placeholder="Search"
             class="md:hidden bg-transparent text-mainBlack placeholder:text-slate-500 placeholder:font-normal font-medium min-w-1/2 w-full border-none focus:outline-none focus:ring-0"
@@ -24,7 +27,6 @@
               viewBox="0 0 24 24"
               stroke-width="2"
               stroke="currentColor"
-              className="size-6"
               class="w-5 h-5"
             >
               <path
@@ -46,6 +48,7 @@
           </button>
           <select
             v-model="selectedDepartment"
+            @change="updateSelectedDepartment"
             class="h-full bg-brightGreen cursor-pointer text-mainOil px-4 py-2 rounded-[4px] border-none"
           >
             <option value="" disabled>All Department</option>
@@ -60,7 +63,7 @@
         </div>
         <button
           class="md:hidden flex place-self-end h-12 bg-mainPurple text-white px-4 py-2 rounded-[4px] hover:bg-darkPurple transition"
-          @click="openExportModal(courses)"
+          @click="openExportModal"
         >
           Export
         </button>
@@ -71,7 +74,7 @@
     >
       <button
         class="hidden md:block bg-mainPurple text-white px-4 py-2 rounded-[4px] hover:bg-darkPurple transition"
-        @click="openExportModal(courses)"
+        @click="openExportModal"
       >
         Export
       </button>
@@ -81,6 +84,7 @@
       >
         <input
           v-model="searchQuery"
+          @input="updateSearchQuery"
           type="text"
           placeholder="Search"
           class="hidden md:block bg-transparent text-mainBlack placeholder:text-slate-500 placeholder:font-normal font-medium min-w-1/2 w-full border-none focus:outline-none focus:ring-0"
@@ -92,7 +96,6 @@
             viewBox="0 0 24 24"
             stroke-width="2"
             stroke="currentColor"
-            className="size-6"
             class="w-5 h-5"
           >
             <path
@@ -104,66 +107,61 @@
         </div>
       </div>
     </div>
-    <Modal v-if="showModal" @close="showModal = false">
-      <GeneralTable
-        :items="filteredCourses"
-        v-model:selection="selectedCourses"
-      />
-      <div class="flex justify-end p-4">
-        <button
-          class="bg-mainPurple text-white px-4 py-2 rounded-[4px] hover:bg-darkPurple transition"
-          @click="exportCourses"
-        >
-          Export
-        </button>
-      </div>
+    <Modal
+      v-if="showModal"
+      @close="showModal = false"
+      :title="modalTitle"
+      :objects="objects"
+    >
     </Modal>
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, watch, defineProps, defineEmits } from 'vue';
 import Modal from './Modal.vue';
-import GeneralTable from './GeneralTable.vue';
 
+const emit = defineEmits(['update:department', 'update:search']);
 const title = ref('Courses');
 const departments = ref(['Department 1', 'Department 2', 'Department 3']);
 const selectedDepartment = ref('');
 const searchQuery = ref('');
 const showModal = ref(false);
-const selectedCourses = ref([]);
 
-const courses = ref([
-  { id: 1, name: 'Course 1', department: 'Department 1' },
-  { id: 2, name: 'Course 2', department: 'Department 2' },
-  { id: 3, name: 'Course 3', department: 'Department 3' },
-  // add more courses as needed
-]);
-
-const filteredCourses = computed(() => {
-  return courses.value.filter(
-    (course) =>
-      (!selectedDepartment.value ||
-        course.department === selectedDepartment.value) &&
-      (!searchQuery.value ||
-        course.name.toLowerCase().includes(searchQuery.value.toLowerCase()))
-  );
+const props = defineProps({
+  objects: {
+    type: Array,
+    required: true,
+  },
+  modalTitle: {
+    type: String,
+    required: true,
+  },
 });
-
 const selectAllDepartments = () => {
   selectedDepartment.value = '';
+  emit('update:department', selectedDepartment.value);
 };
 
-const openExportModal = (objects) => {
-  selectedCourses.value = objects.map((course) => course.id);
+const openExportModal = () => {
   showModal.value = true;
 };
 
-const exportCourses = () => {
-  console.log('Exporting courses:', selectedCourses.value);
-  // Implement export functionality here
-  showModal.value = false;
+const updateSelectedDepartment = () => {
+  emit('update:department', selectedDepartment.value);
 };
+
+const updateSearchQuery = () => {
+  emit('update:search', searchQuery.value);
+};
+
+watch(selectedDepartment, (newVal) => {
+  emit('update:department', newVal);
+});
+
+watch(searchQuery, (newVal) => {
+  emit('update:search', newVal);
+});
 </script>
 
 <style scoped>
