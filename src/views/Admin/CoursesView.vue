@@ -22,10 +22,14 @@
     </div>
     <div class="col-span-full lg:col-span-full w-full md:pb-16">
       <object-details
-        :courseName="courseName"
-        :instructorName="instructorName"
-        :courseCode="courseCode"
-        :courseCredits="courseCredits"
+        :mainLabel="'Course'"
+        :mainValue="courseName"
+        :secondLabel="'Instructor'"
+        :secondValue="instructorName"
+        :thirdLabel="' Code'"
+        :thirdValue="courseCode"
+        :fourthLabel="'Credits'"
+        :fourthValue="courseCredits"
         :cards="cards"
         @card-selected="openModal"
       />
