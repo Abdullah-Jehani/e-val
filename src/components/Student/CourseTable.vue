@@ -13,15 +13,23 @@
           <th class="p-5 text-center">Evaluated</th>
         </tr>
       </thead>
-      <tbody class="bg-white">
-        <tr v-for="(course, index) in courses" :key="index" class="border-b">
+      <tbody class="bg-white bg-opacity-50">
+        <tr
+          v-for="(course, index) in courses"
+          :key="index"
+          class="border-b border-lightPurple"
+          :class="{
+            'border-b-0': index === courses.length - 1,
+            'border-t border-lightPurple': index === 0,
+          }"
+        >
           <td class="hidden p-5 text-left md:table-cell">{{ course.code }}</td>
           <td class="p-5">{{ course.name }}</td>
           <td class="p-5 text-center">
             <input
               type="checkbox"
               v-model="course.evaluated"
-              class="form-checkbox h-5 w-5 text-darkGreen focus:ring-0 rounded-sm"
+              class="form-checkbox bg-transparent h-5 w-5 text-darkGreen focus:ring-0 rounded-sm"
               disabled
             />
           </td>
