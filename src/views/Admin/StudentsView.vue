@@ -6,30 +6,30 @@
       <filters-component
         @update:department="updateDepartment"
         @update:search="updateSearch"
-        :objects="courses"
-        :modalTitle="'Courses'"
+        :objects="students"
+        :modalTitle="''"
       />
     </div>
     <div
       class="col-span-full my-4 md:my-0 h-fit rounded-md bg-offWhite p-1 border border-lightPurple"
     >
       <clickable-table
-        :objects="filteredCourses"
+        :objects="filteredStudents"
         :border="true"
         class="p-3 bg-offWhite"
-        @object-selected="handleCourseSelected"
+        @object-selected="handleStudentSelected"
       />
     </div>
     <div class="col-span-full lg:col-span-full w-full md:pb-16">
       <object-details
-        :mainLabel="'Course'"
-        :mainValue="courseName"
-        :secondLabel="'Instructor'"
-        :secondValue="instructorName"
-        :thirdLabel="' Code'"
-        :thirdValue="courseCode"
-        :fourthLabel="'Credits'"
-        :fourthValue="courseCredits"
+        :mainLabel="'Name'"
+        :mainValue="studentName"
+        :secondLabel="'Email'"
+        :secondValue="studentEmail"
+        :thirdLabel="'Student ID'"
+        :thirdValue="studentId"
+        :fourthLabel="'Semester'"
+        :fourthValue="studentSemester"
         :cards="cards"
         @card-selected="openModal"
       />
@@ -38,8 +38,8 @@
     <Modal
       v-if="showModal"
       @close="showModal = false"
-      :title="'Enrolled Students'"
-      :objects="students"
+      :title="'Enrolled Courses'"
+      :objects="courses"
     >
     </Modal>
   </div>
@@ -52,15 +52,20 @@ import ClickableTable from '../../components/Admin/ClickableTable.vue';
 import ObjectDetails from '../../components/Admin/ObjectDetails.vue';
 import Modal from '../../components/Admin/Modal.vue';
 
+// Reactive variable for selected department and search query
 const selectedDepartment = ref('');
 const searchQuery = ref('');
-const selectedCourse = ref(null);
+
+// Reactive variable for the selected student and modal visibility
+const selectedStudent = ref(null);
 const showModal = ref(false);
 
-const courseName = ref('No Course Selected');
-const instructorName = ref('N/A');
-const courseCode = ref('N/A');
-const courseCredits = ref('N/A');
+// Reactive variables for student details
+const studentName = ref('No Student Selected');
+const studentEmail = ref('N/A');
+const studentId = ref('N/A');
+const studentSemester = ref('N/A');
+const studentDepartment = ref('N/A');
 
 const courses = ref([
   {
@@ -123,33 +128,43 @@ const courses = ref([
 
 const students = ref([
   {
-    id: 12245,
-    name: 'Sami Khaled',
-    email: 'XwE8j@example.com',
+    id: 20134,
+    name: 'Omar Al-Farouq',
+    email: 'omar.alfarouq@university.edu',
+    semester: 3,
+    department: 'Department 1',
     role: 'student',
   },
   {
-    id: 12246,
-    name: 'Ahmed Khaled',
-    email: 'XwE8j@example.com',
+    id: 20135,
+    name: 'Layla Al-Hassan',
+    email: 'layla.alhassan@university.edu',
+    semester: 2,
+    department: 'Department 2',
     role: 'student',
   },
   {
-    id: 12247,
-    name: 'Ahmed Khaled',
-    email: 'XwE8j@example.com',
+    id: 20136,
+    name: 'Khalid Al-Sabah',
+    email: 'khalid.alsabah@university.edu',
+    semester: 4,
+    department: 'Department 3',
     role: 'student',
   },
   {
-    id: 12248,
-    name: 'Ahmed Khaled',
-    email: 'XwE8j@example.com',
+    id: 20137,
+    name: 'Aisha Al-Mansoori',
+    email: 'aisha.almansoori@university.edu',
+    semester: 1,
+    department: 'Department 1',
     role: 'student',
   },
   {
-    id: 12249,
-    name: 'Ahmed Khaled',
-    email: 'XwE8j@example.com',
+    id: 20138,
+    name: 'Faisal Al-Nasser',
+    email: 'faisal.elnasser@university.edu',
+    semester: 3,
+    department: 'Department 2',
     role: 'student',
   },
 ]);
@@ -172,44 +187,52 @@ const cards = ref([
   },
 ]);
 
-const filteredCourses = computed(() => {
-  return courses.value.filter(
-    (course) =>
+// Computed property to filter students based on selected department and search query
+const filteredStudents = computed(() => {
+  return students.value.filter(
+    (student) =>
       (!selectedDepartment.value ||
-        course.department === selectedDepartment.value) &&
+        student.department === selectedDepartment.value) &&
       (!searchQuery.value ||
-        course.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-        course.id.toLowerCase().includes(searchQuery.value.toLowerCase()))
+        student.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+        student.id.toString().includes(searchQuery.value))
   );
 });
 
+// Function to update the selected department
 const updateDepartment = (department) => {
   selectedDepartment.value = department;
 };
 
+// Function to update the search query
 const updateSearch = (query) => {
   searchQuery.value = query;
 };
 
-const handleCourseSelected = (course) => {
-  selectedCourse.value = course;
-  updateCourseInfo(course);
+// Function to handle student selection
+const handleStudentSelected = (student) => {
+  selectedStudent.value = student;
+  updateStudentInfo(student);
 };
 
-function updateCourseInfo(course) {
-  if (course) {
-    courseName.value = course.name || 'No Course Selected';
-    instructorName.value = course.instructor || 'N/A';
-    courseCode.value = course.courseCode || 'N/A';
-    courseCredits.value = course.courseCredits || 'N/A';
+// Function to update student info based on selected student
+function updateStudentInfo(student) {
+  if (student) {
+    studentName.value = student.name || 'No Student Selected';
+    studentEmail.value = student.email || 'N/A';
+    studentId.value = student.id || 'N/A';
+    studentSemester.value = student.semester || 'N/A';
+    studentDepartment.value = student.department || 'N/A';
   } else {
-    courseName.value = 'No Course Selected';
-    instructorName.value = 'N/A';
-    courseCode.value = 'N/A';
-    courseCredits.value = 'N/A';
+    studentName.value = 'No Student Selected';
+    studentEmail.value = 'N/A';
+    studentId.value = 'N/A';
+    studentSemester.value = 'N/A';
+    studentDepartment.value = 'N/A';
   }
 }
 
+// Function to open the modal
 const openModal = () => {
   showModal.value = true;
 };
