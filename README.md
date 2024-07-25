@@ -19,3 +19,11 @@ To install it, run:
 ```sh
 npm install flowbite
 ```
+
+### Install tailwind-scrollbar
+
+To install it, run:
+
+```sh
+npm install --save-dev tailwind-scrollbar
+```

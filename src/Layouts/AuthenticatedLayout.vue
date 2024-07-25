@@ -1,7 +1,7 @@
 <template>
   <div class="antialiased bg-mainWhite">
     <nav
-      class="bg-white border-b border-mainPurple lg:px-8 px-2 py-5 max-h-24 fixed left-0 right-0 top-0 z-50"
+      class="bg-white border-b border-mainPurple md:px-8 px-2 py-5 max-h-24 fixed left-0 right-0 top-0 z-50"
     >
       <div class="flex flex-wrap justify-between items-center">
         <div class="flex justify-start items-center">
@@ -40,13 +40,13 @@
           </button>
           <a
             href="/dashboard"
-            class="hidden lg:flex items-center justify-between ml-1"
+            class="hidden md:flex items-center justify-between ml-1"
           >
             <img src="/e-val-logo/main-logo2.svg" class="mr-3 h-8" alt="Logo" />
           </a>
           <a
             href="/dashboard"
-            class="lg:hidden flex items-center justify-between ml-1"
+            class="md:hidden flex items-center justify-between ml-1"
           >
             <img
               src="/e-val-logo/logo-icon3.svg"
@@ -55,7 +55,7 @@
             />
           </a>
         </div>
-        <div class="flex items-center lg:order-2">
+        <div class="flex items-center md:order-2">
           <button
             type="button"
             class="flex mx-3 rounded-full md:mr-0 items-center justify-center text-mainBlack gap-2 font-semibold p-2.5 text-lg"
@@ -107,7 +107,7 @@
 
     <!-- Sidebar -->
     <aside
-      class="fixed top-0 left-0 z-40 w-56 h-screen pt-16 transition-transform -translate-x-full bg-white border-r border-mainPurple md:translate-x-0"
+      class="fixed top-0 left-0 z-40 lg:w-56 md:40 h-screen pt-16 transition-transform -translate-x-full bg-white border-r border-mainPurple md:translate-x-0"
       aria-label="Sidenav"
       id="drawer-navigation"
     >
@@ -240,30 +240,32 @@
       </div>
     </aside>
 
-    <main class="lg:px-16 px-1 md:ml-56 min-h-screen h-auto pt-28 pb-8">
+    <main
+      class="lg:px-16 md:px-12 px-1 md:ml-40 lg:ml-56 min-h-[calc(100vh-64px)] h-auto pt-28 pb-8"
+    >
       <router-view></router-view>
     </main>
 
     <footer
-      class="lg:px-16 px-4 md:ml-56 py-4 grid grid-cols-2 lg:grid-cols-3 gap-8 mt-4 justify-center items-end lg:items-center text-slate-400"
+      class="md:px-16 px-4 md:ml-40 lg:ml-56 py-4 grid grid-cols-2 md:grid-cols-3 gap-8 mt-4 justify-center items-end md:items-center text-slate-400 h-20"
     >
-      <div class="text-left lg:text-center lg:col-start-2">
+      <div class="text-left md:text-center md:col-start-2">
         <p>e-val &copy; {{ new Date().getFullYear() }}</p>
       </div>
 
       <div
-        class="flex lg:flex-row flex-col items-end justify-end lg:items-center lg:gap-4 gap-2"
+        class="flex md:flex-row flex-col items-end justify-end md:items-center md:gap-4 gap-2"
       >
         <p>Developed by</p>
         <a
           href="https://www.instagram.com/hashed.ly/"
           target="_blank"
-          class="lg:h-8 h-6"
+          class="md:h-8 h-6"
         >
           <img
             src="/icons/hashed-logo.png"
             alt="Hashed.ly Logo"
-            class="lg:h-8 h-6 object-scale-down"
+            class="md:h-8 h-6 object-scale-down"
           />
         </a>
       </div>

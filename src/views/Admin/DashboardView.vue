@@ -96,24 +96,30 @@
     </div>
 
     <div class="col-span-full lg:grid grid-cols-12 gap-4">
-      <div class="col-span-6 my-6 lg:my-4">
+      <div
+        class="col-span-6 my-6 lg:my-4 p-4 bg-offWhite border border-lightPurple rounded-md"
+      >
         <general-table
           :objects="courses"
           :cardTitle="'Courses'"
-          :routeName="'View All Courses'"
+          :routeName="`View Courses (${courses.length})`"
           :route="'/admin/courses'"
         />
       </div>
-      <div class="col-span-6 my-6 lg:my-4">
+      <div
+        class="col-span-6 my-6 lg:my-4 p-4 bg-offWhite border border-lightPurple rounded-md"
+      >
         <general-table
           :objects="students"
           :cardTitle="'Students'"
-          :routeName="'View All Students'"
+          :routeName="`View Students (${students.length})`"
           :route="'/admin/students'"
         />
       </div>
     </div>
-    <div class="col-span-full my-6 lg:my-2 h-auto">
+    <div
+      class="col-span-full my-6 lg:my-2 p-4 border border-lightPurple rounded-md"
+    >
       <request-table
         :objects="requests"
         :cardTitle="'Student Requests'"
@@ -214,22 +220,22 @@ const cards = [
   {
     id: 1,
     title: 'Total Courses',
-    value: '44',
+    value: courses.length,
   },
   {
     id: 2,
     title: 'Completed',
-    value: '31',
+    value: courses.length - 5,
   },
   {
     id: 3,
     title: 'Total Student',
-    value: '402',
+    value: students.length,
   },
   {
     id: 4,
     title: 'Remaining',
-    value: '134',
+    value: students.length - 2,
   },
 ];
 </script>

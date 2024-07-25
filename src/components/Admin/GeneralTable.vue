@@ -1,9 +1,9 @@
 <template>
-  <div class="overflow-x-auto rounded-md border border-lightPurple">
+  <div class="overflow-x-auto">
     <!-- Card header -->
     <div
       v-if="cardTitle !== ''"
-      class="flex flex-col justify-between items-center p-4 pb-0 bg-offWhite"
+      class="flex flex-col justify-between items-center pb-0 bg-offWhite"
     >
       <div class="w-full flex justify-between items-center p-2 pb-4">
         <h1 class="text-2xl font-bold text-mainBlack">{{ cardTitle }}</h1>
@@ -31,7 +31,7 @@
       <div id="divider" class="w-full h-px bg-lightPurple"></div>
     </div>
     <div
-      class="w-full overflow-y-auto overflow-x-clip h-64 lg:p-2 py-2 bg-offWhite font-medium"
+      class="w-full scrollbar-thumb-rounded-full scrollbar-thumb-mainPurple scrollbar-track-transparent scrollbar-thin overflow-y-auto overflow-x-clip h-64 lg:p-2 py-2 bg-offWhite font-medium"
     >
       <div
         v-if="objects.length === 0"
@@ -49,7 +49,7 @@
               'border-b border-lightPurple': border,
             }"
           >
-            <td class="px-5 py-3 text-left md:table-cell">{{ object.id }}</td>
+            <td class="py-3 text-left md:table-cell">{{ object.id }}</td>
             <td class="w-full lg:px-5 px-2 py-3 truncate">{{ object.name }}</td>
           </tr>
         </tbody>

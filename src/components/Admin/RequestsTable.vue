@@ -1,8 +1,6 @@
 <template>
-  <div class="overflow-x-auto rounded-md border border-lightPurple">
-    <div
-      class="flex flex-col justify-between items-center p-4 pb-0 bg-mainWhite"
-    >
+  <div class="overflow-x-auto">
+    <div class="flex flex-col justify-between items-center pb-0 bg-mainWhite">
       <div class="w-full flex justify-between items-center p-2 pb-4">
         <h1 class="text-2xl font-bold text-mainBlack">{{ cardTitle }}</h1>
         <div class="text-darkPurple font-semibold">
@@ -26,7 +24,7 @@
       <div id="divider" class="w-full h-px bg-lightPurple"></div>
     </div>
     <div
-      class="w-full overflow-y-auto overflow-x-clip min-h-24 md:p-2 py-2 bg-mainWhite font-medium"
+      class="w-full scrollbar-thumb-rounded-full scrollbar-thumb-mainPurple scrollbar-track-transparent scrollbar-thin overflow-y-auto overflow-x-clip h-64 lg:p-2 py-2 bg-mainWhite font-medium"
     >
       <div
         v-if="objects.length === 0"
@@ -37,9 +35,9 @@
       <table class="table-auto text-left text-mainBlack">
         <tbody class="bg-mainWhite truncate">
           <tr v-for="(object, index) in objects" :key="index" class="truncate">
-            <td class="px-5 py-3 text-left md:table-cell">{{ object.id }}</td>
+            <td class="pr-5 py-2 text-left md:table-cell">{{ object.id }}</td>
             <td class="w-full md:px-5 px-2 py-3 truncate">{{ object.name }}</td>
-            <td class="md:table-cell md:px-5 px-2 py-3 truncate">
+            <td class="md:table-cell py-2 truncate">
               <div class="flex gap-2">
                 <span
                   @click="acceptItem(index)"

@@ -1,11 +1,11 @@
 <template>
   <div
-    class="px-3 md:p-0 grid gap-y-3 md:gap-y-8 lg:gap-y-6 gap-x-4 md:gap-x-5 grid-cols-4 lg:grid-cols-12"
+    class="px-3 md:p-0 grid gap-y-3 md:gap-y-8 lg:gap-y-6 gap-x-4 md:gap-x-5 grid-cols-4 lg:grid-cols-12 h-fit"
   >
     <div class="col-span-full my-6 lg:my-2 h-auto">
       <filters-component />
     </div>
-    <div class="col-span-full my-6 lg:my-2 h-auto">
+    <div class="col-span-full my-6 lg:my-2 h-fit rounded-md bg-offWhite p-1">
       <general-table
         :objects="courses"
         :cardTitle="''"
