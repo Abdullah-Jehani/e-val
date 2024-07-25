@@ -20,7 +20,7 @@
         @object-selected="handleCourseSelected"
       />
     </div>
-    <div class="col-span-full lg:col-span-full w-full">
+    <div class="col-span-full lg:col-span-full w-full md:pb-16">
       <object-details
         :courseName="courseName"
         :instructorName="instructorName"

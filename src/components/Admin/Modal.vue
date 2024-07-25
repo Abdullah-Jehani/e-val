@@ -2,7 +2,9 @@
   <div
     class="fixed inset-0 bg-black backdrop-blur-sm bg-opacity-80 flex justify-center items-center z-50 transition duration-200 ease-in-out"
   >
-    <div class="bg-offWhite rounded-lg shadow-lg p-6 md:w-1/2 lg:w-3/5 w-5/6">
+    <div
+      class="bg-offWhite rounded-lg shadow-lg p-6 sm:w-2/3 md:w-1/2 min-w-40 lg:w-2/5 w-5/6"
+    >
       <div class="flex justify-between items-center mb-4">
         <h2 v-if="title" class="text-xl font-bold">{{ title }}</h2>
         <button
