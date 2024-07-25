@@ -2,7 +2,7 @@
   <div
     class="w-full flex flex-col md:flex-row justify-between md:items-start items-start my-4 md:mt-6 md:gap-4 border-t md:pt-4 md:pb-12 pb-4 pt-8 border-darkPurple text-mainBlack"
   >
-    <!-- Course Name and Instructor Name -->
+    <!-- Main Details -->
     <div
       class="md:w-3/4 w-full h-24 flex flex-col md:flex-row md:items-start items-start md:mt-8 gap-4"
     >
@@ -12,65 +12,65 @@
         <div
           class="w-full flex justify-start items-start md:items-center gap-2"
         >
-          <!-- Course Name -->
+          <!-- Main Label -->
           <label
             for=""
             class="md:min-w-32 min-w-20 md:text-xl text-md font-normal text-darkGray"
-            >Course:</label
+            >{{ mainLabel }}:</label
           >
-          <p class="md:text-xl text-md font-semibold text-mainBlack truncate">
-            {{ courseName }}
+          <p class="md:text-xl text-lg font-semibold text-mainBlack truncate">
+            {{ mainValue }}
           </p>
         </div>
 
-        <!-- Instructor Name -->
+        <!-- second Label -->
         <div
           class="w-full flex justify-start items-start md:items-center gap-2"
         >
           <label
             for=""
             class="md:min-w-32 min-w-20 md:text-xl text-md font-normal text-darkGray"
-            >Instructor:</label
+            >{{ secondLabel }}:</label
           >
-          <p class="md:text-xl text-md font-semibold text-mainBlack truncate">
-            {{ instructorName }}
+          <p class="md:text-xl text-lg font-semibold text-mainBlack truncate">
+            {{ secondValue }}
           </p>
         </div>
       </div>
     </div>
 
-    <!-- Code and Credits -->
+    <!-- third and fourth Details -->
     <div
       class="md:w-1/4 w-full flex md:flex-col flex-row justify-between md:items-start items-start mt-2 md:mt-8 gap-4"
     >
       <div
         class="w-full flex md:flex-col flex-row justify-start items-start md:items-center gap-6 md:gap-10"
       >
-        <!-- Code -->
+        <!-- third Label -->
         <div
           class="w-full flex justify-start items-start md:items-center gap-2"
         >
           <label
             for=""
             class="md:min-w-24 min-w-16 md:text-xl text-md font-normal text-darkGray"
-            >Code:</label
+            >{{ thirdLabel }}:</label
           >
-          <p class="md:text-xl text-md font-semibold text-mainBlack truncate">
-            {{ courseCode }}
+          <p class="md:text-xl text-lg font-semibold text-mainBlack truncate">
+            {{ thirdValue }}
           </p>
         </div>
 
-        <!-- Credits -->
+        <!-- fourth Label -->
         <div
           class="w-full flex justify-start items-start md:items-center gap-2"
         >
           <label
             for=""
             class="md:min-w-24 min-w-16 md:text-xl text-md font-normal text-darkGray"
-            >Credits:</label
+            >{{ fourthLabel }}:</label
           >
-          <p class="md:text-xl text-md font-semibold text-mainBlack truncate">
-            {{ courseCredits }}
+          <p class="md:text-xl text-lg font-semibold text-mainBlack truncate">
+            {{ fourthValue }}
           </p>
         </div>
       </div>
@@ -171,21 +171,24 @@
 import { ref, defineProps, defineEmits } from 'vue';
 import StatsCard from '../Student/StatsCard.vue';
 
-defineProps({
-  courseName: String,
-  instructorName: String,
-  courseCode: String,
-  courseCredits: String,
-  cards: [
-    {
-      id: Number,
-      title: String,
-      value: Number,
-    },
-  ],
+const props = defineProps({
+  mainLabel: String,
+  mainValue: String,
+  secondLabel: String,
+  secondValue: String,
+  thirdLabel: String,
+  thirdValue: String,
+  fourthLabel: String,
+  fourthValue: String,
+  cards: Array,
 });
 
 const emit = defineEmits(['card-selected']);
+
+/**
+ * Emits the card-selected event with the card ID.
+ * @param {number} cardId - The ID of the selected card.
+ */
 const openModal = (cardId) => {
   emit('card-selected', cardId);
 };
