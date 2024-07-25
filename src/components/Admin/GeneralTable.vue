@@ -29,7 +29,7 @@
       <div id="divider" class="w-full h-px bg-lightPurple"></div>
     </div>
     <div
-      class="w-full overflow-y-auto overflow-x-clip h-64 lg:p-2 py-2 bg-offWhite"
+      class="w-full overflow-y-auto overflow-x-clip h-64 lg:p-2 py-2 bg-offWhite font-medium"
     >
       <table class="table-auto text-left text-mainBlack">
         <tbody class="bg-offWhite truncate">

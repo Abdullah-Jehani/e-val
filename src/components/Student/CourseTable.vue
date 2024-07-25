@@ -4,7 +4,7 @@
   >
     <h1 class="text-2xl font-bold">My Courses</h1>
   </div>
-  <div class="overflow-x-auto rounded-md border border-lightPurple">
+  <div class="overflow-x-auto rounded-md border border-lightPurple font-medium">
     <table class="w-full table-auto text-left">
       <thead>
         <tr class="bg-offWhite">
