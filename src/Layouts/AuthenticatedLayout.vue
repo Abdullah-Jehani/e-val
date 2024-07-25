@@ -112,7 +112,11 @@
       id="drawer-navigation"
     >
       <div class="flex flex-col h-full overflow-y-auto py-5 px-3 bg-white">
-        <ul class="pt-5 flex flex-col gap-1 flex-grow">
+        <!-- Student Sidebar -->
+        <ul
+          v-if="user.role === 'student'"
+          class="pt-5 flex flex-col gap-1 flex-grow"
+        >
           <li>
             <router-link
               to="/dashboard"
@@ -156,6 +160,82 @@
             </router-link>
           </li>
         </ul>
+        <!-- Admin Sidebar -->
+        <ul
+          v-else-if="user.role === 'admin'"
+          class="pt-5 flex flex-col gap-1 flex-grow"
+        >
+          <li>
+            <router-link
+              to="/admin/dashboard"
+              class="flex items-center w-full p-3 px-6 text-base font-medium text-darkGray transition duration-75 hover:bg-mainWhite rounded-md group"
+            >
+              <svg
+                aria-hidden="true"
+                class="flex-shrink-0 w-6 h-6 transition duration-75"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill="currentColor"
+                  d="M4 13h6a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1m-1 7a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1zm10 0a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-7a1 1 0 0 0-1-1h-6a1 1 0 0 0-1 1zm1-10h6a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1h-6a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1"
+                />
+              </svg>
+              <span class="ml-3">Dashboard</span>
+            </router-link>
+          </li>
+          <li>
+            <router-link
+              to="/admin/courses"
+              class="flex items-center w-full p-3 px-6 text-base font-medium text-mainBlack transition duration-75 hover:bg-mainWhite rounded-md group"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="1.13em"
+                height="1em"
+                class="flex-shrink-0 w-6 h-6 transition duration -75"
+                viewBox="0 0 18 16"
+              >
+                <path
+                  fill="currentColor"
+                  d="M3.5 2h-3c-.275 0-.5.225-.5.5v11c0 .275.225.5.5.5h3c.275 0 .5-.225.5-.5v-11c0-.275-.225-.5-.5-.5M3 5H1V4h2zm5.5-3h-3c-.275 0-.5.225-.5.5v11c0 .275.225.5.5.5h3c.275 0 .5-.225.5-.5v-11c0-.275-.225-.5-.5-.5M8 5H6V4h2z"
+                />
+                <path
+                  fill="currentColor"
+                  d="m11.954 2.773l-2.679 1.35a.502.502 0 0 0-.222.671l4.5 8.93a.502.502 0 0 0 .671.222l2.679-1.35a.502.502 0 0 0 .222-.671l-4.5-8.93a.502.502 0 0 0-.671-.222"
+                />
+                <path
+                  fill="currentColor"
+                  d="M14.5 13.5a.5.5 0 1 1-1 0a.5.5 0 0 1 1 0"
+                />
+              </svg>
+              <span class="ml-3">Courses</span>
+            </router-link>
+          </li>
+          <li>
+            <router-link
+              to="/admin/students"
+              class="flex items-center w-full p-3 px-6 text-base font-medium text-mainBlack transition duration-75 hover:bg-mainWhite rounded-md group"
+            >
+              <svg
+                aria-hidden="true"
+                class="flex-shrink-0 w-6 h-6 transition duration-75"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+              <span class="ml-3">Students</span>
+            </router-link>
+          </li>
+        </ul>
+
         <!-- Sidebar footer -->
       </div>
     </aside>
@@ -198,6 +278,7 @@ import { onMounted } from 'vue';
 const user = {
   name: 'Mohamed',
   email: 'mohamed@hashedly.com',
+  role: 'admin',
 };
 
 onMounted(() => {

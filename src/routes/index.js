@@ -9,10 +9,11 @@ import EvaluationView from '../views/Student/EvaluationView.vue';
 import SubmitSuccessView from '../views/Student/SubmitSuccessView.vue';
 
 // Admin views
+import AdminDashboardView from '../views/Admin/DashboardView.vue';
 const routes = [
   {
+    // Authenticated Student routes
     path: '/',
-    name: 'dashboard',
     component: AuthenticatedLayout,
     redirect: '/dashboard',
     children: [
@@ -26,19 +27,29 @@ const routes = [
         name: 'Evaluation',
         component: EvaluationView,
       },
-
       {
-        path: '/:pathMatch(.*)*',
-        redirect: '/',
+        path: '/success',
+        name: 'SubmitSuccess',
+        component: SubmitSuccessView,
       },
       // Add more authenticated routes here
     ],
   },
+  // Authenticated Admin routes
   {
-    path: '/success',
-    name: 'SubmitSuccess',
-    component: SubmitSuccessView,
+    path: '/admin',
+    component: AuthenticatedLayout,
+    redirect: '/dashboard',
+    children: [
+      {
+        path: 'dashboard',
+        name: 'AdminDashboard',
+        component: AdminDashboardView,
+      },
+    ],
   },
+
+  // Authentication routes
   {
     path: '/login',
     name: 'Login',
@@ -53,6 +64,10 @@ const routes = [
     path: '/forgot-password',
     name: 'ForgotPassword',
     component: ForgotPasswordView,
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    redirect: '/',
   },
 ];
 

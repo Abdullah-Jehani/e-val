@@ -131,7 +131,9 @@
 import { ref, computed } from 'vue';
 import FormHeader from '../../components/Student/Form/FormHeader.vue';
 import { useToast } from 'vue-toastification';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const toast = useToast();
 const courseName = ref('No Course Selected');
 const instructorName = ref('No Course Selected');
@@ -254,6 +256,8 @@ function submitForm() {
     question.selectedOption = '';
   });
   toast.success('Evaluation submitted successfully!');
+  // Scroll to the top of the page after successful submission
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function updateCourseInfo() {
