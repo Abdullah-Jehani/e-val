@@ -18,7 +18,7 @@
       </p>
       <form @submit.prevent="signup" class="w-full">
         <div class="flex flex-col gap-2 mb-4">
-          <label for="email" class="block text-sm font-medium text-mainBlack"
+          <label for="email" class="block text-sm font-normal text-mainBlack"
             >Email</label
           >
           <input
@@ -26,14 +26,14 @@
             id="email"
             type="email"
             placeholder="yourname_id@limu.edu.ly"
-            class="block w-full rounded-md border h-12 bg-white text-sm font-normal p-4"
+            class="block w-full rounded-md border border-darkPurple h-12 bg-white text-sm font-normal p-4"
             required
           />
         </div>
         <div class="flex flex-col gap-2 mb-4">
           <label
             for="studentId"
-            class="block text-sm font-medium text-mainBlack"
+            class="block text-sm font-normal text-mainBlack"
             >Student ID</label
           >
           <input
@@ -41,7 +41,7 @@
             type="number"
             id="studentId"
             placeholder="1234"
-            class="block w-full rounded-md border h-[3.375rem] bg-white text-sm font-normal p-4 appearance:textfield [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+            class="block w-full rounded-md border border-darkPurple h-[3.375rem] bg-white text-sm font-normal p-4 appearance:textfield [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
             min="1000"
             max="9999"
             required
@@ -49,7 +49,7 @@
           />
         </div>
         <div class="flex flex-col gap-2 mb-4">
-          <label for="password" class="block text-sm font-medium text-mainBlack"
+          <label for="password" class="block text-sm font-normal text-mainBlack"
             >Password</label
           >
           <input
@@ -57,7 +57,7 @@
             type="password"
             id="password"
             placeholder="••••••••"
-            class="block w-full rounded-md border h-[3.375rem] bg-white text-sm font-normal p-4"
+            class="block w-full rounded-md border border-darkPurple h-[3.375rem] bg-white text-sm font-normal p-4"
             required
           />
         </div>
@@ -73,8 +73,8 @@
         <p class="text-center text-sm font-normal text-slate-700">
           Already have an account?
           <router-link
-            to="/"
-            class="text-mainPurple font-semibold text-primary-600 hover:underline"
+            to="/login"
+            class="text-darkPurple font-semibold text-primary-600 hover:underline"
           >
             Login
           </router-link>

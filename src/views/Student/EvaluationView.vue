@@ -5,10 +5,10 @@
     <!-- Floating Notification -->
     <div
       v-if="showNotification"
-      class="fixed top-4 left-1/2 transform -translate-x-1/2 bg-yellow-200 border border-yellow-400 text-yellow-700 px-4 py-3 rounded-md shadow-md z-50"
+      class="fixed top-1/3 left-1/2 transform -translate-x-1/2 lg:-translate-x-20 bg-brightGreen border border-darkGreen text-lightOil px-4 py-3 rounded-md shadow-md z-50 lg:text-center text-lg cursor-help"
       role="alert"
     >
-      <span class="block sm:inline"
+      <span class="inline"
         >Please select a course to start the evaluation.</span
       >
     </div>
@@ -43,13 +43,13 @@
       <h1 class="text-2xl font-bold mb-4 lg:mb-5 text-darkPurple">
         Evaluating the quality of content delivery
       </h1>
-      <div class="w-full flex flex-col gap-4">
+      <div class="w-full flex flex-col md:gap-8 gap-4">
         <div
           v-for="(question, index) in questions"
           :key="question.id"
-          class="w-full border rounded-md bg-white flex gap-8 md:min-h-64 h-auto justify-between flex-col border-lightPurple p-4 lg:p-4"
+          class="w-full border rounded-md bg-white flex gap-8 md:min-h-48 md:h-auto h-auto justify-between flex-col border-lightPurple p-4 lg:p-4"
         >
-          <div class="w-full flex gap-2">
+          <div class="w-full flex gap-4">
             <label class="hidden md:block text-xl font-normal text-darkGray"
               >Q{{ question.id }}:</label
             >

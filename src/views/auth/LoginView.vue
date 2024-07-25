@@ -17,7 +17,7 @@
       </p>
       <form @submit.prevent="login" class="w-full">
         <div class="flex flex-col gap-2 mb-4">
-          <label for="email" class="block text-sm font-medium text-mainBlack"
+          <label for="email" class="block text-sm font-normal text-mainBlack"
             >Email</label
           >
           <input
@@ -25,12 +25,12 @@
             id="email"
             type="email"
             placeholder="yourname_id@limu.edu.ly"
-            class="block w-full rounded-md border h-12 bg-white text-sm font-normal p-4"
+            class="block w-full rounded-md border border-darkPurple h-12 bg-white text-sm font-normal p-4"
             required
           />
         </div>
         <div class="flex flex-col gap-2 mb-4">
-          <label for="password" class="block text-sm font-medium text-mainBlack"
+          <label for="password" class="block text-sm font-normal text-mainBlack"
             >Password</label
           >
           <input
@@ -38,7 +38,7 @@
             type="password"
             id="password"
             placeholder="••••••••"
-            class="block w-full rounded-md border h-12 bg-white pr-4 text-lg font-normal p-3.5"
+            class="block w-full rounded-md border border-darkPurple h-12 bg-white pr-4 text-lg font-normal p-3.5"
             required
           />
         </div>
@@ -48,7 +48,7 @@
               id="remember"
               aria-describedby="remember"
               type="checkbox"
-              class="w-4 h-4 border border-gray-300 rounded-sm bg-gray-50"
+              class="form-checkbox h-5 w-5 text-brightGreen focus:ring-0 rounded-sm ring-offset-0"
             />
             <label for="remember" class="ml-2 text-sm text-gray-500"
               >Remember me</label
@@ -56,7 +56,7 @@
           </div>
           <router-link
             to="/forgot-password"
-            class="text-sm font-medium text-primary-600 hover:underline text-blue-600"
+            class="text-sm font-medium text-primary-600 hover:underline text-darkPurple"
           >
             Forgot password?
           </router-link>
@@ -74,7 +74,7 @@
           First time?
           <router-link
             to="/register"
-            class="text-mainPurple font-semibold text-primary-600 hover:underline"
+            class="text-darkPurple font-semibold text-primary-600 hover:underline"
           >
             Register Now!
           </router-link>

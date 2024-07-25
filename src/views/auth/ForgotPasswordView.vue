@@ -21,7 +21,7 @@
       </p>
       <form @submit.prevent="sendResetEmail">
         <div class="flex flex-col gap-2 mb-4">
-          <label for="email" class="block text-sm font-medium text-mainBlack"
+          <label for="email" class="block text-sm font-normal text-mainBlack"
             >Email</label
           >
           <input
@@ -29,7 +29,7 @@
             id="email"
             type="email"
             placeholder="yourname_id@limu.edu.ly"
-            class="block w-full rounded-md border h-[3.375rem] bg-white text-sm font-normal p-4"
+            class="block w-full rounded-md border border-darkPurple h-[3.375rem] bg-white text-sm font-normal p-4"
             required
           />
         </div>
@@ -43,8 +43,8 @@
         </div>
         <div class="text-center">
           <router-link
-            to="/"
-            class="text-mainPurple font-semibold text-primary-600 hover:underline"
+            to="/login"
+            class="text-darkPurple font-semibold text-primary-600 hover:underline"
           >
             Cancel
           </router-link>
