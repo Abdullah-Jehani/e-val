@@ -11,6 +11,7 @@ import SubmitSuccessView from '../views/Student/SubmitSuccessView.vue';
 // Admin views
 import AdminDashboardView from '../views/Admin/DashboardView.vue';
 import CoursesView from '../views/Admin/CoursesView.vue';
+import StudentsView from '../views/Admin/StudentsView.vue';
 
 const routes = [
   {
@@ -30,7 +31,7 @@ const routes = [
         component: EvaluationView,
       },
       {
-        path: '/success',
+        path: 'success',
         name: 'SubmitSuccess',
         component: SubmitSuccessView,
       },
@@ -52,6 +53,11 @@ const routes = [
         path: 'courses',
         name: 'Courses',
         component: CoursesView,
+      },
+      {
+        path: 'students',
+        name: 'Students',
+        component: StudentsView,
       },
     ],
   },
