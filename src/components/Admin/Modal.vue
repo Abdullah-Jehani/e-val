@@ -1,8 +1,8 @@
 <template>
   <div
-    class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center"
+    class="fixed inset-0 bg-black backdrop-blur-sm bg-opacity-80 flex justify-center items-center z-50 transition duration-200 ease-in-out"
   >
-    <div class="bg-white rounded-md shadow-lg p-6 w-2/3">
+    <div class="bg-offWhite rounded-lg shadow-lg p-6 w-1/3">
       <div class="flex justify-between items-center mb-4">
         <h2 class="text-xl font-bold">Enrolled Students</h2>
         <button
@@ -47,10 +47,10 @@
           </tbody>
         </table>
       </div>
-      <div class="flex justify-end mt-4">
+      <div class="w-full flex justify-center mt-4">
         <button
           @click="exportCourses"
-          class="bg-mainPurple text-white px-4 py-2 rounded-md"
+          class="w-full bg-mainPurple text-white px-4 py-2 rounded-[4px] transition duration-200 ease-in-out"
         >
           Export
         </button>
