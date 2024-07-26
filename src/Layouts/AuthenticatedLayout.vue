@@ -241,7 +241,7 @@
     </aside>
 
     <main
-      class="lg:px-16 md:px-12 px-1 md:ml-40 lg:ml-56 min-h-[calc(100vh-64px)] h-auto pt-28 pb-8"
+      class="lg:px-16 md:px-12 px-1 md:ml-40 lg:ml-56 min-h-[calc(100vh-6rem)] h-auto pt-28 pb-8"
     >
       <router-view></router-view>
     </main>
@@ -280,7 +280,7 @@ import { onMounted } from 'vue';
 const user = {
   name: 'Mohamed',
   email: 'mohamed@hashedly.com',
-  role: 'student',
+  role: 'admin',
 };
 
 onMounted(() => {

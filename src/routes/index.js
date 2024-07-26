@@ -1,12 +1,17 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import LoginView from '../views/auth/LoginView.vue';
-import RegisterView from '../views/auth/RegisterView.vue';
-import ForgotPasswordView from '../views/auth/ForgotPasswordView.vue';
+
+// Auth views
+import LoginView from '../views/Auth/LoginView.vue';
+import RegisterView from '../views/Auth/RegisterView.vue';
+import ForgotPasswordView from '../views/Auth/ForgotPasswordView.vue';
+import ResetPasswordView from '../views/Auth/ResetPasswordView.vue';
 import AuthenticatedLayout from '../Layouts/AuthenticatedLayout.vue';
+
 // Student views
 import StudentDashboardView from '../views/Student/DashboardView.vue';
 import EvaluationView from '../views/Student/EvaluationView.vue';
 import SubmitSuccessView from '../views/Student/SubmitSuccessView.vue';
+import PendingView from '../views/Student/PendingView.vue';
 
 // Admin views
 import AdminDashboardView from '../views/Admin/DashboardView.vue';
@@ -34,6 +39,11 @@ const routes = [
         path: 'success',
         name: 'SubmitSuccess',
         component: SubmitSuccessView,
+      },
+      {
+        path: 'pending',
+        name: 'Pending',
+        component: PendingView,
       },
       // Add more authenticated routes here
     ],
@@ -77,6 +87,11 @@ const routes = [
     path: '/forgot-password',
     name: 'ForgotPassword',
     component: ForgotPasswordView,
+  },
+  {
+    path: '/reset-password',
+    name: 'ResetPassword',
+    component: ResetPasswordView,
   },
   {
     path: '/:pathMatch(.*)*',
