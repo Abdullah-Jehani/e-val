@@ -280,7 +280,7 @@ import { onMounted } from 'vue';
 const user = {
   name: 'Mohamed',
   email: 'mohamed@hashedly.com',
-  role: 'admin',
+  role: 'student',
 };
 
 onMounted(() => {

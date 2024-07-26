@@ -5,7 +5,7 @@
     <!-- Floating Notification -->
     <div
       v-if="showNotification"
-      class="fixed top-1/3 left-1/2 transform -translate-x-1/2 lg:-translate-x-20 bg-brightGreen border border-darkGreen text-lightOil px-4 py-3 rounded-md shadow-md z-50 lg:text-center text-lg cursor-help"
+      class="fixed top-1/3 left-1/2 transform -translate-x-1/2 lg:-translate-x-20 bg-brightGreen border border-darkGreen text-lightOil px-4 py-3 rounded-md shadow-md z-10 lg:text-center text-lg cursor-help"
       role="alert"
     >
       <span class="inline"
@@ -38,78 +38,7 @@
     </div>
 
     <!-- Form Body -->
-    <!-- Placeholder -->
-    <section class="col-span-full lg:col-span-full w-full">
-      <h1 class="text-2xl font-bold mb-4 lg:mb-5 text-darkPurple">
-        Evaluating the quality of content delivery
-      </h1>
-      <div class="w-full flex flex-col md:gap-8 gap-4">
-        <div
-          v-for="(question, index) in questions"
-          :key="question.id"
-          class="w-full border rounded-md bg-white flex gap-8 md:min-h-48 md:h-auto h-auto justify-between flex-col border-lightPurple p-4 lg:p-4"
-        >
-          <div class="w-full flex gap-4">
-            <label class="hidden md:block text-xl font-normal text-darkGray"
-              >Q{{ question.id }}:</label
-            >
-            <p class="text-xl font-semibold text-mainBlack">
-              {{ question.question }}
-            </p>
-          </div>
-          <!-- Mobile View -->
-          <div class="md:hidden">
-            <select
-              v-model="question.selectedOption"
-              :disabled="!isFormEnabled"
-              class="w-full border-none border-b lg:border-b-0 border-lightPurple bg-offWhite p-4 rounded-lg focus:ring-0 focus:outline-none focus:shadow-outline"
-            >
-              <option disabled selected value="">Select an option</option>
-              <option
-                v-for="option in question.options"
-                :value="option"
-                :key="option"
-              >
-                {{ option }}
-              </option>
-            </select>
-          </div>
-          <!-- Mid and Large Screens -->
-          <div class="hidden md:block">
-            <div class="grid grid-cols-5 gap-4">
-              <template v-for="(option, optionIndex) in question.options">
-                <input
-                  type="radio"
-                  :name="`question-${question.id}`"
-                  :id="`question-${question.id}-${optionIndex}`"
-                  :value="option"
-                  v-model="question.selectedOption"
-                  class="sr-only"
-                  aria-hidden="true"
-                  :disabled="!isFormEnabled"
-                />
-                <label
-                  :for="`question-${question.id}-${optionIndex}`"
-                  :aria-label="option"
-                  :class="{
-                    'bg-mainPurple text-white':
-                      question.selectedOption === option,
-                    'bg-offWhite text-black hover:brightness-95':
-                      question.selectedOption !== option,
-                    'cursor-not-allowed opacity-50': !isFormEnabled,
-                  }"
-                  class="block hover:filter border-none p-4 rounded-lg cursor-pointer text-center transition-all duration-300 ease-in-out"
-                >
-                  {{ option }}
-                </label>
-              </template>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- Placeholder End -->
-    <!-- Form Body End -->
+    <form-body :sections="sections" :isFormEnabled="isFormEnabled" />
 
     <!-- Submit Button -->
     <div
@@ -128,150 +57,58 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { computed } from 'vue';
 import FormHeader from '../../components/Student/Form/FormHeader.vue';
+import FormBody from '../../components/Student/Form/FormBody.vue';
 import { useToast } from 'vue-toastification';
-import { useRouter } from 'vue-router';
+import store from '../../stores/store';
 
-const router = useRouter();
+// Reactive store data
+const courses = computed(() => store.courses);
+const selectedCourseId = computed({
+  get: () => store.selectedCourseId,
+  set: (value) => {
+    store.selectedCourseId = value;
+    store.updateCourseInfo();
+  },
+});
+const courseName = computed(() => store.courseName);
+const instructorName = computed(() => store.instructorName);
+const sections = computed(() => store.sections);
+const showNotification = computed(() => store.showNotification);
+
 const toast = useToast();
-const courseName = ref('No Course Selected');
-const instructorName = ref('No Course Selected');
-const selectedCourseId = ref('');
-const showNotification = ref(true);
-
-const courses = [
-  {
-    id: 1,
-    code: '12345',
-    name: 'Introduction to Programming',
-    Instructor: 'Sami Khaled',
-  },
-  {
-    id: 2,
-    code: '67890',
-    name: 'Data Structures and Algorithms',
-    Instructor: 'Faraj Ahmed',
-  },
-  {
-    id: 3,
-    code: '54321',
-    name: 'Web Development Fundamentals',
-    Instructor: 'Mousa Hassan',
-  },
-  {
-    id: 4,
-    code: '98765',
-    name: 'Mobile App Development',
-    Instructor: 'Najib Mohamed',
-  },
-  {
-    id: 5,
-    code: '43210',
-    name: 'Database Management Systems',
-    Instructor: 'Feras Ali',
-  },
-];
-
-const questions = ref([
-  {
-    id: 1,
-    question: 'Explanation of the course material is clear and understandable',
-    selectedOption: '',
-    options: [
-      'Strongly Disagree',
-      'Disagree',
-      'Neutral',
-      'Agree',
-      'Strongly Agree',
-    ],
-  },
-  {
-    id: 2,
-    question: 'Course topics are clear and related to the course content.',
-    selectedOption: '',
-    options: [
-      'Strongly Disagree',
-      'Disagree',
-      'Neutral',
-      'Agree',
-      'Strongly Agree',
-    ],
-  },
-  {
-    id: 3,
-    question: 'Notes/presentations cover all course topics.',
-    selectedOption: '',
-    options: [
-      'Strongly Disagree',
-      'Disagree',
-      'Neutral',
-      'Agree',
-      'Strongly Agree',
-    ],
-  },
-  {
-    id: 4,
-    question:
-      'Course books/references (digital or physical) are reliable and up-to-date.',
-    selectedOption: '',
-    options: [
-      'Strongly Disagree',
-      'Disagree',
-      'Neutral',
-      'Agree',
-      'Strongly Agree',
-    ],
-  },
-  {
-    id: 5,
-    question: 'Clear audio and video in recorded lectures.',
-    selectedOption: '',
-    options: [
-      'Strongly Disagree',
-      'Disagree',
-      'Neutral',
-      'Agree',
-      'Strongly Agree',
-    ],
-  },
-]);
-
-const isFormEnabled = computed(() => selectedCourseId.value !== '');
+const isFormEnabled = computed(() => store.selectedCourseId !== '');
 
 function submitForm() {
   if (!isFormEnabled.value) return;
 
-  for (const question of questions.value) {
-    if (question.selectedOption === '') {
-      toast.error('Please answer all questions');
-      return;
+  for (const section of store.sections) {
+    for (const question of section.questions) {
+      if (question.selectedOption === '') {
+        toast.error('Please answer all questions');
+        return;
+      }
     }
   }
-  console.log(questions.value.map((q) => q.selectedOption));
-  // Clear selected options and course
-  selectedCourseId.value = '';
-  updateCourseInfo();
-  questions.value.forEach((question) => {
-    question.selectedOption = '';
-  });
-  toast.success('Evaluation submitted successfully!');
-  // Scroll to the top of the page after successful submission
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
 
-function updateCourseInfo() {
-  const selectedCourse = courses.find(
-    (course) => course.id === parseInt(selectedCourseId.value)
+  console.log(
+    store.sections.map((section) => ({
+      title: section.title,
+      questions: section.questions.map((q) => ({
+        text: q.text,
+        selectedOption: q.selectedOption,
+        selectedValue:
+          q.options.find((option) => option.value === q.selectedOption)?.text ||
+          null,
+      })),
+    }))
   );
-  if (selectedCourse) {
-    courseName.value = selectedCourse.name;
-    instructorName.value = selectedCourse.Instructor;
-    showNotification.value = false;
-  } else {
-    courseName.value = 'No Course Selected';
-    instructorName.value = 'No Course Selected';
-    showNotification.value = true;
-  }
+
+  // Clear selected options and course
+  store.resetForm();
+
+  toast.success('Evaluation submitted successfully!');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 </script>

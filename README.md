@@ -27,3 +27,5 @@ To install it, run:
 ```sh
 npm install --save-dev tailwind-scrollbar
 ```
+
+## Change user role in AuthenticatedLayout to access different sidebars
