@@ -28,4 +28,4 @@ To install it, run:
 npm install --save-dev tailwind-scrollbar
 ```
 
-## Change user role in AuthenticatedLayout to access different sidebars
+## Change user role in `AuthenticatedLayout.vue` to access different sidebars
