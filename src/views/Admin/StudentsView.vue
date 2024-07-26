@@ -7,7 +7,7 @@
         @update:department="updateDepartment"
         @update:search="updateSearch"
         :objects="students"
-        :modalTitle="''"
+        :modalTitle="'Students'"
       />
     </div>
     <div

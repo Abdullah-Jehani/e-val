@@ -9,7 +9,7 @@
         class="flex gap-2 items-start w-full h-full md:w-auto justify-between"
       >
         <h1 class="md:text-2xl text-lg font-bold text-mainBlack">
-          {{ title }}
+          {{ modalTitle }}
         </h1>
         <div
           id="search"
