@@ -1,4 +1,6 @@
 // Define courses and sections
+import { ref } from 'vue';
+
 const courses = [
   {
     id: '12325',
