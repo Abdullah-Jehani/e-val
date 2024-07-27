@@ -10,6 +10,7 @@ export const useAuthStore = defineStore("auth", {
       password: null,
       student_id: null,
       token: null,
+      isApproved: false,
       errorMessage: null,
     },
     admin: {
@@ -30,20 +31,9 @@ export const useAuthStore = defineStore("auth", {
     getUserErrorMessages: (state) => state.user.errorMessage,
     getAdminErrorMessages: (state) => state.admin.errorMessage,
     getRole: (state) => state.role,
+    getIsApproved: (state) => state.user.isApproved,
   },
   actions: {
-    async login() {
-      const apiUrl = import.meta.env.VITE_API_URL;
-      try {
-        const response = await axios.post(apiUrl + "login", {
-          email: this.email,
-          password: this.password,
-        });
-        router.push("/dashboard");
-      } catch {
-        console.log("Error");
-      }
-    },
     async register() {
       const apiUrl = import.meta.env.VITE_APP_API_URL;
       try {
@@ -84,11 +74,30 @@ export const useAuthStore = defineStore("auth", {
         this.admin.email = null;
         this.admin.password = null;
         this.admin.errorMessage = null;
-
         router.push("/login");
       } catch {
+        router.push("/login");
+        alert("Logout");
         console.log("Errorc" + error);
+        router.push("/login");
+        alert("Logout");
       }
+    },
+    clearData() {
+      this.user.email = null;
+      this.user.password = null;
+      this.user.student_id = null;
+      this.user.errorMessage = null;
+      this.admin.email = null;
+      this.admin.password = null;
+      this.admin.errorMessage = null;
+
+      this.role = null;
+
+      this.user.token = null;
+      this.admin.token = null;
+
+      this.user.isApproved = false;
     },
   },
   persist: true,
