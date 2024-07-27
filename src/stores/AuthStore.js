@@ -4,18 +4,32 @@ import router from "../routes";
 
 export const useAuthStore = defineStore("auth", {
   state: () => ({
-    email: null,
-    password: null,
-    username: null,
-    token: null,
-    errorMessage: null,
+    role: null,
+    user: {
+      email: null,
+      password: null,
+      student_id: null,
+      token: null,
+      errorMessage: null,
+    },
+    admin: {
+      email: null,
+      password: null,
+      token: null,
+      errorMessage: null,
+    },
   }),
   getters: {
-    getEmail: (state) => state.email,
-    getToken: (state) => state.token,
-    getPassword: (state) => state.password,
-    getUserName: (state) => state.username,
-    getErrorMessage: (state) => state.errorMessage,
+    getUserEmail: (state) => state.user.email,
+    getAdminEmail: (state) => state.admin.email,
+    getUserToken: (state) => state.user.token,
+    getAdminToken: (state) => state.admin.token,
+    getUserPassword: (state) => state.user.password,
+    getAdminPassword: (state) => state.admin.password,
+    getStudentId: (state) => state.user.student_id,
+    getUserErrorMessages: (state) => state.user.errorMessage,
+    getAdminErrorMessages: (state) => state.admin.errorMessage,
+    getRole: (state) => state.role,
   },
   actions: {
     async login() {
@@ -31,29 +45,51 @@ export const useAuthStore = defineStore("auth", {
       }
     },
     async register() {
-      const apiUrl = import.meta.env.VITE_API_URL;
+      const apiUrl = import.meta.env.VITE_APP_API_URL;
       try {
         const response = await axios.post(apiUrl + "register", {
-          email: this.email,
-          password: this.password,
-          username: this.username,
+          email: this.user.email,
+          password: this.user.password,
+          student_id: this.user.student_id,
         });
+        console.log(response);
+        alert("Register Successful");
+
         router.push("/login");
       } catch {
         console.log("Error");
       }
     },
-
     async logout() {
-      const apiUrl = import.meta.env.VITE_API_URL;
+      const apiUrl = import.meta.env.VITE_APP_API_URL;
       try {
-        const response = await axios.post(apiUrl + "logout");
+        const response = await axios.post(
+          apiUrl + "logout",
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${this.admin.token ?? this.user.token}`, // still not tested , waiting for ezzo changes.
+            },
+          }
+        );
+        console.log(response);
+        alert("Logout Successful");
+        this.admin.token = null;
+        this.user.token = null;
+        this.role = null;
+        this.user.email = null;
+        this.user.password = null;
+        this.user.student_id = null;
+        this.user.errorMessage = null;
+        this.admin.email = null;
+        this.admin.password = null;
+        this.admin.errorMessage = null;
+
         router.push("/login");
       } catch {
-        console.log("Error");
+        console.log("Errorc" + error);
       }
     },
   },
-
   persist: true,
 });

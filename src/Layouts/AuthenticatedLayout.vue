@@ -90,12 +90,15 @@
                 user.name
               }}</span>
               <span class="block text-sm text-mainBlack truncate">{{
-                user.email
+                authStore.admin.email
               }}</span>
             </div>
             <ul class="py-1 text-gray-700" aria-labelledby="dropdown">
               <li>
-                <a href="#" class="block py-2 px-4 text-sm hover:bg-mainWhite"
+                <a
+                  @click="logout"
+                  href="#"
+                  class="block py-2 px-4 text-sm hover:bg-mainWhite"
                   >Sign out</a
                 >
               </li>
@@ -114,7 +117,7 @@
       <div class="flex flex-col h-full overflow-y-auto py-5 px-3 bg-white">
         <!-- Student Sidebar -->
         <ul
-          v-if="user.role === 'student'"
+          v-if="authStore.role === 'student'"
           class="pt-5 flex flex-col gap-1 flex-grow"
         >
           <li>
@@ -162,7 +165,7 @@
         </ul>
         <!-- Admin Sidebar -->
         <ul
-          v-else-if="user.role === 'admin'"
+          v-else-if="authStore.role === 'admin'"
           class="pt-5 flex flex-col gap-1 flex-grow"
         >
           <li>
@@ -274,14 +277,20 @@
 </template>
 
 <script setup>
-import { initFlowbite } from 'flowbite';
-import { onMounted } from 'vue';
+import axios from "axios";
+import { initFlowbite } from "flowbite";
+import { onMounted } from "vue";
+import { useAuthStore } from "../stores/AuthStore";
+const authStore = useAuthStore();
 
 const user = {
-  name: 'Mohamed',
-  email: 'mohamed@hashedly.com',
-  role: 'admin',
+  name: "Mohamed",
+  email: "mohamed@hashedly.com",
+  role: "admin",
 };
+async function logout() {
+  await authStore.logout();
+}
 
 onMounted(() => {
   initFlowbite();
