@@ -85,37 +85,39 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-import axios from 'axios';
-import { useToast } from 'vue-toastification';
-import { useAuthStore } from '../../stores/AuthStore';
+import { onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
+import axios from "axios";
+import { useToast } from "vue-toastification";
+import { useAuthStore } from "../../stores/AuthStore";
 
-const email = ref('sufyan_3196@limu.edu.ly');
-const password = ref('12345678');
+const email = ref("");
+const password = ref("");
 const router = useRouter();
 const toast = useToast();
 const authStore = useAuthStore();
-
-const login = async () => {
+async function login() {
+  const apiUrl = import.meta.env.VITE_APP_API_URL;
   try {
-    const response = await axios.post(
-      'http://127.0.0.1:8000/api/student/login/',
-      {
-        email: email.value,
-        password: password.value,
-      }
-    );
-
-    const token = response.data.token;
-    authStore.setToken(token);
-    toast.success('Login successful!');
-    router.replace('/home');
+    const response = await axios.post(apiUrl + "login", {
+      email: email.value,
+      password: password.value,
+    });
+    console.log(response.data.role);
+    console.log(response);
+    if (response.data.role === "admin") {
+      authStore.admin.email = response.data.admin.email;
+      authStore.admin.token = response.data.token;
+      authStore.role = response.data.admin.role;
+    }
+    // alert("Login Successful");
+    router.push("/admin/dashboard");
   } catch (error) {
-    console.error(error);
-    toast.error('Failed to login. Please check your email and password.');
+    console.log("Error" + error);
   }
-};
+}
+
+onMounted(() => {});
 </script>
 
 <style>
