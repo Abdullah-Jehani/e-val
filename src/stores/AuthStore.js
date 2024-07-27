@@ -16,6 +16,10 @@ export const useAuthStore = defineStore('auth', {
       token: null,
       isApproved: false,
       errorMessage: null,
+      isEvaluated: false,
+      department_id: null,
+      registered_courses: [],
+      evaluated_courses: [],
     },
     admin: {
       email: null,
@@ -36,6 +40,10 @@ export const useAuthStore = defineStore('auth', {
     getAdminErrorMessages: (state) => state.admin.errorMessage,
     getRole: (state) => state.role,
     getIsApproved: (state) => state.user.isApproved,
+    getIsEvaluated: (state) => state.user.isEvaluated,
+    getDepartmentId: (state) => state.user.department_id,
+    getRegisteredCourses: (state) => state.user.registered_courses,
+    getEvaluatedCourses: (state) => state.user.evaluated_courses,
   },
   actions: {
     async register() {
@@ -52,36 +60,11 @@ export const useAuthStore = defineStore('auth', {
         this.user.evaluated_courses = response.data.student.evaluated_courses;
         this.user.registered_courses = response.data.student.registered_courses;
         this.user.department_id = response.data.student.department_id;
-        console.log(this.user.registered_courses.data);
-
-        toast.success('Register Successful');
-
+        console.log('Registered Courses:', this.user.registered_courses);
+        alert('Register Successful');
         router.push('/login');
-      } catch {
-        toast.error('Register Failed');
-        console.log('Error');
-      }
-    },
-    async login() {
-      const apiUrl = import.meta.env.VITE_APP_API_URL;
-      try {
-        const response = await axios.post(apiUrl + 'login', {
-          email: this.user.email,
-          password: this.user.password,
-        });
-        this.user.token = response.data.token;
-        this.user.isApproved = response.data.isApproved;
-        this.role = response.data.role;
-
-        if (this.role === 'admin') {
-          router.push('/admin/dashboard');
-        } else if (this.role === 'student' && this.user.isApproved) {
-          router.push('/dashboard');
-        } else {
-          router.push('/pending');
-        }
       } catch (error) {
-        console.log('Error', error);
+        console.log('Error:', error);
       }
     },
     async logout() {
