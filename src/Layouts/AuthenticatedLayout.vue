@@ -58,12 +58,12 @@
         <div class="flex items-center md:order-2">
           <button
             type="button"
-            class="flex mx-3 rounded-full md:mr-0 items-center justify-center text-mainBlack gap-2 font-medium p-2.5 text-lg"
+            class="capitalize flex mx-3 rounded-full md:mr-0 items-center justify-center text-mainBlack gap-2 font-medium p-2.5 text-lg"
             id="user-menu-button"
             aria-expanded="false"
             data-dropdown-toggle="dropdown"
           >
-            <p>{{ user.name }}</p>
+            <p>{{ userName }}</p>
 
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -87,7 +87,7 @@
           >
             <div class="py-3 px-4">
               <span class="block text-sm font-semibold text-mainBlack">{{
-                user.name
+                userName
               }}</span>
               <span class="block text-sm font-semibold text-mainBlack">
                 {{
@@ -288,6 +288,11 @@ import { useAuthStore } from '../stores/AuthStore';
 const authStore = useAuthStore();
 
 const user = authStore.user;
+
+const userName =
+  authStore.role === 'student'
+    ? user.email.split('@')[0]
+    : authStore.admin.email.split('@')[0];
 
 async function logout() {
   await authStore.logout();
