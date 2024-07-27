@@ -121,20 +121,18 @@ async function login() {
       console.log(authStore.user.isApproved);
     }
     if (authStore.role === 'admin') {
-      alert('Login Successful');
       router.push('/dashboard');
     } else if (
       authStore.role === 'student' &&
       authStore.user.isApproved === 0
     ) {
-      alert('Pending Status');
+      toast.info('Pending Status');
       router.push('/pending');
     } else {
-      alert('login successful');
       router.push('/dashboard');
     }
   } catch (error) {
-    console.error('Error:', error);
+    toast.error('Invalid email or password');
   }
 }
 

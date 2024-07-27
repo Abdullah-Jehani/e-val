@@ -21,10 +21,10 @@ import StudentsView from '../views/Admin/StudentsView.vue';
 
 const routes = [
   {
-    // Authenticated Student routes
     path: '/',
     component: AuthenticatedLayout,
     redirect: '/dashboard',
+    meta: { requiresAuth: true },
     children: [
       {
         path: 'dashboard',
@@ -56,6 +56,7 @@ const routes = [
     path: '/admin',
     component: AuthenticatedLayout,
     redirect: '/admin/dashboard',
+    meta: { requiresAuth: true },
     children: [
       {
         path: 'dashboard',
@@ -109,22 +110,34 @@ const router = createRouter({
   routes,
 });
 
-// Navigation guard to protect routes
+// Navigation Guard
 router.beforeEach((to, from, next) => {
   const authStore = useAuthStore();
   const isAuthenticated = !!authStore.getUserToken || !!authStore.getAdminToken;
   const isApproved = authStore.getIsApproved;
+  const role = authStore.getRole;
 
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     if (!isAuthenticated) {
       next('/login');
-    } else if (
-      to.matched.some((record) => record.meta.requiresApproval) &&
-      !isApproved
-    ) {
-      next('/pending');
     } else {
-      next();
+      if (role === 'student') {
+        if (!isApproved && to.name !== 'Pending') {
+          next('/pending');
+        } else if (isApproved) {
+          next();
+        } else {
+          next('/login');
+        }
+      } else if (role === 'admin') {
+        if (to.path.startsWith('/admin')) {
+          next();
+        } else {
+          next('/admin/dashboard');
+        }
+      } else {
+        next('/login');
+      }
     }
   } else {
     next();

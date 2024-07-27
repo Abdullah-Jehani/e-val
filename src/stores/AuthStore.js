@@ -12,6 +12,7 @@ export const useAuthStore = defineStore('auth', {
       email: null,
       password: null,
       student_id: null,
+      department_id: null,
       token: null,
       isApproved: false,
       errorMessage: null,
@@ -45,12 +46,42 @@ export const useAuthStore = defineStore('auth', {
           password: this.user.password,
           student_id: this.user.student_id,
         });
-        console.log(response);
+
+        this.isEvaluated = response.data.student.is_evaluated;
+        this.isApproved = response.data.student.is_approved;
+        this.user.evaluated_courses = response.data.student.evaluated_courses;
+        this.user.registered_courses = response.data.student.registered_courses;
+        this.user.department_id = response.data.student.department_id;
+        console.log(this.user.registered_courses.data);
+
         toast.success('Register Successful');
 
         router.push('/login');
       } catch {
+        toast.error('Register Failed');
         console.log('Error');
+      }
+    },
+    async login() {
+      const apiUrl = import.meta.env.VITE_APP_API_URL;
+      try {
+        const response = await axios.post(apiUrl + 'login', {
+          email: this.user.email,
+          password: this.user.password,
+        });
+        this.user.token = response.data.token;
+        this.user.isApproved = response.data.isApproved;
+        this.role = response.data.role;
+
+        if (this.role === 'admin') {
+          router.push('/admin/dashboard');
+        } else if (this.role === 'student' && this.user.isApproved) {
+          router.push('/dashboard');
+        } else {
+          router.push('/pending');
+        }
+      } catch (error) {
+        console.log('Error', error);
       }
     },
     async logout() {
@@ -61,45 +92,32 @@ export const useAuthStore = defineStore('auth', {
           {},
           {
             headers: {
-              Authorization: `Bearer ${this.admin.token ?? this.user.token}`, // still not tested , waiting for ezzo changes.
+              Authorization: `Bearer ${this.admin.token ?? this.user.token}`,
             },
           }
         );
         console.log(response);
         toast.success('Logout Successful');
-        this.admin.token = null;
-        this.user.token = null;
-        this.role = null;
-        this.user.email = null;
-        this.user.password = null;
-        this.user.student_id = null;
-        this.user.errorMessage = null;
-        this.admin.email = null;
-        this.admin.password = null;
-        this.admin.errorMessage = null;
+        this.clearData();
         router.push('/login');
-      } catch {
+      } catch (error) {
+        console.log('Error', error);
+        toast.error('Logout Failed,' + error.response.data.message);
         router.push('/login');
-        toast.info('Logout');
-        console.log('Errorc' + error);
-        router.push('/login');
-        toast.error('Logout');
       }
     },
     clearData() {
       this.user.email = null;
       this.user.password = null;
       this.user.student_id = null;
+      this.user.department_id = null;
       this.user.errorMessage = null;
       this.admin.email = null;
       this.admin.password = null;
       this.admin.errorMessage = null;
-
       this.role = null;
-
       this.user.token = null;
       this.admin.token = null;
-
       this.user.isApproved = false;
     },
   },
