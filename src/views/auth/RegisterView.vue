@@ -85,7 +85,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
 import { useToast } from "vue-toastification";
@@ -109,6 +109,9 @@ const validateStudentId = (event) => {
 const signup = async () => {
   await authStore.register();
 };
+onMounted(() => {
+  authStore.clearData();
+});
 </script>
 
 <style>

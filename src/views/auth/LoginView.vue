@@ -105,15 +105,34 @@ async function login() {
     });
     console.log(response.data.role);
     console.log(response);
+
     if (response.data.role === "admin") {
       authStore.admin.email = response.data.admin.email;
       authStore.admin.token = response.data.token;
       authStore.role = response.data.admin.role;
+    } else {
+      authStore.user.email = response.data.student.email;
+      authStore.user.token = response.data.token;
+      authStore.role = response.data.role;
+      authStore.user.student_id = response.data.student.student_id;
+      authStore.user.isApproved = response.data.student.is_approved;
+      console.log(authStore.user.isApproved);
     }
-    // alert("Login Successful");
-    router.push("/admin/dashboard");
+    if (authStore.role === "admin") {
+      alert("Login Successful");
+      router.push("/dashboard");
+    } else if (
+      authStore.role === "student" &&
+      authStore.user.isApproved === 0
+    ) {
+      alert("Pending Status");
+      router.push("/pending");
+    } else {
+      alert("login successful");
+      router.push("/dashboard");
+    }
   } catch (error) {
-    console.log("Error" + error);
+    console.error("Error:", error);
   }
 }
 
