@@ -1,10 +1,9 @@
 <template>
-  <main class="grid lg:grid-cols-12 min-h-screen lg:bg-mainWhite bg-mainWhite">
-    <!-- <div
-      class="hidden absolute top-1/4 -left-24 translate-x-0.5 translate-y-0.5 h-[200vh] min-w-screen z-0 bg-mainPurple rounded-full aspect-square lg:flex items-center justify-center"
-    ></div> -->
+  <main
+    class="grid sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-12 min-h-screen lg:bg-mainWhite bg-mainWhite"
+  >
     <div
-      class="mx-auto min-h-2/3 py-12 px-10 w-full col-span-full lg:col-span-4 lg:col-start-5 h-fit col-start-2 rounded-lg sm:col-span-10 sm:col-start-2 md:col-span-4 md:col-start-5 lg:bg-white lg:border border-darkPurple lg:shadow-md shadow-darkPurple z-10 place-self-center"
+      class="mx-auto min-h-2/3 py-12 px-10 w-full col-span-full lg:col-span-4 lg:col-start-5 h-fit col-start-2 rounded-lg sm:col-span-4 sm:col-start-2 md:col-span-4 md:col-start-3 lg:bg-white lg:border border-darkPurple lg:shadow-md shadow-darkPurple z-10 place-self-center"
     >
       <div class="flex items-center justify-center mx-auto mb-4">
         <img

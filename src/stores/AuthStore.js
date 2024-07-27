@@ -1,8 +1,11 @@
-import { defineStore } from "pinia";
-import axios from "axios";
-import router from "../routes";
+import { defineStore } from 'pinia';
+import axios from 'axios';
+import router from '../routes';
+import { useToast } from 'vue-toastification';
 
-export const useAuthStore = defineStore("auth", {
+const toast = useToast();
+
+export const useAuthStore = defineStore('auth', {
   state: () => ({
     role: null,
     user: {
@@ -37,24 +40,24 @@ export const useAuthStore = defineStore("auth", {
     async register() {
       const apiUrl = import.meta.env.VITE_APP_API_URL;
       try {
-        const response = await axios.post(apiUrl + "register", {
+        const response = await axios.post(apiUrl + 'register', {
           email: this.user.email,
           password: this.user.password,
           student_id: this.user.student_id,
         });
         console.log(response);
-        alert("Register Successful");
+        toast.success('Register Successful');
 
-        router.push("/login");
+        router.push('/login');
       } catch {
-        console.log("Error");
+        console.log('Error');
       }
     },
     async logout() {
       const apiUrl = import.meta.env.VITE_APP_API_URL;
       try {
         const response = await axios.post(
-          apiUrl + "logout",
+          apiUrl + 'logout',
           {},
           {
             headers: {
@@ -63,7 +66,7 @@ export const useAuthStore = defineStore("auth", {
           }
         );
         console.log(response);
-        alert("Logout Successful");
+        toast.success('Logout Successful');
         this.admin.token = null;
         this.user.token = null;
         this.role = null;
@@ -74,13 +77,13 @@ export const useAuthStore = defineStore("auth", {
         this.admin.email = null;
         this.admin.password = null;
         this.admin.errorMessage = null;
-        router.push("/login");
+        router.push('/login');
       } catch {
-        router.push("/login");
-        alert("Logout");
-        console.log("Errorc" + error);
-        router.push("/login");
-        alert("Logout");
+        router.push('/login');
+        toast.info('Logout');
+        console.log('Errorc' + error);
+        router.push('/login');
+        toast.error('Logout');
       }
     },
     clearData() {

@@ -1,7 +1,9 @@
 <template>
-  <main class="grid lg:grid-cols-12 min-h-screen lg:bg-mainWhite bg-mainWhite">
+  <main
+    class="grid sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-12 min-h-screen lg:bg-mainWhite bg-mainWhite"
+  >
     <div
-      class="mx-auto min-h-2/3 py-12 px-10 w-full col-span-full lg:col-span-4 lg:col-start-5 h-fit col-start-2 rounded-lg sm:col-span-10 sm:col-start-2 md:col-span-4 md:col-start-5 lg:bg-white lg:border border-darkPurple lg:shadow-md shadow-darkPurple z-10 place-self-center"
+      class="mx-auto min-h-2/3 py-12 px-10 w-full col-span-full lg:col-span-4 lg:col-start-5 h-fit col-start-2 rounded-lg sm:col-span-4 sm:col-start-2 md:col-span-4 md:col-start-3 lg:bg-white lg:border border-darkPurple lg:shadow-md shadow-darkPurple z-10 place-self-center"
     >
       <div class="flex items-center justify-center mx-auto mb-4">
         <img
@@ -85,28 +87,28 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
-import { useRouter } from "vue-router";
-import axios from "axios";
-import { useToast } from "vue-toastification";
-import { useAuthStore } from "../../stores/AuthStore";
+import { onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
+import axios from 'axios';
+import { useToast } from 'vue-toastification';
+import { useAuthStore } from '../../stores/AuthStore';
 
-const email = ref("");
-const password = ref("");
+const email = ref('');
+const password = ref('');
 const router = useRouter();
 const toast = useToast();
 const authStore = useAuthStore();
 async function login() {
   const apiUrl = import.meta.env.VITE_APP_API_URL;
   try {
-    const response = await axios.post(apiUrl + "login", {
+    const response = await axios.post(apiUrl + 'login', {
       email: email.value,
       password: password.value,
     });
     console.log(response.data.role);
     console.log(response);
 
-    if (response.data.role === "admin") {
+    if (response.data.role === 'admin') {
       authStore.admin.email = response.data.admin.email;
       authStore.admin.token = response.data.token;
       authStore.role = response.data.admin.role;
@@ -118,21 +120,21 @@ async function login() {
       authStore.user.isApproved = response.data.student.is_approved;
       console.log(authStore.user.isApproved);
     }
-    if (authStore.role === "admin") {
-      alert("Login Successful");
-      router.push("/dashboard");
+    if (authStore.role === 'admin') {
+      alert('Login Successful');
+      router.push('/dashboard');
     } else if (
-      authStore.role === "student" &&
+      authStore.role === 'student' &&
       authStore.user.isApproved === 0
     ) {
-      alert("Pending Status");
-      router.push("/pending");
+      alert('Pending Status');
+      router.push('/pending');
     } else {
-      alert("login successful");
-      router.push("/dashboard");
+      alert('login successful');
+      router.push('/dashboard');
     }
   } catch (error) {
-    console.error("Error:", error);
+    console.error('Error:', error);
   }
 }
 

@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import { useAuthStore } from '../stores/authstore';
 
 // Auth views
 import LoginView from '../views/Auth/LoginView.vue';
@@ -29,26 +30,28 @@ const routes = [
         path: 'dashboard',
         name: 'StudentDashboard',
         component: StudentDashboardView,
+        meta: { requiresAuth: true, requiresApproval: true },
       },
       {
         path: 'evaluation',
         name: 'Evaluation',
         component: EvaluationView,
+        meta: { requiresAuth: true, requiresApproval: true },
       },
       {
         path: 'success',
         name: 'SubmitSuccess',
         component: SubmitSuccessView,
+        meta: { requiresAuth: true, requiresApproval: true },
       },
       {
         path: 'pending',
         name: 'Pending',
         component: PendingView,
+        meta: { requiresAuth: true },
       },
-      // Add more authenticated routes here
     ],
   },
-  // Authenticated Admin routes
   {
     path: '/admin',
     component: AuthenticatedLayout,
@@ -58,21 +61,22 @@ const routes = [
         path: 'dashboard',
         name: 'AdminDashboard',
         component: AdminDashboardView,
+        meta: { requiresAuth: true },
       },
       {
         path: 'courses',
         name: 'Courses',
         component: CoursesView,
+        meta: { requiresAuth: true },
       },
       {
         path: 'students',
         name: 'Students',
         component: StudentsView,
+        meta: { requiresAuth: true },
       },
     ],
   },
-
-  // Authentication routes
   {
     path: '/login',
     name: 'Login',
@@ -105,18 +109,26 @@ const router = createRouter({
   routes,
 });
 
-// Ensure you protect your routes and redirect users to the login page if they are not authenticated.
+// Navigation guard to protect routes
+router.beforeEach((to, from, next) => {
+  const authStore = useAuthStore();
+  const isAuthenticated = !!authStore.getUserToken || !!authStore.getAdminToken;
+  const isApproved = authStore.getIsApproved;
 
-// router.beforeEach((to, from, next) => {
-//   const isAuthenticated = !!localStorage.getItem('token'); // Adjust according to your auth logic
-//   if (
-//     to.matched.some((record) => record.meta.requiresAuth) &&
-//     !isAuthenticated
-//   ) {
-//     next('/');
-//   } else {
-//     next();
-//   }
-// });
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if (!isAuthenticated) {
+      next('/login');
+    } else if (
+      to.matched.some((record) => record.meta.requiresApproval) &&
+      !isApproved
+    ) {
+      next('/pending');
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+});
 
 export default router;

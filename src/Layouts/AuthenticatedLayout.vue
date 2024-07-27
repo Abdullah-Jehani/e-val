@@ -91,7 +91,7 @@
               }}</span>
               <span class="block text-sm font-semibold text-mainBlack">
                 {{
-                  authStore.role === "student"
+                  authStore.role === 'student'
                     ? authStore.user.email
                     : authStore.admin.email
                 }}
@@ -281,17 +281,14 @@
 </template>
 
 <script setup>
-import axios from "axios";
-import { initFlowbite } from "flowbite";
-import { onMounted } from "vue";
-import { useAuthStore } from "../stores/AuthStore";
+import axios from 'axios';
+import { initFlowbite } from 'flowbite';
+import { onMounted } from 'vue';
+import { useAuthStore } from '../stores/AuthStore';
 const authStore = useAuthStore();
 
-const user = {
-  name: "Mohamed",
-  email: "mohamed@hashedly.com",
-  role: "admin",
-};
+const user = authStore.user;
+
 async function logout() {
   await authStore.logout();
 }
