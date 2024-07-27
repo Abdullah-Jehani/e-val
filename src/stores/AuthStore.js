@@ -61,9 +61,10 @@ export const useAuthStore = defineStore('auth', {
         this.user.registered_courses = response.data.student.registered_courses;
         this.user.department_id = response.data.student.department_id;
         console.log('Registered Courses:', this.user.registered_courses);
-        alert('Register Successful');
+        toast.success('Register Successful');
         router.push('/login');
       } catch (error) {
+        toast.error('Register Failed,' + error.response.data.message);
         console.log('Error:', error);
       }
     },
@@ -80,12 +81,10 @@ export const useAuthStore = defineStore('auth', {
           }
         );
         console.log(response);
-        toast.success('Logout Successful');
         this.clearData();
         router.push('/login');
       } catch (error) {
         console.log('Error', error);
-        toast.error('Logout Failed,' + error.response.data.message);
         router.push('/login');
       }
     },

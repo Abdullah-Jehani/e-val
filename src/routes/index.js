@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import { useAuthStore } from '../stores/authstore';
+// import { useAuthStore } from '../stores/authstore';
 
 // Auth views
 import LoginView from '../views/Auth/LoginView.vue';
@@ -24,31 +24,31 @@ const routes = [
     path: '/',
     component: AuthenticatedLayout,
     redirect: '/dashboard',
-    meta: { requiresAuth: true },
+    // meta: { requiresAuth: true },
     children: [
       {
         path: 'dashboard',
         name: 'StudentDashboard',
         component: StudentDashboardView,
-        meta: { requiresAuth: true, requiresApproval: true },
+        // meta: { requiresAuth: true, requiresApproval: true },
       },
       {
         path: 'evaluation',
         name: 'Evaluation',
         component: EvaluationView,
-        meta: { requiresAuth: true, requiresApproval: true },
+        // meta: { requiresAuth: true, requiresApproval: true },
       },
       {
         path: 'success',
         name: 'SubmitSuccess',
         component: SubmitSuccessView,
-        meta: { requiresAuth: true, requiresApproval: true },
+        // meta: { requiresAuth: true, requiresApproval: true },
       },
       {
         path: 'pending',
         name: 'Pending',
         component: PendingView,
-        meta: { requiresAuth: true },
+        // meta: { requiresAuth: true },
       },
     ],
   },
@@ -62,19 +62,19 @@ const routes = [
         path: 'dashboard',
         name: 'AdminDashboard',
         component: AdminDashboardView,
-        meta: { requiresAuth: true },
+        // meta: { requiresAuth: true },
       },
       {
         path: 'courses',
         name: 'Courses',
         component: CoursesView,
-        meta: { requiresAuth: true },
+        // meta: { requiresAuth: true },
       },
       {
         path: 'students',
         name: 'Students',
         component: StudentsView,
-        meta: { requiresAuth: true },
+        // meta: { requiresAuth: true },
       },
     ],
   },
@@ -111,37 +111,37 @@ const router = createRouter({
 });
 
 // Navigation Guard
-router.beforeEach((to, from, next) => {
-  const authStore = useAuthStore();
-  const isAuthenticated = !!authStore.getUserToken || !!authStore.getAdminToken;
-  const isApproved = authStore.getIsApproved;
-  const role = authStore.getRole;
+// router.beforeEach((to, from, next) => {
+//   const authStore = useAuthStore();
+//   const isAuthenticated = !!authStore.getUserToken || !!authStore.getAdminToken;
+//   const isApproved = authStore.getIsApproved;
+//   const role = authStore.getRole;
 
-  if (to.matched.some((record) => record.meta.requiresAuth)) {
-    if (!isAuthenticated) {
-      next('/login');
-    } else {
-      if (role === 'student') {
-        if (!isApproved && to.name !== 'Pending') {
-          next('/pending');
-        } else if (isApproved) {
-          next();
-        } else {
-          next('/login');
-        }
-      } else if (role === 'admin') {
-        if (to.path.startsWith('/admin')) {
-          next();
-        } else {
-          next('/admin/dashboard');
-        }
-      } else {
-        next('/login');
-      }
-    }
-  } else {
-    next();
-  }
-});
+//   if (to.matched.some((record) => record.meta.requiresAuth)) {
+//     if (!isAuthenticated) {
+//       next('/login');
+//     } else {
+//       if (role === 'student') {
+//         if (!isApproved && to.name !== 'Pending') {
+//           next('/pending');
+//         } else if (isApproved) {
+//           next();
+//         } else {
+//           next('/login');
+//         }
+//       } else if (role === 'admin') {
+//         if (to.path.startsWith('/admin')) {
+//           next();
+//         } else {
+//           next('/admin/dashboard');
+//         }
+//       } else {
+//         next('/login');
+//       }
+//     }
+//   } else {
+//     next();
+//   }
+// });
 
 export default router;

@@ -105,33 +105,36 @@ async function login() {
       email: email.value,
       password: password.value,
     });
-    console.log(response.data.role);
-    console.log(response);
 
-    if (response.data.role === 'admin') {
-      authStore.admin.email = response.data.admin.email;
-      authStore.admin.token = response.data.token;
-      authStore.role = response.data.admin.role;
+    const data = response.data;
+    console.log(data);
+
+    const authStore = useAuthStore();
+
+    if (data.role === 'admin') {
+      authStore.admin.email = data.admin.email;
+      authStore.admin.token = data.token;
+      authStore.role = data.admin.role;
+      router.push('/admin/dashboard');
+      toast.success('Welcome Admin');
     } else {
-      authStore.user.email = response.data.student.email;
-      authStore.user.token = response.data.token;
-      authStore.role = response.data.role;
-      authStore.user.student_id = response.data.student.student_id;
-      authStore.user.isApproved = response.data.student.is_approved;
+      authStore.user.email = data.student.email;
+      authStore.user.token = data.token;
+      authStore.role = data.role;
+      authStore.user.student_id = data.student.student_id;
+      authStore.user.isApproved = data.student.is_approved;
+
       console.log(authStore.user.isApproved);
-    }
-    if (authStore.role === 'admin') {
-      router.push('/dashboard');
-    } else if (
-      authStore.role === 'student' &&
-      authStore.user.isApproved === 0
-    ) {
-      toast.info('Pending Status');
-      router.push('/pending');
-    } else {
-      router.push('/dashboard');
+
+      if (authStore.user.isApproved === 0) {
+        toast.info('Pending Status');
+        router.push('/pending');
+      } else {
+        router.push('/dashboard');
+      }
     }
   } catch (error) {
+    console.error('Login error:', error);
     toast.error('Invalid email or password');
   }
 }

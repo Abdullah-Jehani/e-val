@@ -67,7 +67,7 @@
                     question.selectedOption !== option.value,
                   'cursor-not-allowed opacity-50': !isFormEnabled,
                 }"
-                class="block hover:filter border-none p-4 rounded-lg cursor-pointer text-center transition-all duration-300 ease-in-out"
+                class="hover:filter border-none p-4 rounded-lg cursor-pointer text-center transition-all duration-300 ease-in-out flex justify-center items-center"
               >
                 {{ option.text }}
               </label>
