@@ -89,9 +89,13 @@
               <span class="block text-sm font-semibold text-mainBlack">{{
                 user.name
               }}</span>
-              <span class="block text-sm text-mainBlack truncate">{{
-                authStore.admin.email
-              }}</span>
+              <span class="block text-sm font-semibold text-mainBlack">
+                {{
+                  authStore.role === "student"
+                    ? authStore.user.email
+                    : authStore.admin.email
+                }}
+              </span>
             </div>
             <ul class="py-1 text-gray-700" aria-labelledby="dropdown">
               <li>
