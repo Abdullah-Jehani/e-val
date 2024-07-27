@@ -54,6 +54,7 @@ export const useAuthStore = defineStore("auth", {
         });
         console.log(response);
         alert("Register Successful");
+
         router.push("/login");
       } catch {
         console.log("Error");
