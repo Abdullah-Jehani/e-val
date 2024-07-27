@@ -12,6 +12,10 @@ export const useAuthStore = defineStore("auth", {
       token: null,
       isApproved: false,
       errorMessage: null,
+      isEvaluated: false,
+      department_id: null,
+      registered_courses: [],
+      evaluated_courses: [],
     },
     admin: {
       email: null,
@@ -32,6 +36,10 @@ export const useAuthStore = defineStore("auth", {
     getAdminErrorMessages: (state) => state.admin.errorMessage,
     getRole: (state) => state.role,
     getIsApproved: (state) => state.user.isApproved,
+    getIsEvaluated: (state) => state.user.isEvaluated,
+    getDepartmentId: (state) => state.user.department_id,
+    getRegisteredCourses: (state) => state.user.registered_courses,
+    getEvaluatedCourses: (state) => state.user.evaluated_courses,
   },
   actions: {
     async register() {
@@ -42,12 +50,17 @@ export const useAuthStore = defineStore("auth", {
           password: this.user.password,
           student_id: this.user.student_id,
         });
-        console.log(response);
-        alert("Register Successful");
 
+        this.isEvaluated = response.data.student.is_evaluated;
+        this.isApproved = response.data.student.is_approved;
+        this.user.evaluated_courses = response.data.student.evaluated_courses;
+        this.user.registered_courses = response.data.student.registered_courses;
+        this.user.department_id = response.data.student.department_id;
+        console.log("Registered Courses:", this.user.registered_courses);
+        alert("Register Successful");
         router.push("/login");
-      } catch {
-        console.log("Error");
+      } catch (error) {
+        console.log("Error:", error);
       }
     },
     async logout() {
