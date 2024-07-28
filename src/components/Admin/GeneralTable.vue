@@ -49,8 +49,12 @@
               'border-b border-lightPurple': border,
             }"
           >
-            <td class="py-3 text-left md:table-cell">{{ object.id }}</td>
-            <td class="w-full lg:px-5 px-2 py-3 truncate">{{ object.name }}</td>
+            <td class="py-3 text-left md:table-cell">
+              {{ object.student_id ? object.student_id : object.course_code }}
+            </td>
+            <td class="w-full lg:px-5 px-2 py-3 truncate">
+              {{ object.email ? object.email : object.name }}
+            </td>
           </tr>
         </tbody>
       </table>

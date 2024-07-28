@@ -132,12 +132,23 @@
 
 <script setup>
 import axios from 'axios';
-import { onMounted, ref } from 'vue';
+import { onMounted, computed, ref } from 'vue';
 import { useAuthStore } from '../../stores/AuthStore';
 import { useToast } from 'vue-toastification';
 import StatsCard from '../../components/Student/StatsCard.vue';
 import GeneralTable from '../../components/Admin/GeneralTable.vue';
 import RequestTable from '../../components/Admin/RequestsTable.vue';
+
+const totalStudents = ref(0);
+const evaluatedStudents = ref(0);
+const remainingStudents = ref(0);
+
+const totalCourses = ref(0);
+const evaluatedCourses = ref(0);
+const remainingCourses = ref(0);
+
+const toast = useToast();
+const authStore = useAuthStore();
 
 const requests = ref([]);
 
@@ -145,31 +156,49 @@ const courses = ref([]);
 
 const students = ref([]);
 
-const cards = [
-  {
-    id: 1,
-    title: 'Total Courses',
-    value: courses.value.length,
-  },
-  {
-    id: 2,
-    title: 'Evaluated',
-    value: courses.value.length - 2,
-  },
-  {
-    id: 3,
-    title: 'Total Students',
-    value: students.value.length,
-  },
-  {
-    id: 4,
-    title: 'Remaining',
-    value: students.value.length - 2,
-  },
-];
+async function getStudents() {
+  const authStore = useAuthStore();
+  const apiUrl = import.meta.env.VITE_APP_API_URL;
+  try {
+    const response = await axios.get(apiUrl + 'students', {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + authStore.admin.token,
+      },
+    });
+    students.value = response.data.data.filter(
+      (student) => student.is_approved === 1
+    );
+    totalStudents.value = students.value.length;
+    evaluatedStudents.value = students.value.filter(
+      (student) => student.is_evaluated === 1
+    ).length;
+    remainingStudents.value = totalStudents.value - evaluatedStudents.value;
+  } catch (error) {
+    console.error(error);
+  }
+}
 
-const toast = useToast();
-const authStore = useAuthStore();
+async function getCourses() {
+  const authStore = useAuthStore();
+  const apiUrl = import.meta.env.VITE_APP_API_URL;
+  try {
+    const response = await axios.get(apiUrl + 'courses', {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + authStore.admin.token,
+      },
+    });
+    courses.value = response.data;
+    totalCourses.value = courses.value.length;
+    evaluatedCourses.value = courses.value.filter(
+      (course) => course.is_evaluated === 1
+    ).length;
+    remainingCourses.value = totalCourses.value - evaluatedCourses.value;
+  } catch (error) {
+    console.error(error);
+  }
+}
 
 async function getRequests() {
   const authStore = useAuthStore();
@@ -182,7 +211,6 @@ async function getRequests() {
       },
     });
     requests.value = response.data;
-    console.log(requests.value);
   } catch (error) {
     console.error(error);
   }
@@ -239,9 +267,7 @@ async function rejectStudent(index) {
         },
       }
     );
-    toast.success(
-      `Rejected student with ID ${requests.value[index].student_id}`
-    );
+    toast.error(`Rejected student with ID ${requests.value[index].student_id}`);
     console.log(response.data);
     // Optionally, remove the rejected request from the list
     requests.value.splice(index, 1);
@@ -251,8 +277,32 @@ async function rejectStudent(index) {
   }
 }
 
+const cards = computed(() => [
+  {
+    id: 1,
+    title: 'Total Courses',
+    value: totalCourses.value,
+  },
+  {
+    id: 2,
+    title: 'Evaluated',
+    value: evaluatedCourses.value,
+  },
+  {
+    id: 3,
+    title: 'Total Students',
+    value: totalStudents.value,
+  },
+  {
+    id: 4,
+    title: 'Remaining',
+    value: remainingStudents.value,
+  },
+]);
+
 onMounted(() => {
   getRequests();
-  console.log(requests.value);
+  getStudents();
+  getCourses();
 });
 </script>
