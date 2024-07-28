@@ -59,8 +59,8 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { defineProps } from 'vue';
+import { ref } from "vue";
+import { defineProps } from "vue";
 
 const props = defineProps({
   objects: {
