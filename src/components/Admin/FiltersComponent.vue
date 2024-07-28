@@ -56,10 +56,10 @@
             <option value="" disabled>All Department</option>
             <option
               v-for="department in departments"
-              :key="department"
-              :value="department"
+              :key="department.id"
+              :value="department.id"
             >
-              {{ department }}
+              {{ department.name }}
             </option>
           </select>
         </div>
@@ -116,20 +116,22 @@
       :objects="objects"
       :showExportButton="true"
       @export="openExportModal"
-    >
-    </Modal>
+    ></Modal>
   </div>
 </template>
 
 <script setup>
-import { ref, watch, defineProps, defineEmits } from 'vue';
-import Modal from './Modal.vue';
+import { ref, watch, onMounted, defineProps, defineEmits } from "vue";
+import axios from "axios";
+import Modal from "./Modal.vue";
+import { useAuthStore } from "../../stores/AuthStore";
 
-const emit = defineEmits(['update:department', 'update:search']);
-const title = ref('Courses');
-const departments = ref(['Department 1', 'Department 2', 'Department 3']);
-const selectedDepartment = ref('');
-const searchQuery = ref('');
+const authStore = useAuthStore();
+const emit = defineEmits(["update:department", "update:search"]);
+const title = ref("Courses");
+const departments = ref([]);
+const selectedDepartment = ref("");
+const searchQuery = ref("");
 const showModal = ref(false);
 
 const props = defineProps({
@@ -142,9 +144,25 @@ const props = defineProps({
     required: true,
   },
 });
+
+const fetchDepartments = async () => {
+  try {
+    const response = await axios.get("http://127.0.0.1:8000/api/departments", {
+      headers: {
+        Authorization: `Bearer ${authStore.admin.token}`,
+      },
+    });
+    departments.value = response.data;
+  } catch (error) {
+    console.error("Error fetching departments:", error);
+  }
+};
+
+onMounted(fetchDepartments);
+
 const selectAllDepartments = () => {
-  selectedDepartment.value = '';
-  emit('update:department', selectedDepartment.value);
+  selectedDepartment.value = "";
+  emit("update:department", selectedDepartment.value);
 };
 
 const openExportModal = () => {
@@ -152,19 +170,19 @@ const openExportModal = () => {
 };
 
 const updateSelectedDepartment = () => {
-  emit('update:department', selectedDepartment.value);
+  emit("update:department", selectedDepartment.value);
 };
 
 const updateSearchQuery = () => {
-  emit('update:search', searchQuery.value);
+  emit("update:search", searchQuery.value);
 };
 
 watch(selectedDepartment, (newVal) => {
-  emit('update:department', newVal);
+  emit("update:department", newVal);
 });
 
 watch(searchQuery, (newVal) => {
-  emit('update:search', newVal);
+  emit("update:search", newVal);
 });
 </script>
 

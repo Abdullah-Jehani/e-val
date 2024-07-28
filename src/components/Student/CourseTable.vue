@@ -23,8 +23,10 @@
             'border-t border-lightPurple': index === 0,
           }"
         >
-          <td class="hidden p-5 text-left md:table-cell">{{ code }}</td>
-          <td class="p-5">{{ name }}</td>
+          <td class="hidden p-5 text-left md:table-cell">
+            {{ course.course_code }}
+          </td>
+          <td class="p-5">{{ course.name }}</td>
           <td class="p-5 text-center">
             <input
               type="checkbox"
@@ -41,19 +43,8 @@
 
 <script setup>
 import { ref } from "vue";
+import { useAuthStore } from "../../stores/AuthStore";
 
-const courseCode = ref("");
-const courseName = ref("");
-const props = defineProps({
-  code: String,
-  name: String,
-  evaluated: Boolean,
-});
-const courses = ref([
-  { code: "12345", name: "Introduction to Programming", evaluated: true },
-  { code: "67890", name: "Data Structures and Algorithms", evaluated: true },
-  { code: "54321", name: "Web Development Fundamentals", evaluated: false },
-  { code: "98765", name: "Mobile App Development", evaluated: true },
-  { code: "43210", name: "Database Management Systems", evaluated: false },
-]);
+const authStore = useAuthStore();
+const courses = ref(authStore.user.registered_courses);
 </script>
