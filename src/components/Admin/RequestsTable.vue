@@ -35,12 +35,16 @@
       <table class="table-auto text-left text-mainBlack">
         <tbody class="bg-mainWhite truncate">
           <tr v-for="(object, index) in objects" :key="index" class="truncate">
-            <td class="pr-5 py-2 text-left md:table-cell">{{ object.id }}</td>
-            <td class="w-full md:px-5 px-2 py-3 truncate">{{ object.name }}</td>
+            <td class="pr-5 py-2 text-left md:table-cell">
+              {{ object.student_id }}
+            </td>
+            <td class="w-full md:px-5 px-2 py-3 truncate">
+              {{ object.email }}
+            </td>
             <td class="md:table-cell py-2 truncate">
               <div class="flex gap-2">
                 <span
-                  @click="acceptItem(index)"
+                  @click="$emit('accept', index)"
                   class="md:px-3 md:py-1 p-1 rounded-sm bg-darkGreen text-white hover:filter hover:brightness-90 cursor-pointer transition duration-200 ease-in-out"
                 >
                   <svg
@@ -59,7 +63,7 @@
                   </svg>
                 </span>
                 <span
-                  @click="rejectItem(index)"
+                  @click="$emit('reject', index)"
                   class="md:px-3 md:py-1 p-1 rounded-sm bg-mainRed text-white hover:filter hover:brightness-90 cursor-pointer transition duration-200 ease-in-out"
                 >
                   <svg
@@ -87,11 +91,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { defineProps } from 'vue';
-import { useToast } from 'vue-toastification';
-
-const toast = useToast();
+import { defineProps, defineEmits } from 'vue';
 
 const props = defineProps({
   objects: {
@@ -108,13 +108,5 @@ const props = defineProps({
   },
 });
 
-const acceptItem = (index) => {
-  toast.success(`Accepted student with id ${props.objects[index].id}`);
-  props.objects.splice(index, 1);
-};
-
-const rejectItem = (index) => {
-  toast.error(`Rejected student with id ${props.objects[index].id}`);
-  props.objects.splice(index, 1);
-};
+const emit = defineEmits(['accept', 'reject']);
 </script>

@@ -64,8 +64,8 @@ export const useAuthStore = defineStore('auth', {
         toast.success('Register Successful');
         router.push('/login');
       } catch (error) {
-        toast.error('Register Failed,' + error.response.data.message);
-        console.log('Error:', error);
+        toast.error('Register Failed');
+        console.log('Error:', error.response.data.message);
       }
     },
     async logout() {

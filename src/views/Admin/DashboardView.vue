@@ -123,240 +123,27 @@
         :objects="requests"
         :cardTitle="'Student Requests'"
         :tagName="`${requests.length} Requests`"
+        @accept="acceptStudent"
+        @reject="rejectStudent"
       />
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import axios from 'axios';
+import { onMounted, ref } from 'vue';
+import { useAuthStore } from '../../stores/AuthStore';
+import { useToast } from 'vue-toastification';
 import StatsCard from '../../components/Student/StatsCard.vue';
 import GeneralTable from '../../components/Admin/GeneralTable.vue';
 import RequestTable from '../../components/Admin/RequestsTable.vue';
 
-const courses = ref([
-  {
-    id: '12325',
-    department: 'Department 1',
-    name: 'Introduction to Programming',
-    instructor: 'Al-Khwarizmi',
-    courseCode: 'CS101',
-    courseCredits: '3',
-    enrolledStudents: 40,
-    evaluated: 30,
-  },
-  {
-    id: '61890',
-    department: 'Department 2',
-    name: 'Data Structures and Algorithms',
-    instructor: 'Ibn al-Haytham',
-    courseCode: 'CS202',
-    courseCredits: '4',
-    enrolledStudents: 35,
-    evaluated: 28,
-  },
-  {
-    id: '12341',
-    department: 'Department 3',
-    name: 'Web Development',
-    instructor: 'Al-Farabi',
-    courseCode: 'CS303',
-    courseCredits: '3',
-    enrolledStudents: 45,
-    evaluated: 40,
-  },
-  {
-    id: '67090',
-    department: 'Department 2',
-    name: 'Database Management',
-    instructor: 'Ibn Sina',
-    courseCode: 'CS404',
-    courseCredits: '4',
-    enrolledStudents: 50,
-    evaluated: 45,
-  },
-  {
-    id: '19345',
-    department: 'Department 1',
-    name: 'Software Engineering',
-    instructor: 'Al-Biruni',
-    courseCode: 'CS505',
-    courseCredits: '3',
-    enrolledStudents: 30,
-    evaluated: 25,
-  },
-  {
-    id: '60090',
-    department: 'Department 3',
-    name: 'Artificial Intelligence',
-    instructor: 'Jabir ibn Hayyan',
-    courseCode: 'CS606',
-    courseCredits: '4',
-    enrolledStudents: 55,
-    evaluated: 50,
-  },
-  {
-    id: '00345',
-    department: 'Department 2',
-    name: 'Operating Systems',
-    instructor: 'Ibn Rushd',
-    courseCode: 'CS707',
-    courseCredits: '3',
-    enrolledStudents: 38,
-    evaluated: 32,
-  },
-]);
+const requests = ref([]);
 
-const students = ref([
-  {
-    id: 20134,
-    name: 'Omar Al-Farouq',
-    email: 'omar.alfarouq@university.edu',
-    semester: 3,
-    department: 'Department 1',
-    enrolledCourses: 5,
-    evaluated: 3,
-    remaining: 2,
-    role: 'student',
-  },
-  {
-    id: 20135,
-    name: 'Layla Al-Hassan',
-    email: 'layla.alhassan@university.edu',
-    semester: 2,
-    department: 'Department 2',
-    enrolledCourses: 7,
-    evaluated: 5,
-    remaining: 2,
-    role: 'student',
-  },
-  {
-    id: 20136,
-    name: 'Khalid Al-Sabah',
-    email: 'khalid.alsabah@university.edu',
-    semester: 4,
-    department: 'Department 3',
-    enrolledCourses: 6,
-    evaluated: 3,
-    remaining: 3,
-    role: 'student',
-  },
-  {
-    id: 20137,
-    name: 'Aisha Al-Mansoori',
-    email: 'aisha.almansoori@university.edu',
-    semester: 1,
-    department: 'Department 1',
-    enrolledCourses: 7,
-    evaluated: 7,
-    remaining: 0,
-    role: 'student',
-  },
-  {
-    id: 20138,
-    name: 'Faisal Al-Nasser',
-    email: 'faisal.elnasser@university.edu',
-    semester: 3,
-    department: 'Department 2',
-    enrolledCourses: 5,
-    evaluated: 3,
-    remaining: 2,
-    role: 'student',
-  },
-  {
-    id: 20139,
-    name: 'Hassan Al-Shehri',
-    email: 'hassan.alshehri@university.edu',
-    semester: 2,
-    department: 'Department 3',
-    enrolledCourses: 7,
-    evaluated: 1,
-    remaining: 6,
-    role: 'student',
-  },
-  {
-    id: 20140,
-    name: 'Sara Al-Mansoori',
-    email: 'sara.almansoori@university.edu',
-    semester: 4,
-    department: 'Department 1',
-    enrolledCourses: 4,
-    evaluated: 3,
-    remaining: 1,
-    role: 'student',
-  },
-  {
-    id: 20141,
-    name: 'Farah Ben Abdallah',
-    email: 'farah.benabdallah@university.edu',
-    semester: 4,
-    department: 'Department 1',
-    enrolledCourses: 6,
-    evaluated: 3,
-    remaining: 3,
-    role: 'student',
-  },
-  {
-    id: 20142,
-    name: 'Khalid Bilal',
-    email: 'khalid.bilal@university.edu',
-    semester: 4,
-    department: 'Department 1',
-    enrolledCourses: 6,
-    evaluated: 2,
-    remaining: 4,
-    role: 'student',
-  },
-  {
-    id: 20143,
-    name: 'Sami Khalil',
-    email: 'sami.khalil@university.edu',
-    semester: 4,
-    department: 'Department 1',
-    enrolledCourses: 7,
-    evaluated: 3,
-    remaining: 4,
-    role: 'student',
-  },
-]);
+const courses = ref([]);
 
-const requests = ref([
-  {
-    id: 12245,
-    name: 'Sami Khaled',
-    email: 'XwE8j@example.com',
-    role: 'student',
-    request: '',
-  },
-  {
-    id: 12246,
-    name: 'Ahmed Khaled',
-    email: 'XwE8j@example.com',
-    role: 'student',
-    request: '',
-  },
-  {
-    id: 12247,
-    name: 'Ahmed Khaled',
-    email: 'XwE8j@example.com',
-    role: 'student',
-    request: '',
-  },
-  {
-    id: 12248,
-    name: 'Ahmed Khaled',
-    email: 'XwE8j@example.com',
-    role: 'student',
-    request: '',
-  },
-  {
-    id: 12249,
-    name: 'Ahmed Khaled',
-    email: 'XwE8j@example.com',
-    role: 'student',
-    request: '',
-  },
-]);
+const students = ref([]);
 
 const cards = [
   {
@@ -380,4 +167,92 @@ const cards = [
     value: students.value.length - 2,
   },
 ];
+
+const toast = useToast();
+const authStore = useAuthStore();
+
+async function getRequests() {
+  const authStore = useAuthStore();
+  const apiUrl = import.meta.env.VITE_APP_API_URL;
+  try {
+    const response = await axios.get(apiUrl + 'students/unapproved', {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + authStore.admin.token,
+      },
+    });
+    requests.value = response.data;
+    console.log(requests.value);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+async function acceptStudent(index) {
+  const apiUrl = import.meta.env.VITE_APP_API_URL;
+  const token = authStore.admin?.token;
+
+  if (!token) {
+    toast.error('User is not authenticated');
+    return;
+  }
+
+  try {
+    const response = await axios.post(
+      `${apiUrl}approve-user/${requests.value[index].id}`,
+      {},
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    toast.success(
+      `Accepted student with ID ${requests.value[index].student_id}`
+    );
+    console.log(response.data);
+    // Optionally, remove the accepted request from the list
+    requests.value.splice(index, 1);
+  } catch (error) {
+    toast.error('Failed to accept student');
+    console.error(error);
+  }
+}
+
+async function rejectStudent(index) {
+  const apiUrl = import.meta.env.VITE_APP_API_URL;
+  const token = authStore.admin?.token;
+
+  if (!token) {
+    toast.error('User is not authenticated');
+    return;
+  }
+
+  try {
+    const response = await axios.delete(
+      `${apiUrl}students/${requests.value[index].id}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    toast.success(
+      `Rejected student with ID ${requests.value[index].student_id}`
+    );
+    console.log(response.data);
+    // Optionally, remove the rejected request from the list
+    requests.value.splice(index, 1);
+  } catch (error) {
+    toast.error('Failed to reject student');
+    console.error(error);
+  }
+}
+
+onMounted(() => {
+  getRequests();
+  console.log(requests.value);
+});
 </script>

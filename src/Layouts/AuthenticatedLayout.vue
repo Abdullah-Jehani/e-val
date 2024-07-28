@@ -248,13 +248,13 @@
     </aside>
 
     <main
-      class="lg:px-16 md:px-12 px-1 md:ml-40 lg:ml-56 min-h-[calc(100vh-6rem)] h-auto pt-28 pb-8"
+      class="lg:px-16 sm:px-12 px-1 md:ml-48 lg:ml-56 min-h-[calc(100vh-6rem)] h-auto pt-28 pb-8"
     >
       <router-view></router-view>
     </main>
 
     <footer
-      class="md:px-16 px-4 md:ml-40 lg:ml-56 py-4 grid grid-cols-2 md:grid-cols-3 gap-8 mt-4 justify-center items-end md:items-center text-slate-400 h-20"
+      class="md:px-16 sm:px-12 text-sm md:text-[1rem] px-4 md:ml-40 lg:ml-56 py-4 grid grid-cols-2 md:grid-cols-3 gap-8 mt-4 justify-center items-end md:items-center text-slate-400 h-20"
     >
       <div class="text-left md:text-center md:col-start-2">
         <p>e-val &copy; {{ new Date().getFullYear() }}</p>
@@ -263,11 +263,11 @@
       <div
         class="flex md:flex-row flex-col items-end justify-end md:items-center md:gap-4 gap-2"
       >
-        <p>Developed by</p>
+        <p class="w-full inline text-right">Developed by</p>
         <a
           href="https://www.instagram.com/hashed.ly/"
           target="_blank"
-          class="md:h-8 h-6"
+          class="md:h-8 h-6w-full"
         >
           <img
             src="/icons/hashed-logo.png"

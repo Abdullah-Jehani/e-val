@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-// import { useAuthStore } from '../stores/authstore';
+import { useAuthStore } from '../stores/AuthStore'; // Ensure the correct path
 
 // Auth views
 import LoginView from '../views/Auth/LoginView.vue';
@@ -21,63 +21,72 @@ import StudentsView from '../views/Admin/StudentsView.vue';
 
 const routes = [
   {
+    // Authenticated Student routes
     path: '/',
     component: AuthenticatedLayout,
     redirect: '/dashboard',
-    // meta: { requiresAuth: true },
     children: [
       {
         path: 'dashboard',
         name: 'StudentDashboard',
         component: StudentDashboardView,
-        // meta: { requiresAuth: true, requiresApproval: true },
+        meta: { requiresAuth: true, role: 'student' },
       },
       {
         path: 'evaluation',
         name: 'Evaluation',
         component: EvaluationView,
-        // meta: { requiresAuth: true, requiresApproval: true },
+        meta: { requiresAuth: true, role: 'student' },
       },
       {
         path: 'success',
         name: 'SubmitSuccess',
         component: SubmitSuccessView,
-        // meta: { requiresAuth: true, requiresApproval: true },
+        meta: { requiresAuth: true, role: 'student' },
       },
       {
         path: 'pending',
         name: 'Pending',
         component: PendingView,
-        // meta: { requiresAuth: true },
+        meta: { requiresAuth: true, role: 'student' },
+        beforeEnter: (to, from, next) => {
+          const authStore = useAuthStore();
+          if (authStore.getRole === 'student' && authStore.getIsApproved) {
+            next('/dashboard');
+          } else {
+            next();
+          }
+        },
       },
     ],
   },
+  // Authenticated Admin routes
   {
     path: '/admin',
     component: AuthenticatedLayout,
     redirect: '/admin/dashboard',
-    meta: { requiresAuth: true },
     children: [
       {
         path: 'dashboard',
         name: 'AdminDashboard',
         component: AdminDashboardView,
-        // meta: { requiresAuth: true },
+        meta: { requiresAuth: true, role: 'admin' },
       },
       {
         path: 'courses',
         name: 'Courses',
         component: CoursesView,
-        // meta: { requiresAuth: true },
+        meta: { requiresAuth: true, role: 'admin' },
       },
       {
         path: 'students',
         name: 'Students',
         component: StudentsView,
-        // meta: { requiresAuth: true },
+        meta: { requiresAuth: true, role: 'admin' },
       },
     ],
   },
+  // Authentication routes
   {
     path: '/login',
     name: 'Login',
@@ -110,38 +119,47 @@ const router = createRouter({
   routes,
 });
 
-// Navigation Guard
-// router.beforeEach((to, from, next) => {
-//   const authStore = useAuthStore();
-//   const isAuthenticated = !!authStore.getUserToken || !!authStore.getAdminToken;
-//   const isApproved = authStore.getIsApproved;
-//   const role = authStore.getRole;
+router.beforeEach((to, from, next) => {
+  const authStore = useAuthStore();
+  const isAuthenticated = !!authStore.getUserToken || !!authStore.getAdminToken;
+  const role = authStore.getRole;
+  const isApproved = authStore.getIsApproved;
 
-//   if (to.matched.some((record) => record.meta.requiresAuth)) {
-//     if (!isAuthenticated) {
-//       next('/login');
-//     } else {
-//       if (role === 'student') {
-//         if (!isApproved && to.name !== 'Pending') {
-//           next('/pending');
-//         } else if (isApproved) {
-//           next();
-//         } else {
-//           next('/login');
-//         }
-//       } else if (role === 'admin') {
-//         if (to.path.startsWith('/admin')) {
-//           next();
-//         } else {
-//           next('/admin/dashboard');
-//         }
-//       } else {
-//         next('/login');
-//       }
-//     }
-//   } else {
-//     next();
-//   }
-// });
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if (!isAuthenticated) {
+      next('/login');
+    } else if (to.matched.some((record) => record.meta.role === 'admin')) {
+      if (role === 'admin') {
+        next();
+      } else {
+        next('/login');
+      }
+    } else if (to.matched.some((record) => record.meta.role === 'student')) {
+      if (role === 'student') {
+        if (!isApproved && to.path !== '/pending') {
+          next('/pending');
+        } else {
+          next();
+        }
+      } else {
+        next('/login');
+      }
+    } else {
+      next();
+    }
+  } else {
+    if (isAuthenticated) {
+      if (role === 'admin' && !to.path.startsWith('/admin')) {
+        next('/admin/dashboard');
+      } else if (role === 'student' && to.path === '/login') {
+        next('/dashboard');
+      } else {
+        next();
+      }
+    } else {
+      next();
+    }
+  }
+});
 
 export default router;
