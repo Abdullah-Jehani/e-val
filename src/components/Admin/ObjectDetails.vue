@@ -15,10 +15,12 @@
           <!-- Main Label -->
           <label
             for=""
-            class="md:min-w-32 min-w-20 md:text-xl text-md font-normal text-darkGray"
+            class="md:min-w-32 min-w-20 md:text-lg lg:text-xl text-md font-normal text-darkGray"
             >{{ mainLabel }}:</label
           >
-          <p class="md:text-xl text-lg font-semibold text-mainBlack truncate">
+          <p
+            class="md:text-lg lg:text-xl text-lg font-semibold text-mainBlack truncate"
+          >
             {{ mainValue }}
           </p>
         </div>
@@ -29,10 +31,12 @@
         >
           <label
             for=""
-            class="md:min-w-32 min-w-20 md:text-xl text-md font-normal text-darkGray"
+            class="md:min-w-32 min-w-20 md:text-lg lg:text-xl text-md font-normal text-darkGray"
             >{{ secondLabel }}:</label
           >
-          <p class="md:text-xl text-lg font-semibold text-mainBlack truncate">
+          <p
+            class="md:text-lg lg:text-xl text-lg font-semibold text-mainBlack truncate"
+          >
             {{ secondValue }}
           </p>
         </div>
@@ -52,10 +56,10 @@
         >
           <label
             for=""
-            class="md:min-w-24 min-w-16 md:text-xl text-md font-normal text-darkGray"
+            class="md:min-w-24 min-w-16 md:text-lg lg:text-xl text-md font-normal text-darkGray"
             >{{ thirdLabel }}:</label
           >
-          <p class="md:text-xl text-lg font-semibold text-mainBlack truncate">
+          <p class="md:text-lg lg:text-xl text-lg font-semibold text-mainBlack">
             {{ thirdValue }}
           </p>
         </div>
@@ -66,10 +70,10 @@
         >
           <label
             for=""
-            class="md:min-w-24 min-w-16 md:text-xl text-md font-normal text-darkGray"
+            class="md:min-w-24 min-w-16 md:text-lg lg:text-xl text-md font-normal text-darkGray"
             >{{ fourthLabel }}:</label
           >
-          <p class="md:text-xl text-lg font-semibold text-mainBlack truncate">
+          <p class="md:text-lg lg:text-xl text-lg font-semibold text-mainBlack">
             {{ fourthValue }}
           </p>
         </div>

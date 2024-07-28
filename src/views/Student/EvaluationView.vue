@@ -24,8 +24,12 @@
         id="course"
         class="mx-auto cursor-pointer w-full border border-lightPurple bg-offWhite p-4 rounded-md focus:ring-0 focus:outline-none focus:shadow-outline"
       >
-        <option disabled selected value="">Select Course</option>
-        <option v-for="course in courses" :value="course.id" :key="course.id">
+        <option disabled value="">Select Course</option>
+        <option
+          v-for="course in registeredCourses"
+          :value="course.id"
+          :key="course.id"
+        >
           {{ course.name }}
         </option>
       </select>
@@ -57,33 +61,105 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, ref, onMounted } from 'vue';
 import FormHeader from '../../components/Student/Form/FormHeader.vue';
 import FormBody from '../../components/Student/Form/FormBody.vue';
 import { useToast } from 'vue-toastification';
-import store from '../../stores/store';
+import axios from 'axios';
+import { useAuthStore } from '../../stores/AuthStore';
 
-// Reactive store data
-const courses = computed(() => store.courses);
-const selectedCourseId = computed({
-  get: () => store.selectedCourseId,
-  set: (value) => {
-    store.selectedCourseId = value;
-    store.updateCourseInfo();
+const authStore = useAuthStore();
+
+const registeredCourses = ref([]);
+
+const sections = ref([
+  {
+    id: 1,
+    title: 'Evaluating the quality of content delivery',
+    questions: [
+      {
+        id: 1,
+        text: 'Explanation of the course material is clear and understandable',
+        selectedOption: '',
+        options: [
+          { text: 'Strongly Disagree', value: 0 },
+          { text: 'Disagree', value: 1 },
+          { text: 'Neutral', value: 2 },
+          { text: 'Agree', value: 3 },
+          { text: 'Strongly Agree', value: 4 },
+        ],
+      },
+      {
+        id: 2,
+        text: 'Course topics are clear and related to the course content.',
+        selectedOption: '',
+        options: [
+          { text: 'Strongly Disagree', value: 0 },
+          { text: 'Disagree', value: 1 },
+          { text: 'Neutral', value: 2 },
+          { text: 'Agree', value: 3 },
+          { text: 'Strongly Agree', value: 4 },
+        ],
+      },
+    ],
   },
-});
-const courseName = computed(() => store.courseName);
-const instructorName = computed(() => store.instructorName);
-const sections = computed(() => store.sections);
-const showNotification = computed(() => store.showNotification);
+  {
+    id: 2,
+    title: 'Evaluating the resources and references',
+    questions: [
+      {
+        id: 1,
+        text: 'Notes/presentations cover all course topics.',
+        selectedOption: '',
+        options: [
+          { text: 'Strongly Disagree', value: 0 },
+          { text: 'Disagree', value: 1 },
+          { text: 'Neutral', value: 2 },
+          { text: 'Agree', value: 3 },
+          { text: 'Strongly Agree', value: 4 },
+        ],
+      },
+      {
+        id: 2,
+        text: 'Course books/references (digital or physical) are reliable and up-to-date.',
+        selectedOption: '',
+        options: [
+          { text: 'Strongly Disagree', value: 0 },
+          { text: 'Disagree', value: 1 },
+          { text: 'Neutral', value: 2 },
+          { text: 'Agree', value: 3 },
+          { text: 'Strongly Agree', value: 4 },
+        ],
+      },
+      {
+        id: 3,
+        text: 'Clear audio and video in recorded lectures.',
+        selectedOption: '',
+        options: [
+          { text: 'Strongly Disagree', value: 0 },
+          { text: 'Disagree', value: 1 },
+          { text: 'Neutral', value: 2 },
+          { text: 'Agree', value: 3 },
+          { text: 'Strongly Agree', value: 4 },
+        ],
+      },
+    ],
+  },
+]);
+
+const selectedCourseId = ref('');
+const courseName = ref('No Course Selected');
+const instructorName = ref('No Course Selected');
+const showNotification = ref(true);
+
+const isFormEnabled = computed(() => selectedCourseId.value !== '');
 
 const toast = useToast();
-const isFormEnabled = computed(() => store.selectedCourseId !== '');
 
 function submitForm() {
   if (!isFormEnabled.value) return;
 
-  for (const section of store.sections) {
+  for (const section of sections.value) {
     for (const question of section.questions) {
       if (question.selectedOption === '') {
         toast.error('Please answer all questions');
@@ -93,7 +169,7 @@ function submitForm() {
   }
 
   console.log(
-    store.sections.map((section) => ({
+    sections.value.map((section) => ({
       title: section.title,
       questions: section.questions.map((q) => ({
         text: q.text,
@@ -105,10 +181,46 @@ function submitForm() {
     }))
   );
 
-  // Clear selected options and course
-  store.resetForm();
+  resetForm();
 
   toast.success('Evaluation submitted successfully!');
   window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function updateCourseInfo() {
+  const selectedCourse = registeredCourses.value.find(
+    (course) => course.id === selectedCourseId.value
+  );
+  if (selectedCourse) {
+    courseName.value = selectedCourse.name;
+    instructorName.value = selectedCourse.instructor;
+    showNotification.value = false;
+  } else {
+    courseName.value = 'No Course Selected';
+    instructorName.value = 'No Course Selected';
+    showNotification.value = true;
+  }
+}
+
+// fetching registeredCourses
+const fetchRegisteredCourses = async () => {
+  try {
+    registeredCourses.value = authStore.getRegisteredCourses;
+  } catch (error) {
+    console.error('Error fetching registeredCourses:', error);
+  }
+};
+
+onMounted(fetchRegisteredCourses);
+
+// Clear selected options and course
+function resetForm() {
+  selectedCourseId.value = '';
+  updateCourseInfo();
+  sections.value.forEach((section) => {
+    section.questions.forEach((question) => {
+      question.selectedOption = '';
+    });
+  });
 }
 </script>

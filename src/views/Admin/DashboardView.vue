@@ -171,8 +171,9 @@ async function getStudents() {
     );
     totalStudents.value = students.value.length;
     evaluatedStudents.value = students.value.filter(
-      (student) => student.is_evaluated === 1
-    ).length;
+      (student) => student.isEvaluated === true
+    );
+    console.log(evaluatedStudents.value);
     remainingStudents.value = totalStudents.value - evaluatedStudents.value;
   } catch (error) {
     console.error(error);
@@ -239,6 +240,7 @@ async function acceptStudent(index) {
     toast.success(
       `Accepted student with ID ${requests.value[index].student_id}`
     );
+    getStudents();
     console.log(response.data);
     // Optionally, remove the accepted request from the list
     requests.value.splice(index, 1);

@@ -30,7 +30,7 @@
           <td class="p-5 text-center">
             <input
               type="checkbox"
-              v-model="course.evaluated"
+              v-model="course.is_evaluated"
               class="form-checkbox bg-transparent h-5 w-5 text-darkGreen focus:ring-0 rounded-sm"
               disabled
             />
@@ -42,8 +42,8 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { useAuthStore } from "../../stores/AuthStore";
+import { ref } from 'vue';
+import { useAuthStore } from '../../stores/AuthStore';
 
 const authStore = useAuthStore();
 const courses = ref(authStore.user.registered_courses);
