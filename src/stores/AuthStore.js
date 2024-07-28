@@ -6,6 +6,7 @@ import { useToast } from 'vue-toastification';
 const toast = useToast();
 
 export const useAuthStore = defineStore('auth', {
+  // State definition
   state: () => ({
     role: null,
     user: {
@@ -17,7 +18,6 @@ export const useAuthStore = defineStore('auth', {
       isApproved: false,
       errorMessage: null,
       isEvaluated: false,
-      department_id: null,
       registered_courses: [],
       evaluated_courses: [],
     },
@@ -28,6 +28,7 @@ export const useAuthStore = defineStore('auth', {
       errorMessage: null,
     },
   }),
+  // Getters for accessing state properties
   getters: {
     getUserEmail: (state) => state.user.email,
     getAdminEmail: (state) => state.admin.email,
@@ -45,7 +46,9 @@ export const useAuthStore = defineStore('auth', {
     getRegisteredCourses: (state) => state.user.registered_courses,
     getEvaluatedCourses: (state) => state.user.evaluated_courses,
   },
+  // Actions for performing asynchronous operations
   actions: {
+    // Register a new user
     async register() {
       const apiUrl = import.meta.env.VITE_APP_API_URL;
       try {
@@ -55,19 +58,24 @@ export const useAuthStore = defineStore('auth', {
           student_id: this.user.student_id,
         });
 
+        // Update state based on the response
         this.isEvaluated = response.data.student.is_evaluated;
         this.isApproved = response.data.student.is_approved;
         this.user.evaluated_courses = response.data.student.evaluated_courses;
         this.user.registered_courses = response.data.student.registered_courses;
         this.user.department_id = response.data.student.department_id;
         console.log('Registered Courses:', this.user.registered_courses);
+
+        // Show success message and redirect to login
         toast.success('Register Successful');
         router.push('/login');
       } catch (error) {
+        // Show error message
         toast.error('Register Failed');
         console.log('Error:', error.response.data.message);
       }
     },
+    // Log out the current user
     async logout() {
       const apiUrl = import.meta.env.VITE_APP_API_URL;
       try {
@@ -88,6 +96,7 @@ export const useAuthStore = defineStore('auth', {
         router.push('/login');
       }
     },
+    // Clear user and admin data
     clearData() {
       this.user.email = null;
       this.user.password = null;
