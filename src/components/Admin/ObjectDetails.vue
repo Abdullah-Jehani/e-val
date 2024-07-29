@@ -95,7 +95,7 @@
       <stats-card
         :title="card.title"
         :value="card.value"
-        @click="() => openModal(card.id)"
+        @click="() => openModal(card.array)"
         class="bg-offWhite border w-full border-lightPurple hover:bg-lightPurple hover:bg-opacity-40 transition duration-200 ease-in-out col-span-6 cursor-pointer"
         :class="{
           ' col-span-6 w-full': card.id == 1,

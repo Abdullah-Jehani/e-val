@@ -31,12 +31,13 @@
         <general-table :objects="objects" cardTitle="" :border="border" />
       </div>
       <div v-if="showExportButton" class="w-full flex justify-center mt-4">
-        <button
+        <a
+          :href="exportLink"
           @click="$emit('export', selectedItems)"
-          class="w-full bg-mainPurple hover:bg-darkPurple text-white px-4 py-2 rounded-[4px] transition duration-100 ease-in-out"
+          class="w-full bg-mainPurple hover:bg-darkPurple text-white px-4 py-2 rounded-[4px] text-center transition duration-100 ease-in-out"
         >
           {{ buttonText }}
-        </button>
+        </a>
       </div>
     </div>
   </div>
@@ -48,6 +49,9 @@ import { defineEmits, defineProps } from 'vue';
 import GeneralTable from '../../components/Admin/GeneralTable.vue';
 
 const emit = defineEmits(['close', 'export']);
+
+const apiUrl = import.meta.env.VITE_APP_API_URL;
+const exportLink = apiUrl + 'export/evaluations';
 
 const props = defineProps({
   title: {

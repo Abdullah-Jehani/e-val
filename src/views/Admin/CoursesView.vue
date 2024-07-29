@@ -118,10 +118,10 @@ function updateCourseInfo(course) {
     instructorName.value = course.instructor || 'N/A';
     courseCode.value = course.course_code || 'N/A';
     courseCredits.value = course.course_credits || 'N/A';
-    courseEnrolledStudents.value = course.enrolled_students || 0;
-    courseEvaluated.value = course.evaluated_students || 0;
+    courseEnrolledStudents.value = course.enrolled_students;
+    courseEvaluated.value = course.evaluated_students;
     courseRemaining.value =
-      course.enrolled_students - course.evaluated_students || 0;
+      course.enrolled_students - course.evaluated_students;
   } else {
     courseName.value = 'No Course Selected';
     instructorName.value = 'N/A';
@@ -154,16 +154,19 @@ const courseStatsCards = computed(() => [
     id: 1,
     title: 'Enrolled Students',
     value: courseEnrolledStudents.value,
+    array: courseEnrolledStudents,
   },
   {
     id: 2,
     title: 'Evaluated',
     value: courseEvaluated.value,
+    array: courseEvaluated,
   },
   {
     id: 3,
     title: 'Remaining',
     value: courseRemaining.value,
+    array: courseRemaining,
   },
 ]);
 </script>
