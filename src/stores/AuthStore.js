@@ -12,6 +12,7 @@ export const useAuthStore = defineStore('auth', {
     user: {
       email: null,
       password: null,
+      name: null,
       student_id: null,
       department_id: null,
       token: null,
@@ -32,6 +33,7 @@ export const useAuthStore = defineStore('auth', {
   getters: {
     getUserEmail: (state) => state.user.email,
     getAdminEmail: (state) => state.admin.email,
+    getUserName: (state) => state.user.name,
     getUserToken: (state) => state.user.token,
     getAdminToken: (state) => state.admin.token,
     getUserPassword: (state) => state.user.password,
@@ -55,6 +57,7 @@ export const useAuthStore = defineStore('auth', {
         const response = await axios.post(apiUrl + 'register', {
           email: this.user.email,
           password: this.user.password,
+          name: this.user.name,
           student_id: this.user.student_id,
         });
 

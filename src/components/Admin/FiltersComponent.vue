@@ -64,6 +64,7 @@
           </select>
         </div>
         <button
+          v-if="modalTitle !== 'Students'"
           class="md:hidden text-sm flex place-self-end h-12 bg-mainPurple text-white px-3 py-1 text-center items-center rounded-[4px] hover:bg-darkPurple transition"
           @click="openExportModal"
         >
@@ -75,6 +76,7 @@
       class="w-full flex justify-end md:flex-col gap-2 items-end mt-2 md:mt-0"
     >
       <button
+        v-if="modalTitle !== 'Students'"
         class="hidden md:block bg-mainPurple text-white px-4 py-2 rounded-[4px] hover:bg-darkPurple transition"
         @click="openExportModal"
       >
@@ -116,22 +118,22 @@
       :objects="objects"
       :showExportButton="true"
       @export="openExportModal"
-    ></Modal>
+    />
   </div>
 </template>
 
 <script setup>
-import { ref, watch, onMounted, defineProps, defineEmits } from "vue";
-import axios from "axios";
-import Modal from "./Modal.vue";
-import { useAuthStore } from "../../stores/AuthStore";
+import { ref, watch, onMounted, defineProps, defineEmits } from 'vue';
+import axios from 'axios';
+import Modal from './Modal.vue';
+import { useAuthStore } from '../../stores/AuthStore';
 
 const authStore = useAuthStore();
-const emit = defineEmits(["update:department", "update:search"]);
-const title = ref("Courses");
+const emit = defineEmits(['update:department', 'update:search']);
+const title = ref('Courses');
 const departments = ref([]);
-const selectedDepartment = ref("");
-const searchQuery = ref("");
+const selectedDepartment = ref('');
+const searchQuery = ref('');
 const showModal = ref(false);
 
 const props = defineProps({
@@ -147,22 +149,22 @@ const props = defineProps({
 
 const fetchDepartments = async () => {
   try {
-    const response = await axios.get("http://127.0.0.1:8000/api/departments", {
+    const response = await axios.get('http://127.0.0.1:8000/api/departments', {
       headers: {
         Authorization: `Bearer ${authStore.admin.token}`,
       },
     });
     departments.value = response.data;
   } catch (error) {
-    console.error("Error fetching departments:", error);
+    console.error('Error fetching departments:', error);
   }
 };
 
 onMounted(fetchDepartments);
 
 const selectAllDepartments = () => {
-  selectedDepartment.value = "";
-  emit("update:department", selectedDepartment.value);
+  selectedDepartment.value = '';
+  emit('update:department', selectedDepartment.value);
 };
 
 const openExportModal = () => {
@@ -170,19 +172,19 @@ const openExportModal = () => {
 };
 
 const updateSelectedDepartment = () => {
-  emit("update:department", selectedDepartment.value);
+  emit('update:department', selectedDepartment.value);
 };
 
 const updateSearchQuery = () => {
-  emit("update:search", searchQuery.value);
+  emit('update:search', searchQuery.value);
 };
 
 watch(selectedDepartment, (newVal) => {
-  emit("update:department", newVal);
+  emit('update:department', newVal);
 });
 
 watch(searchQuery, (newVal) => {
-  emit("update:search", newVal);
+  emit('update:search', newVal);
 });
 </script>
 

@@ -13,7 +13,7 @@
         </header>
 
         <!-- Introduction Text -->
-        <section class="intro mb-8 md:px-16">
+        <section class="intro mb-8 md:px-12">
           <p class="text-lg text-center text-gray-600">
             Welcome to the course evaluation system. Your status is currently
             pending.

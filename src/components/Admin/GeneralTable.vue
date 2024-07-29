@@ -53,7 +53,7 @@
               {{ object.student_id ? object.student_id : object.course_code }}
             </td>
             <td class="w-full lg:px-5 px-2 py-3 truncate">
-              {{ object.email ? object.email : object.name }}
+              {{ object.name }}
             </td>
           </tr>
         </tbody>
@@ -63,13 +63,14 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { defineProps } from "vue";
+import { ref } from 'vue';
+import { defineProps } from 'vue';
 
 const props = defineProps({
   objects: {
     type: Array,
     required: true,
+    default: () => [],
   },
   cardTitle: {
     type: String,

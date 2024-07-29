@@ -22,7 +22,7 @@
               {{ object.student_id }}
             </td>
             <td class="w-full md:px-5 px-2 py-3 truncate">
-              {{ object.email }}
+              {{ object.name }}
             </td>
             <td class="md:table-cell py-2 truncate">
               <div class="flex gap-2">

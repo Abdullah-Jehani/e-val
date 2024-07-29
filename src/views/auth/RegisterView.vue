@@ -34,6 +34,21 @@
         </div>
         <div class="flex flex-col gap-2 mb-4">
           <label
+            for="student-name"
+            class="block text-sm font-normal text-mainBlack"
+            >Name</label
+          >
+          <input
+            v-model="authStore.user.name"
+            type="text"
+            id="student-name"
+            placeholder="Your Name"
+            class="block w-full rounded-md border border-darkPurple h-[3.375rem] bg-white text-sm font-normal p-4 appearance:textfield [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+            required
+          />
+        </div>
+        <div class="flex flex-col gap-2 mb-4">
+          <label
             for="studentId"
             class="block text-sm font-normal text-mainBlack"
             >Student ID</label

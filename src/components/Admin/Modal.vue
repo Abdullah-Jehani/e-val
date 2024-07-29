@@ -28,12 +28,7 @@
         </button>
       </div>
       <div class="overflow-y-auto h-64">
-        <general-table
-          :objects="objects"
-          cardTitle=""
-          v-model:selection="selectedItems"
-          :border="border"
-        />
+        <general-table :objects="objects" cardTitle="" :border="border" />
       </div>
       <div v-if="showExportButton" class="w-full flex justify-center mt-4">
         <button
@@ -50,7 +45,6 @@
 <script setup>
 import { ref } from 'vue';
 import { defineEmits, defineProps } from 'vue';
-
 import GeneralTable from '../../components/Admin/GeneralTable.vue';
 
 const emit = defineEmits(['close', 'export']);
@@ -83,7 +77,6 @@ const props = defineProps({
 });
 
 const selectedItems = ref([]);
-const isChecked = ref(false);
 </script>
 
 <style scoped></style>

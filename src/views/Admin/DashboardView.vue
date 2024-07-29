@@ -302,6 +302,24 @@ const cards = computed(() => [
   },
 ]);
 
+// Function to get the evaluated count for each course
+function getEvaluatedCount(courseId) {
+  return students.value.reduce((count, student) => {
+    if (
+      student.evaluated_courses &&
+      student.evaluated_courses.includes(courseId)
+    ) {
+      count++;
+    }
+    return count;
+  }, 0);
+}
+
+// Updating the courses evaluated_students property
+courses.value.forEach((course) => {
+  course.evaluated_students = getEvaluatedCount(course.id);
+});
+
 onMounted(() => {
   getRequests();
   getStudents();

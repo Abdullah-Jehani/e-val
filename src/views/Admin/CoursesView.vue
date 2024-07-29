@@ -40,45 +40,48 @@
       @close="showModal = false"
       :title="'Enrolled Students'"
       :objects="students"
-    >
-    </Modal>
+    />
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from "vue";
-import FiltersComponent from "../../components/Admin/FiltersComponent.vue";
-import ClickableTable from "../../components/Admin/ClickableTable.vue";
-import ObjectDetails from "../../components/Admin/ObjectDetails.vue";
-import Modal from "../../components/Admin/Modal.vue";
-import axios from "axios";
-import { useAuthStore } from "../../stores/AuthStore";
+import { ref, computed, onMounted } from 'vue';
+import FiltersComponent from '../../components/Admin/FiltersComponent.vue';
+import ClickableTable from '../../components/Admin/ClickableTable.vue';
+import ObjectDetails from '../../components/Admin/ObjectDetails.vue';
+import Modal from '../../components/Admin/Modal.vue';
+import axios from 'axios';
+import { useAuthStore } from '../../stores/AuthStore';
+import { useToast } from 'vue-toastification';
+
+const toast = useToast();
+const apiUrl = import.meta.env.VITE_APP_API_URL;
 
 const authStore = useAuthStore();
-const selectedDepartment = ref("");
-const searchQuery = ref("");
+const selectedDepartment = ref('');
+const searchQuery = ref('');
 const selectedCourse = ref(null);
 const showModal = ref(false);
 
 const courses = ref([]);
-const courseName = ref("No Course Selected");
-const instructorName = ref("N/A");
-const courseCode = ref("N/A");
-const courseCredits = ref("N/A");
-const courseEnrolledStudents = ref("N/A");
-const courseEvaluated = ref("N/A");
-const courseRemaining = ref("N/A");
+const courseName = ref('No Course Selected');
+const instructorName = ref('N/A');
+const courseCode = ref('N/A');
+const courseCredits = ref('N/A');
+const courseEnrolledStudents = ref(0);
+const courseEvaluated = ref(0);
+const courseRemaining = ref(0);
 
 const fetchCourses = async () => {
   try {
-    const response = await axios.get("http://127.0.0.1:8000/api/courses", {
+    const response = await axios.get(apiUrl + 'courses', {
       headers: {
         Authorization: `Bearer ${authStore.admin.token}`,
       },
     });
     courses.value = response.data;
   } catch (error) {
-    console.error("Error fetching courses:", error);
+    console.error('Error fetching courses:', error);
   }
 };
 onMounted(fetchCourses);
@@ -111,22 +114,22 @@ const handleCourseSelected = (course) => {
 
 function updateCourseInfo(course) {
   if (course) {
-    courseName.value = course.name || "No Course Selected";
-    instructorName.value = course.instructor || "N/A";
-    courseCode.value = course.course_code || "N/A";
-    courseCredits.value = course.course_credits || "N/A";
-    courseEnrolledStudents.value = course.enrolled_students || "N/A";
-    courseEvaluated.value = course.evaluated_students || "N/A";
+    courseName.value = course.name || 'No Course Selected';
+    instructorName.value = course.instructor || 'N/A';
+    courseCode.value = course.course_code || 'N/A';
+    courseCredits.value = course.course_credits || 'N/A';
+    courseEnrolledStudents.value = course.enrolled_students || 0;
+    courseEvaluated.value = course.evaluated_students || 0;
     courseRemaining.value =
-      course.enrolled_students - course.evaluated_students || "N/A";
+      course.enrolled_students - course.evaluated_students || 0;
   } else {
-    courseName.value = "No Course Selected";
-    instructorName.value = "N/A";
-    courseCode.value = "N/A";
-    courseCredits.value = "N/A";
-    courseEnrolledStudents.value = "N/A";
-    courseEvaluated.value = "N/A";
-    courseRemaining.value = "N/A";
+    courseName.value = 'No Course Selected';
+    instructorName.value = 'N/A';
+    courseCode.value = 'N/A';
+    courseCredits.value = 'N/A';
+    courseEnrolledStudents.value = 0;
+    courseEvaluated.value = 0;
+    courseRemaining.value = 0;
   }
 }
 
@@ -134,20 +137,32 @@ const openModal = () => {
   showModal.value = true;
 };
 
+const exportData = async () => {
+  try {
+    await axios.get('http://127.0.0.1:8000/api/courses', {
+      headers: {
+        Authorization: `Bearer ${authStore.admin.token}`,
+      },
+    });
+  } catch (error) {
+    toast.error('Error exporting data');
+  }
+};
+
 const courseStatsCards = computed(() => [
   {
     id: 1,
-    title: "Enrolled Students",
+    title: 'Enrolled Students',
     value: courseEnrolledStudents.value,
   },
   {
     id: 2,
-    title: "Evaluated",
+    title: 'Evaluated',
     value: courseEvaluated.value,
   },
   {
     id: 3,
-    title: "Remaining",
+    title: 'Remaining',
     value: courseRemaining.value,
   },
 ]);

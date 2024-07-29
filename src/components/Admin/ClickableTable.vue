@@ -24,9 +24,15 @@
             }"
             @click="handleClick(object)"
           >
-            <td class="p-3 text-left rounded-l-md">{{ object.id }}</td>
+            <td class="p-3 text-left rounded-l-md">
+              {{ object.student_id ? object.student_id : object.course_code }}
+            </td>
             <td class="w-full md:px-5 px-2 py-3 truncate rounded-r-md">
-              {{ object.name }}
+              {{
+                object.name.value === ''
+                  ? object.email.split('@')[0].replace('.', ' ')
+                  : object.name
+              }}
             </td>
           </tr>
         </tbody>
@@ -36,7 +42,7 @@
 </template>
 
 <script setup>
-import { ref, defineProps, defineEmits } from 'vue';
+import { ref, defineProps, defineEmits, onMounted } from 'vue';
 
 const props = defineProps({
   objects: {
@@ -49,6 +55,8 @@ const props = defineProps({
   },
 });
 
+const studentName = ref(''); // Reactive variable for student name
+
 const emit = defineEmits(['object-selected']);
 const selected = ref(null);
 
@@ -57,7 +65,3 @@ const handleClick = (object) => {
   emit('object-selected', object); // Emit the selected object
 };
 </script>
-
-<style scoped>
-/* Your styles here */
-</style>
