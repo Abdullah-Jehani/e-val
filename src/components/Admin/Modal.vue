@@ -47,11 +47,15 @@
 import { ref } from 'vue';
 import { defineEmits, defineProps } from 'vue';
 import GeneralTable from '../../components/Admin/GeneralTable.vue';
+import { useAuthStore } from '../../stores/AuthStore';
+import { useToast } from 'vue-toastification';
 
 const emit = defineEmits(['close', 'export']);
 
 const apiUrl = import.meta.env.VITE_APP_API_URL;
 const exportLink = apiUrl + 'export/evaluations';
+const authStore = useAuthStore();
+const toast = useToast();
 
 const props = defineProps({
   title: {
