@@ -86,9 +86,9 @@
             id="dropdown"
           >
             <div class="py-3 px-4">
-              <span class="block text-sm font-semibold text-mainBlack">{{
+              <!-- <span class="block text-sm font-semibold text-mainBlack">{{
                 userName
-              }}</span>
+              }}</span> -->
               <span class="block text-sm font-semibold text-mainBlack">
                 {{
                   authStore.role === 'student'
@@ -97,12 +97,12 @@
                 }}
               </span>
             </div>
-            <ul class="py-1 text-gray-700" aria-labelledby="dropdown">
+            <ul class="p-1 text-gray-700" aria-labelledby="dropdown">
               <li>
                 <a
                   @click="logout"
                   href="#"
-                  class="block py-2 px-4 text-sm hover:bg-mainWhite"
+                  class="rounded-lg block py-2 px-4 text-sm hover:bg-mainWhite"
                   >Sign out</a
                 >
               </li>
@@ -291,7 +291,7 @@ const user = authStore.user;
 
 const userName =
   authStore.role === 'student'
-    ? user.email.split('@')[0]
+    ? user.name
     : authStore.admin.email.split('@')[0];
 
 async function logout() {

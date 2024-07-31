@@ -19,18 +19,38 @@
         E-Valuation System!
       </p>
       <form @submit.prevent="signup" class="w-full">
-        <div class="flex flex-col gap-2 mb-4">
-          <label for="email" class="block text-sm font-normal text-mainBlack"
-            >Email</label
-          >
-          <input
-            v-model="authStore.user.email"
-            id="email"
-            type="email"
-            placeholder="yourname_id@limu.edu.ly"
-            class="block w-full rounded-md border border-darkPurple h-12 bg-white text-sm font-normal p-4"
-            required
-          />
+        <div class="flex flex-col md:flex-row gap-2 mb-4">
+          <div class="flex flex-col gap-2 mb-4 md:mb-0 w-3/4">
+            <label for="email" class="block text-sm font-normal text-mainBlack"
+              >Email</label
+            >
+            <input
+              v-model="authStore.user.email"
+              id="email"
+              type="email"
+              placeholder="yourname_id@limu.edu.ly"
+              class="block w-full rounded-md border border-darkPurple h-12 bg-white text-sm font-normal p-4"
+              required
+            />
+          </div>
+          <div class="flex flex-col gap-2 mb-4 md:mb-0 w-1/4">
+            <label
+              for="studentId"
+              class="block text-sm font-normal text-mainBlack"
+              >Student ID</label
+            >
+            <input
+              v-model="authStore.user.student_id"
+              type="number"
+              id="studentId"
+              placeholder="1234"
+              class="block w-full rounded-md border border-darkPurple h-12 bg-white text-sm font-normal p-4 appearance:textfield [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+              min="1000"
+              max="9999"
+              required
+              @input="validateStudentId"
+            />
+          </div>
         </div>
         <div class="flex flex-col gap-2 mb-4">
           <label
@@ -43,26 +63,8 @@
             type="text"
             id="student-name"
             placeholder="Your Name"
-            class="block w-full rounded-md border border-darkPurple h-[3.375rem] bg-white text-sm font-normal p-4 appearance:textfield [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+            class="block w-full rounded-md border border-darkPurple h-12 bg-white text-sm font-normal p-4 appearance:textfield [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
             required
-          />
-        </div>
-        <div class="flex flex-col gap-2 mb-4">
-          <label
-            for="studentId"
-            class="block text-sm font-normal text-mainBlack"
-            >Student ID</label
-          >
-          <input
-            v-model="authStore.user.student_id"
-            type="number"
-            id="studentId"
-            placeholder="1234"
-            class="block w-full rounded-md border border-darkPurple h-[3.375rem] bg-white text-sm font-normal p-4 appearance:textfield [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-            min="1000"
-            max="9999"
-            required
-            @input="validateStudentId"
           />
         </div>
         <div class="flex flex-col gap-2 mb-4">
@@ -74,14 +76,14 @@
             type="password"
             id="password"
             placeholder="••••••••"
-            class="block w-full rounded-md border border-darkPurple h-[3.375rem] bg-white text-sm font-normal p-4"
+            class="block w-full rounded-md border border-darkPurple h-12 bg-white text-sm font-normal p-4"
             required
           />
         </div>
         <div class="mt-10 mb-4 pb-5">
           <input
             type="submit"
-            class="block w-full bg-mainPurple hover:bg-darkPurple h-[3.375rem] text-white font-medium text-lg rounded-md transition-all duration-100 ease-in-out text-center cursor-pointer"
+            class="block w-full bg-mainPurple hover:bg-darkPurple h-12 text-white font-medium text-lg rounded-md transition-all duration-100 ease-in-out text-center cursor-pointer"
             value="Sign up"
           />
         </div>

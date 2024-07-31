@@ -44,8 +44,8 @@
             required
           />
         </div>
-        <div class="flex items-center justify-between mb-6 pb-5">
-          <div class="flex items-start">
+        <div class="flex items-center justify-end mb-6 pb-5">
+          <!-- <div class="flex items-start">
             <input
               id="remember"
               aria-describedby="remember"
@@ -55,7 +55,7 @@
             <label for="remember" class="ml-2 text-sm text-gray-500"
               >Remember me</label
             >
-          </div>
+          </div> -->
           <router-link
             to="/forgot-password"
             class="text-sm font-medium text-primary-600 hover:underline text-darkPurple"
