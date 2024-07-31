@@ -37,6 +37,13 @@
   </main>
 </template>
 
-<script setup></script>
+<script setup>
+import { onMounted } from "vue";
+import { useAuthStore } from "../../stores/AuthStore";
+const authStore = useAuthStore();
+onMounted(() => {
+  authStore.getUserData();
+});
+</script>
 
 <style></style>

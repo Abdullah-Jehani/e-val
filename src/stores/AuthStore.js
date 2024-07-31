@@ -1,11 +1,11 @@
-import { defineStore } from 'pinia';
-import axios from 'axios';
-import router from '../routes';
-import { useToast } from 'vue-toastification';
+import { defineStore } from "pinia";
+import axios from "axios";
+import router from "../routes";
+import { useToast } from "vue-toastification";
 
 const toast = useToast();
 
-export const useAuthStore = defineStore('auth', {
+export const useAuthStore = defineStore("auth", {
   // State definition
   state: () => ({
     role: null,
@@ -56,7 +56,7 @@ export const useAuthStore = defineStore('auth', {
     async register() {
       const apiUrl = import.meta.env.VITE_APP_API_URL;
       try {
-        const response = await axios.post(apiUrl + 'register', {
+        const response = await axios.post(apiUrl + "register", {
           email: this.user.email,
           password: this.user.password,
           name: this.user.name,
@@ -72,15 +72,15 @@ export const useAuthStore = defineStore('auth', {
           response.data.student.registered_courses || []; // Ensure it's an array
         this.user.department_id = response.data.student.department_id;
 
-        console.log('Registered Courses:', this.user.registered_courses);
+        console.log("Registered Courses:", this.user.registered_courses);
 
         // Show success message and redirect to login
-        toast.success('Register Successful');
-        router.push('/login');
+        toast.success("Register Successful");
+        router.push("/login");
       } catch (error) {
         // Show error message
-        toast.error('Register Failed');
-        console.log('Error:', error.response.data.message);
+        toast.error("Register Failed");
+        console.log("Error:", error.response.data.message);
       }
     },
     // Log out the current user
@@ -88,7 +88,7 @@ export const useAuthStore = defineStore('auth', {
       const apiUrl = import.meta.env.VITE_APP_API_URL;
       try {
         const response = await axios.post(
-          apiUrl + 'logout',
+          apiUrl + "logout",
           {},
           {
             headers: {
@@ -98,10 +98,29 @@ export const useAuthStore = defineStore('auth', {
         );
         console.log(response);
         this.clearData();
-        router.push('/login');
+        router.push("/login");
       } catch (error) {
-        console.log('Error', error);
-        router.push('/login');
+        console.log("Error", error);
+        router.push("/login");
+      }
+    },
+    async getUserData() {
+      const apiUrl = import.meta.env.VITE_APP_API_URL;
+      try {
+        const response = await axios.get(apiUrl + "student", {
+          headers: {
+            Authorization: `Bearer ${this.user.token}`,
+          },
+        });
+        this.isEvaluated = response.data.student.is_evaluated;
+        this.isApproved = response.data.student.is_approved;
+        this.user.evaluated_courses =
+          response.data.student.evaluated_courses || []; // Ensure it's an array
+        this.user.registered_courses =
+          response.data.student.registered_courses || []; // Ensure it's an array
+        this.user.department_id = response.data.student.department_id;
+      } catch (error) {
+        console.error("Error fetching user data:", error);
       }
     },
     // Clear user and admin data

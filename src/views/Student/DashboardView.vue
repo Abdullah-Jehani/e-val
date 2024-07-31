@@ -109,37 +109,39 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import StatsCard from '../../components/Student/StatsCard.vue';
-import CourseTable from '../../components/Student/CourseTable.vue';
-import { useAuthStore } from '../../stores/AuthStore';
+import { onMounted, ref } from "vue";
+import StatsCard from "../../components/Student/StatsCard.vue";
+import CourseTable from "../../components/Student/CourseTable.vue";
+import { useAuthStore } from "../../stores/AuthStore";
 
 const student = ref({});
 
 const authStore = useAuthStore();
 student.value = authStore.user;
-
+onMounted(() => {
+  authStore.getUserData();
+});
 const cards = [
   {
     id: 1,
-    title: 'Total Courses',
+    title: "Total Courses",
     value: student.value.registered_courses.length,
   },
   {
     id: 2,
-    title: 'Evaluated',
+    title: "Evaluated",
     value: student.value.evaluated_courses.length,
   },
   {
     id: 3,
-    title: 'Remaining',
+    title: "Remaining",
     value:
       student.value.registered_courses.length -
       student.value.evaluated_courses.length,
   },
   {
     id: 4,
-    title: 'Semester',
+    title: "Semester",
     value: student.value.semester,
   },
 ];
