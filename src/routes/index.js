@@ -39,12 +39,6 @@ const routes = [
         meta: { requiresAuth: true, role: 'student' },
       },
       {
-        path: 'success',
-        name: 'SubmitSuccess',
-        component: SubmitSuccessView,
-        meta: { requiresAuth: true, role: 'student' },
-      },
-      {
         path: 'pending',
         name: 'Pending',
         component: PendingView,
@@ -86,6 +80,12 @@ const routes = [
       },
     ],
   },
+  {
+    path: '/success',
+    name: 'SubmitSuccess',
+    component: SubmitSuccessView,
+    meta: { requiresAuth: true, role: 'student', isEvaluated: true },
+  },
   // Authentication routes
   {
     path: '/login',
@@ -124,6 +124,7 @@ router.beforeEach((to, from, next) => {
   const isAuthenticated = !!authStore.getUserToken || !!authStore.getAdminToken;
   const role = authStore.getRole;
   const isApproved = authStore.getIsApproved;
+  const isEvaluated = authStore.getIsEvaluated;
 
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     if (!isAuthenticated) {

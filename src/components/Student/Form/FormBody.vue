@@ -1,3 +1,4 @@
+<!-- FormBody.vue -->
 <template>
   <section
     v-for="section in sections"
@@ -30,9 +31,9 @@
         <!-- Mobile View -->
         <div class="md:hidden">
           <select
-            v-model="question.selectedOption"
+            v-model="selectedValues[question.id]"
             :disabled="!isFormEnabled"
-            class="w-full border-none border-b lg:border-b-0 border-lightPurple bg-offWhite p-4 rounded-lg focus:ring-0 focus:outline-none focus:shadow-outline"
+            class="w-full border border-lightPurple bg-offWhite p-4 rounded-lg focus:ring-0 focus:outline-none focus:shadow-outline"
           >
             <option disabled value="">Select an option</option>
             <option
@@ -53,7 +54,7 @@
                 :name="`question-${section.id}-${question.id}`"
                 :id="`question-${section.id}-${question.id}-${option.value}`"
                 :value="option.value"
-                v-model="question.selectedOption"
+                v-model="selectedValues[question.id]"
                 class="sr-only"
                 aria-hidden="true"
                 :disabled="!isFormEnabled"
@@ -63,9 +64,9 @@
                 :aria-label="option.text"
                 :class="{
                   'bg-mainPurple text-white':
-                    question.selectedOption === option.value,
+                    selectedValues[question.id] === option.value,
                   'bg-offWhite text-black hover:brightness-95':
-                    question.selectedOption !== option.value,
+                    selectedValues[question.id] !== option.value,
                   'cursor-not-allowed opacity-50': !isFormEnabled,
                 }"
                 class="hover:filter border-none p-4 rounded-lg cursor-pointer text-center transition-all duration-300 ease-in-out flex justify-center items-center"
@@ -81,8 +82,9 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
-import { useToast } from 'vue-toastification';
+import { ref } from 'vue';
+import { watch } from 'vue';
+import { useEvalStore } from '../../../stores/EvalStore';
 
 const props = defineProps({
   sections: {
@@ -95,6 +97,9 @@ const props = defineProps({
   },
 });
 
+const evalStore = useEvalStore();
+const selectedValues = ref(evalStore.selectedValues);
+
 const parsedOptions = (optionsString) => {
   try {
     return JSON.parse(optionsString);
@@ -103,4 +108,15 @@ const parsedOptions = (optionsString) => {
     return [];
   }
 };
+
+// Watch for changes in the selectedValues and update the store
+watch(
+  () => selectedValues.value,
+  (newValues) => {
+    for (const [questionId, value] of Object.entries(newValues)) {
+      evalStore.updateSelectedValue(questionId, value);
+    }
+  },
+  { deep: true }
+);
 </script>

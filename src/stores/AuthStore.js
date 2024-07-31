@@ -107,6 +107,7 @@ export const useAuthStore = defineStore('auth', {
     // Clear user and admin data
     clearData() {
       this.user.email = null;
+      this.user.name = null;
       this.user.password = null;
       this.user.student_id = null;
       this.user.department_id = null;

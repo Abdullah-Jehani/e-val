@@ -20,7 +20,7 @@
       </p>
       <form @submit.prevent="signup" class="w-full">
         <div class="flex flex-col md:flex-row gap-2 mb-4">
-          <div class="flex flex-col gap-2 mb-4 md:mb-0 w-3/4">
+          <div class="flex flex-col gap-2 mb-4 md:mb-0 md:w-3/4">
             <label for="email" class="block text-sm font-normal text-mainBlack"
               >Email</label
             >
@@ -33,7 +33,7 @@
               required
             />
           </div>
-          <div class="flex flex-col gap-2 mb-4 md:mb-0 w-1/4">
+          <div class="flex flex-col gap-2 mb-4 md:mb-0 md:w-1/4">
             <label
               for="studentId"
               class="block text-sm font-normal text-mainBlack"
