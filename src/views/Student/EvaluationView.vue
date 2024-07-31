@@ -8,9 +8,7 @@
       class="fixed top-1/3 left-1/2 transform -translate-x-1/2 lg:-translate-x-20 bg-brightGreen border border-darkGreen text-lightOil px-4 py-3 rounded-md shadow-md z-10 lg:text-center text-lg cursor-help"
       role="alert"
     >
-      <span class="inline"
-        >Please select a course to start the evaluation.</span
-      >
+      Please select a course to start the evaluation.
     </div>
 
     <!-- Select Course -->
@@ -35,7 +33,6 @@
       </select>
     </div>
 
-    <!-- Form -->
     <!-- Form Header -->
     <div class="col-span-full lg:col-span-full w-full">
       <form-header :courseName="courseName" :instructorName="instructorName" />
@@ -69,84 +66,10 @@ import axios from 'axios';
 import { useAuthStore } from '../../stores/AuthStore';
 
 const authStore = useAuthStore();
+const toast = useToast();
 
 const registeredCourses = ref([]);
-
-const sections = ref([
-  {
-    id: 1,
-    title: 'Evaluating the quality of content delivery',
-    questions: [
-      {
-        id: 1,
-        text: 'Explanation of the course material is clear and understandable',
-        selectedOption: '',
-        options: [
-          { text: 'Strongly Disagree', value: 0 },
-          { text: 'Disagree', value: 1 },
-          { text: 'Neutral', value: 2 },
-          { text: 'Agree', value: 3 },
-          { text: 'Strongly Agree', value: 4 },
-        ],
-      },
-      {
-        id: 2,
-        text: 'Course topics are clear and related to the course content.',
-        selectedOption: '',
-        options: [
-          { text: 'Strongly Disagree', value: 0 },
-          { text: 'Disagree', value: 1 },
-          { text: 'Neutral', value: 2 },
-          { text: 'Agree', value: 3 },
-          { text: 'Strongly Agree', value: 4 },
-        ],
-      },
-    ],
-  },
-  {
-    id: 2,
-    title: 'Evaluating the resources and references',
-    questions: [
-      {
-        id: 1,
-        text: 'Notes/presentations cover all course topics.',
-        selectedOption: '',
-        options: [
-          { text: 'Strongly Disagree', value: 0 },
-          { text: 'Disagree', value: 1 },
-          { text: 'Neutral', value: 2 },
-          { text: 'Agree', value: 3 },
-          { text: 'Strongly Agree', value: 4 },
-        ],
-      },
-      {
-        id: 2,
-        text: 'Course books/references (digital or physical) are reliable and up-to-date.',
-        selectedOption: '',
-        options: [
-          { text: 'Strongly Disagree', value: 0 },
-          { text: 'Disagree', value: 1 },
-          { text: 'Neutral', value: 2 },
-          { text: 'Agree', value: 3 },
-          { text: 'Strongly Agree', value: 4 },
-        ],
-      },
-      {
-        id: 3,
-        text: 'Clear audio and video in recorded lectures.',
-        selectedOption: '',
-        options: [
-          { text: 'Strongly Disagree', value: 0 },
-          { text: 'Disagree', value: 1 },
-          { text: 'Neutral', value: 2 },
-          { text: 'Agree', value: 3 },
-          { text: 'Strongly Agree', value: 4 },
-        ],
-      },
-    ],
-  },
-]);
-
+const sections = ref([]);
 const selectedCourseId = ref('');
 const courseName = ref('No Course Selected');
 const instructorName = ref('No Course Selected');
@@ -154,37 +77,26 @@ const showNotification = ref(true);
 
 const isFormEnabled = computed(() => selectedCourseId.value !== '');
 
-const toast = useToast();
-
-function submitForm() {
-  if (!isFormEnabled.value) return;
-
-  for (const section of sections.value) {
-    for (const question of section.questions) {
-      if (question.selectedOption === '') {
-        toast.error('Please answer all questions');
-        return;
-      }
-    }
+async function fetchRegisteredCourses() {
+  try {
+    registeredCourses.value = authStore.getRegisteredCourses;
+  } catch (error) {
+    console.error('Error fetching registered courses:', error);
   }
+}
 
-  console.log(
-    sections.value.map((section) => ({
-      title: section.title,
-      questions: section.questions.map((q) => ({
-        text: q.text,
-        selectedOption: q.selectedOption,
-        selectedValue:
-          q.options.find((option) => option.value === q.selectedOption)?.text ||
-          null,
-      })),
-    }))
-  );
-
-  resetForm();
-
-  toast.success('Evaluation submitted successfully!');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+async function fetchSections() {
+  const apiUrl = import.meta.env.VITE_APP_API_URL;
+  try {
+    const response = await axios.get(apiUrl + 'question-sections', {
+      headers: {
+        Authorization: `Bearer ${authStore.user.token}`,
+      },
+    });
+    sections.value = response.data;
+  } catch (error) {
+    console.error('Error fetching sections:', error);
+  }
 }
 
 function updateCourseInfo() {
@@ -202,18 +114,6 @@ function updateCourseInfo() {
   }
 }
 
-// fetching registeredCourses
-const fetchRegisteredCourses = async () => {
-  try {
-    registeredCourses.value = authStore.getRegisteredCourses;
-  } catch (error) {
-    console.error('Error fetching registeredCourses:', error);
-  }
-};
-
-onMounted(fetchRegisteredCourses);
-
-// Clear selected options and course
 function resetForm() {
   selectedCourseId.value = '';
   updateCourseInfo();
@@ -223,4 +123,39 @@ function resetForm() {
     });
   });
 }
+
+function submitForm() {
+  if (!isFormEnabled.value) return;
+
+  const allQuestionsAnswered = sections.value.every((section) =>
+    section.questions.every((question) => question.selectedOption !== '')
+  );
+
+  if (!allQuestionsAnswered) {
+    toast.error('Please answer all questions');
+    return;
+  }
+
+  // const submissionData = sections.value.map((section) => ({
+  //   title: section.title,
+  //   questions: section.questions.map((q) => ({
+  //     text: q.text,
+  //     selectedOption: q.selectedOption,
+  //     selectedValue:
+  //       q.options.find((option) => option.value === q.selectedOption)?.text ||
+  //       null,
+  //   })),
+  // }));
+
+  // console.log(submissionData);
+
+  resetForm();
+  toast.success('Evaluation submitted successfully!');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+onMounted(() => {
+  fetchRegisteredCourses();
+  fetchSections();
+});
 </script>

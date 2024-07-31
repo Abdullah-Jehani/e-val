@@ -21,6 +21,7 @@ export const useAuthStore = defineStore('auth', {
       isEvaluated: false,
       registered_courses: [],
       evaluated_courses: [],
+      semester: null,
     },
     admin: {
       email: null,
@@ -45,6 +46,7 @@ export const useAuthStore = defineStore('auth', {
     getIsApproved: (state) => state.user.isApproved,
     getIsEvaluated: (state) => state.user.isEvaluated,
     getDepartmentId: (state) => state.user.department_id,
+    // getSemester: (state) => state.user.semester,
     getRegisteredCourses: (state) => state.user.registered_courses,
     getEvaluatedCourses: (state) => state.user.evaluated_courses,
   },
@@ -64,9 +66,12 @@ export const useAuthStore = defineStore('auth', {
         // Update state based on the response
         this.isEvaluated = response.data.student.is_evaluated;
         this.isApproved = response.data.student.is_approved;
-        this.user.evaluated_courses = response.data.student.evaluated_courses;
-        this.user.registered_courses = response.data.student.registered_courses;
+        this.user.evaluated_courses =
+          response.data.student.evaluated_courses || []; // Ensure it's an array
+        this.user.registered_courses =
+          response.data.student.registered_courses || []; // Ensure it's an array
         this.user.department_id = response.data.student.department_id;
+
         console.log('Registered Courses:', this.user.registered_courses);
 
         // Show success message and redirect to login

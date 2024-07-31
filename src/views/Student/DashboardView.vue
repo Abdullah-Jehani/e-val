@@ -112,38 +112,35 @@
 import { ref } from 'vue';
 import StatsCard from '../../components/Student/StatsCard.vue';
 import CourseTable from '../../components/Student/CourseTable.vue';
+import { useAuthStore } from '../../stores/AuthStore';
 
-const student = ref({
-  id: 20134,
-  name: 'Omar Al-Farouq',
-  email: 'omar.alfarouq@university.edu',
-  semester: 3,
-  department: 'Department 1',
-  enrolledCourses: 5,
-  evaluated: 3,
-  role: 'student',
-});
+const student = ref({});
+
+const authStore = useAuthStore();
+student.value = authStore.user;
 
 const cards = [
   {
     id: 1,
     title: 'Total Courses',
-    value: student.value.enrolledCourses,
+    value: student.value.registered_courses.length,
   },
   {
     id: 2,
     title: 'Evaluated',
-    value: student.value.evaluated,
+    value: student.value.evaluated_courses.length,
   },
   {
     id: 3,
     title: 'Remaining',
-    value: student.value.enrolledCourses - student.value.evaluated,
+    value:
+      student.value.registered_courses.length -
+      student.value.evaluated_courses.length,
   },
   {
     id: 4,
     title: 'Semester',
-    value: '8',
+    value: student.value.semester,
   },
 ];
 </script>
