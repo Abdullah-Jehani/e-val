@@ -29,7 +29,7 @@
         :thirdLabel="' Code'"
         :thirdValue="courseCode"
         :fourthLabel="'Credits'"
-        :fourthValue="courseCredits"
+        :fourthValue="courseCredits.toString()"
         :cards="courseStatsCards"
         @card-selected="openModal"
       />

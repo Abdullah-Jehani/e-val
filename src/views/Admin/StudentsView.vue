@@ -27,9 +27,9 @@
         :secondLabel="'Email'"
         :secondValue="studentEmail"
         :thirdLabel="'Student ID'"
-        :thirdValue="studentId"
+        :thirdValue="studentId.toString()"
         :fourthLabel="'Semester'"
-        :fourthValue="studentSemester"
+        :fourthValue="studentSemester.toString()"
         :cards="studentStatsCards"
         @card-selected="openModal"
       />
