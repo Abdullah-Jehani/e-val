@@ -169,10 +169,10 @@ async function getStudents() {
     students.value = response.data.data.filter(
       (student) => student.is_approved === 1
     );
-    totalStudents.value = students.value.length;
+    totalStudents.value = response.data.total_students;
     evaluatedStudents.value = students.value.filter(
-      (student) => student.isEvaluated === true
-    );
+      (student) => student.is_evaluated === 1
+    ).length;
     console.log(evaluatedStudents.value);
     remainingStudents.value = totalStudents.value - evaluatedStudents.value;
   } catch (error) {
