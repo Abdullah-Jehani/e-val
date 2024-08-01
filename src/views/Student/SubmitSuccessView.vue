@@ -3,7 +3,7 @@
     class="grid lg:grid-cols-12 min-h-screen lg:bg-mainWhite bg-mainWhite py-20"
   >
     <div
-      class="mx-auto min-h-2/3 py-12 px-10 w-full col-span-full lg:col-span-10 lg:col-start-2 h-full col-start-2 rounded-lg sm:col-span-10 sm:col-start-2 md:col-span-4 md:col-start-5 lg:bg-white lg:border-2 border-darkPurple lg:shadow-md shadow-darkPurple z-10 place-self-center"
+      class="mx-auto min-h-2/3 py-12 px-10 w-full col-span-full lg:col-span-10 lg:col-start-2 h-full col-start-2 rounded-lg sm:col-span-10 sm:col-start-2 md:col-span-4 md:col-start-5 lg:bg-white lg:border border-darkPurple lg:shadow-md shadow-darkPurple z-10 place-self-center"
     >
       <div class="flex items-center justify-center mx-auto mb-4">
         <img
@@ -38,8 +38,8 @@
 </template>
 
 <script setup>
-import { onMounted } from "vue";
-import { useAuthStore } from "../../stores/AuthStore";
+import { onMounted } from 'vue';
+import { useAuthStore } from '../../stores/AuthStore';
 const authStore = useAuthStore();
 onMounted(() => {
   authStore.getUserData();
